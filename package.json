@@ -1,0 +1,20 @@
+{
+  "name": "rbac-mern-boilerplate",
+  "version": "1.0.0",
+  "description": "In this repository I will keep adding the production best practices we should follow in a MERN (MongoDB, Express.js, React.js, and Node.js) project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foyzulkarim/rbac-mern-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foyzulkarim/rbac-mern-boilerplate/issues"
+  },
+  "homepage": "https://github.com/foyzulkarim/rbac-mern-boilerplate#readme"
+}

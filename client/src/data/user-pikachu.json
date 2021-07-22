@@ -1,0 +1,87 @@
+{
+    "_id": "5c8d0c505653de3985aa0ff",
+    "name": "Pikachu",
+    "description": "Rato elétrico bem fofinho",
+    "role": "atacante",
+    "createdAt": "2016-06-07T03:50:56.838Z",
+    "modifiedAt": "2016-06-07T03:50:56.838Z",
+    "permissions": [
+        {
+            "_id": "5c8d0c505653de3985aa0ff",
+            "resourceName": "dashboard",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa1ff",
+            "resourceName": "product",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa1ff",
+            "resourceName": "products-add",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa1ff",
+            "resourceName": "products-add",
+            "resourceType": "route",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa1ff",
+            "resourceName": "products-list",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa1ff",
+            "resourceName": "products-list",
+            "resourceType": "route",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985ea1fa",
+            "resourceName": "customer",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d0c505653de3985aa0f1",
+            "resourceName": "product-edit-button",
+            "resourceType": "button",
+            "isAllowed": true,
+            "isDisabled": true
+        },
+        {
+            "_id": "5c8d0c505653de3985aa0f1",
+            "resourceName": "product-delete-button",
+            "resourceType": "button",
+            "isAllowed": true,
+            "isDisabled": true
+        },
+        {
+            "_id": "5c8d0c505653dee985aa1ff",
+            "resourceName": "customers-list",
+            "resourceType": "menu",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "_id": "5c8d03505653de3f85aa1ff",
+            "resourceName": "customers-add",
+            "resourceType": "route",
+            "isAllowed": true,
+            "isDisabled": false
+        }
+    ]
+}

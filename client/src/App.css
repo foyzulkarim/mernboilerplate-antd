@@ -1,0 +1,101 @@
+@import '~antd/dist/antd.css';
+@import '@ant-design/pro-form/dist/form.css';
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.header {
+    color: white
+}
+
+.main-content {
+    background: white;
+    padding: 24;
+    margin: 0;
+    minHeight: 800;
+}
+
+/* antd css */
+
+.login-warp {
+    max-width: 360px;
+    margin: auto;
+}
+
+.icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url('https://gw.alipayobjects.com/zos/rmsportal/itDzjUnkelhQNsycranf.svg');
+    margin-left: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.icon-alipay {
+    background-position: -24px 0;
+}
+
+.icon-alipay:hover {
+    background-position: 0 0;
+}
+
+.icon-taobao {
+    background-position: -24px-24px;
+}
+
+.icon-taobao:hover {
+    background-position: 0-24px;
+}
+
+.icon-weibo {
+    background-position: -24px-48px;
+}
+
+.icon-weibo:hover {
+    background-position: 0-48px;
+}
+
+.loading-wrap {
+    margin: 20px 0;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    text-align: center;
+    /* background: rgba(0, 0, 0, 0.05); */
+    border-radius: 4px;
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "_id": "60f85c0ec1e11d6fd8f2071c",
+    "name": "Super shop admin",
+    "alias": "super-shop-admin",
+    "isAdmin": true,
+    "isSuperAdmin": false
+  }
+]

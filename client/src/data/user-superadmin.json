@@ -1,0 +1,115 @@
+{
+  "_id": "5c8d0c505653de3985aa0ff",
+  "name": "Superman",
+  "description": "Rato elétrico bem fofinho",
+  "role": "atacante",
+  "createdAt": "2016-06-07T03:50:56.838Z",
+  "modifiedAt": "2016-06-07T03:50:56.838Z",
+  "permissions": [
+    {
+      "_id": "5c8d0c505653de3985aa0ff",
+      "resourceName": "dashboard",
+      "resourceType": "menu",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d0c505653ee3935aa1ff",
+      "resourceName": "role",
+      "resourceType": "menu",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d0c505653de5985aa1fc",
+      "resourceName": "user",
+      "resourceType": "menu",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d0c505653de39c5bb1ff",
+      "resourceName": "resource",
+      "resourceType": "menu",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d7c505353ee3985aa1ff",
+      "resourceName": "permission",
+      "resourceType": "menu",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "roles-add",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "roles-list",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "users-add",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "users-list",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "users-edit",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "users-detail",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "resources-add",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "resources-list",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "permissions-add",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    },
+    {
+      "_id": "5c8d03505653de3f85aa1ff",
+      "resourceName": "permissions-list",
+      "resourceType": "route",
+      "isAllowed": true,
+      "isDisabled": false
+    }
+  ]
+}

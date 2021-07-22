@@ -1,0 +1,11 @@
+[
+  {
+      "_id": "60f84fc3b8d25800218ed43f",
+      "productName": "Black Berry",
+      "sku": "black-berry",
+      "cost": 10,
+      "price": 20,
+      "createdAt": "2021-07-21T16:48:03.718Z",
+      "updatedAt": "2021-07-21T16:48:03.718Z"
+  }
+]

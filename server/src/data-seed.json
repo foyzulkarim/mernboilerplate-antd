@@ -1,0 +1,143 @@
+{
+    "User": [
+        {
+            "firstName": "sakib",
+            "lastName": "hasan",
+            "username": "sk_hasan",
+            "email": "skhasan@gmail.com",
+            "address": "gulshan",
+            "phoneNumber": "01598223542",
+            "roleName": "Admin",
+            "password": "123"
+        },
+        {
+            "firstName": "tamim",
+            "lastName": "hasan",
+            "username": "tm_hasan",
+            "email": "tmhasan@gmail.com",
+            "address": "banani",
+            "phoneNumber": "01596223542",
+            "roleName": "Super Admin",
+            "password": "123"
+        },
+        {
+            "firstName": "papin",
+            "lastName": "hasan",
+            "username": "pp_hasan",
+            "email": "pphasan@gmail.com",
+            "address": "mohakhali",
+            "phoneNumber": "01598238543",
+            "roleName": "Super Admin",
+            "password": "123"
+        }
+    ],
+    "Product": [
+        {
+            "productName": "Loaf",
+            "sku": "soo300dvd",
+            "categoryName": "Bakery",
+            "cost": 50,
+            "regularPrice": 35
+        },
+        {
+            "productName": "Biscuit",
+            "sku": "seo300dvd",
+            "categoryName": "Bakery",
+            "cost": 40,
+            "regularPrice": 25
+        },
+        {
+            "productName": "Leg Roast",
+            "sku": "seg300dvd",
+            "categoryName": "Continental",
+            "cost": 200,
+            "regularPrice": 180
+        }
+    ],
+    "Customer": [
+        {
+            "customerName": "tamim",
+            "email": "tmhasan@gmail.com",
+            "contactNumber": "01598353542",
+            "address": "banani",
+            "area": "banani",
+            "state": "N/A",
+            "postcode": "1212",
+            "city": "Dhaka"
+        },
+        {
+            "customerName": "papin",
+            "email": "pphasan@gmail.com",
+            "contactNumber": "01598357542",
+            "address": "banani",
+            "area": "banani",
+            "state": "N/A",
+            "postcode": "1212",
+            "city": "Dhaka"
+        },
+        {
+            "customerName": "taskin",
+            "email": "tkhasan@gmail.com",
+            "contactNumber": "01508353542",
+            "address": "banani",
+            "area": "banani",
+            "state": "N/A",
+            "postcode": "1212",
+            "city": "Dhaka"
+        }
+    ],
+    "Role": [
+        {
+            "name": "Admin",
+            "isSuperAdmin": false,
+            "isAdmin": true,
+            "alias": "admin"
+        },
+        {
+            "name": "Super Admin",
+            "isSuperAdmin": true,
+            "isAdmin": false,
+            "alias": "admin"
+        },
+        {
+            "name": "User",
+            "isSuperAdmin": false,
+            "isAdmin": false,
+            "alias": "user"
+        }
+    ],
+    "Resource": [
+        {
+            "name": "dashboard",
+            "type": "menu"
+        },
+        {
+            "name": "customer-add",
+            "type": "submenu"
+        },
+        {
+            "name": "customer-list",
+            "type": "submenu"
+        }
+    ],
+    "Permission": [
+        {
+            "roleName": "Super Admin",
+            "resourceName": "dashboard",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "roleName": "Super Admin",
+            "resourceName": "user-add",
+            "isAllowed": true,
+            "isDisabled": false
+        },
+        {
+            "roleName": "Super Admin",
+            "resourceName": "user-list",
+            "isAllowed": true,
+            "isDisabled": false
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "60f878adc713027355fea5fd",
+    "collectionName": "products",
+    "searchText": "berry",
+    "fromDate": "2021-07-19T19:42:19.162Z",
+    "toDate": "2021-07-23T19:42:19.162Z",
+    "filterName": "berry",
+    "createdAt": "2021-07-21T19:42:37.052Z",
+    "updatedAt": "2021-07-21T19:42:37.052Z"
+  }
+]

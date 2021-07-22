@@ -1,0 +1,44 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start:pm2": "pm2 start ./src/server.js --watch",
+    "restart:pm2": "pm2 restart ./src/server.js",
+    "stop:pm2": "pm2 stop ./src/server.js",
+    "start": "nodemon ./src/server.js",
+    "db:up": "docker-compose -f ./db.yml up"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.3.0",
+    "helmet": "^4.6.0",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.2",
+    "nodemon": "^2.0.12",
+    "pino": "^6.0.0-rc.2",
+    "pino-http": "^5.5.0",
+    "pm2": "^5.1.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-plugin-security": "^1.4.0",
+    "jest": "^27.0.6",
+    "mongodb-memory-server": "^7.3.1",
+    "supertest": "^6.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
