@@ -4,6 +4,8 @@
 
 In this repository I will keep adding the production best practices we should follow in a MERN (MongoDB, Express.js, React.js, and Node.js) project.
 
+![Product List Page](./docs/images/product-list-search-result.png)
+
 ## Technology stack
 
 As the name suggests, this repository is built on top of Express.js and React.js, however in the implementation detail, we will find other supporting technologies as well.

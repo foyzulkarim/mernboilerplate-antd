@@ -13,7 +13,7 @@ function App() {
     <Layout>
       <Header>
         <Space>
-          <div className="logo" ><h1 className='header'>Feature flag</h1></div>
+          <div className="logo" ><h1 className='header'>RBAC MERN Boilerplate</h1></div>
           {auth.isAuthenticated && auth.profile && <h2 className='header'>{auth.profile.name}</h2>}
           {auth.isAuthenticated && <Button onClick={() => { handleAuth(false) }}>Log out</Button>}
         </Space>
