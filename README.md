@@ -150,6 +150,7 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 | ------- | ----------------- | ---------------------------------------------------- |
 | root    | `npm run build`   | Builds the containers                                |
 | root    | `npm run start`   | Start the projects and database in docker containers |
+|root|`docker exec -it appserver  /bin/sh` then `npm run db:seed`|Executes seed products inside container|
 | server  | `npm i`           | Install server side dependencies                     |
 | server  | `npm run db:up`   | Start the database in a docker container             |
 | server  | `npm run db:seed` | Seed products data into database                     |

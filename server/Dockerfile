@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:lts-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
 ENV NODE_ENV=production
