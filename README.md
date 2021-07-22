@@ -36,7 +36,7 @@ This project can be run basically in two ways. One is using docker, other way is
 
 ##### Prerequisites
 
-[x] Docker : To run `docker-compose` command
+- [x] Docker : To run `docker-compose` command
 
 Go to the root of the repository and execute `npm start`. This will spin up the server and client containers along with the MongoDB instance inside of Docker environment.
 
@@ -49,8 +49,10 @@ npm start
 
 ##### Prerequisites
 
-[x] Node.js : To run npm packages
-[x] Docker : To run MongoDB database
+- [x] Node.js : To run npm packages
+- [x] Docker : To run MongoDB database
+
+##### Steps
 
 - To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
 - Create a `.env` file inside of the `server` directory. Add the below entries
