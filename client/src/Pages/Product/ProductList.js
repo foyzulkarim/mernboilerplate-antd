@@ -39,7 +39,7 @@ const columns = [
     {
         title: "Action",
         key: "action",
-        
+
         render: (obj) => (
             <Space size="middle">
                 <AppProtectedComponent
@@ -123,26 +123,21 @@ const ProductList = () => {
                 console.log(f);
                 setFilterName(f.filterName);
                 setFilterId(f._id);
-                setFromDate(moment(f.fromDate, dateFormat));
-                setToDate(moment(f.toDate, dateFormat));
-                setSearchText(f.searchText);
+                if (f.fromDate) {
+                    setFromDate(moment(f.fromDate, dateFormat));
+                }
+                if (f.toDate) {
+                    setToDate(moment(f.toDate, dateFormat));
+                }
+                if (f.searchText) {
+                    setSearchText(f.searchText);
+                }
                 console.log(fromDate, toDate, searchText);
             }
             else clearFilter();
         }
         else clearFilter();
     }
-
-    // useEffect(() => {
-    //     const search = async () => {
-    //         console.log(fromDate, toDate, searchText);
-    //         setIsLoading(true);
-    //         //const products = await API.searchProducts(fromDate, toDate, searchText);
-    //         //setData(products);
-    //         setIsLoading(false);
-    //     }
-    //     search();
-    // }, [fromDate, toDate, searchText]);
 
     const InputFilter = () => {
         return (
@@ -157,7 +152,7 @@ const ProductList = () => {
         );
     }
 
-    const reloadFilters = async () => {        
+    const reloadFilters = async () => {
         const fs = await API.searchFilters();
         setFilters(fs);
     }
@@ -165,7 +160,7 @@ const ProductList = () => {
 
     useEffect(() => {
         const load = async () => {
-            setIsLoading(true);            
+            setIsLoading(true);
             const products = await API.searchProducts();
             console.log(products);
             setData(products);
@@ -178,7 +173,7 @@ const ProductList = () => {
     useEffect(() => {
         const load = async () => {
             setIsLoading(true);
-            await reloadFilters();           
+            await reloadFilters();
             setIsLoading(false);
         }
 

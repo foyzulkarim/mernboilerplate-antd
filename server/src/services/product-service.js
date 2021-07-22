@@ -63,4 +63,14 @@ const search = async (payload) => {
     return viewModels;
 }
 
-module.exports = { getAll, save, update, deleteById, getById, search };
+const upsert = async (product) => {
+    const item = await Model.findOne(product);
+    if (item == null) {
+        const model = await Model.createNew(product);
+        const savedItem = await model.save();
+        return savedItem._id;
+    }
+    return 'Already exists';
+}
+
+module.exports = { getAll, save, update, deleteById, getById, search, upsert };

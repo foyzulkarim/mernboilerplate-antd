@@ -44,15 +44,21 @@ npm start
 [x] Node.js : To run npm packages 
 [x] Docker : To run MongoDB database
 
-To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
-#### Server
+- To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
+- Create a `.env` file inside of the `server` directory. Add the below entries
+    ```
+    DB_HOST=localhost
+    DB_PORT=27017
+    DB_NAME=appdb
+    ```
+#### Server commands
 ```sh
 cd server
 npm i
 npm run db:up
 npm start
 ```
-#### Client
+#### Client commands
 ```sh
 cd client
 npm i
@@ -115,6 +121,7 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 |root|`npm run start`|Start the projects and database in docker containers|
 |server|`npm i`           | Install server side dependencies         |
 |server|`npm run db:up`   | Start the database in a docker container|
+|server|`npm run db:seed` | Seed products data into database|
 |server|`npm run test`|Execute tests using `jest`|
 |client|`npm i`|Install client side dependencies|
 |client|`npm run start`| Start the react app|

@@ -9,7 +9,8 @@
     "restart:pm2": "pm2 restart ./src/server.js",
     "stop:pm2": "pm2 stop ./src/server.js",
     "start": "nodemon ./src/server.js",
-    "db:up": "docker-compose -f ./db.yml up"
+    "db:up": "docker-compose -f ./db.yml up",
+    "db:seed": "node ./setup/seed-products.js"
   },
   "keywords": [],
   "author": "",
