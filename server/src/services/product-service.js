@@ -16,14 +16,15 @@ const save = async (product) => {
 };
 
 const update = async (product) => {
-    const id = product.id;
+    const id = product._id;
     let model = await Model.findById(id);
     if (model) {
-        model.name = product.name;
+        model.productName = product.productName;
         model.cost = product.cost;
         model.sku = product.sku;
+        model.price = product.price;
         model.updatedAt = Date.now().toString();
-        model.save();
+        await model.save();
         return model._id;
     }
     throw new NotFound("Product not found by the id: " + id);
@@ -45,20 +46,21 @@ const getById = async (id) => {
     return viewModel;
 };
 
-const search = async (payload) => {    
+const search = async (payload) => {
     let dateQuery = {};
     if (payload.fromDate && payload.toDate) {
         dateQuery = { updatedAt: { $gte: payload.fromDate, $lte: payload.toDate } };
     }
 
     let searchQuery = {};
-    if (payload.searchText) {        
+    if (payload.searchText) {
         searchQuery = { productName: { '$regex': payload.searchText, '$options': 'i' } };
     }
 
     let query = { $and: [dateQuery, searchQuery] };
 
-    const items = await Model.find(query);    
+    const items = await Model.find(query)
+        .limit(10).sort({ updatedAt: -1 });
     let viewModels = items.map((item) => ProductViewModel.convert(item));
     return viewModels;
 }

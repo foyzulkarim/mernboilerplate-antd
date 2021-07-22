@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage=true",
     "start:pm2": "pm2 start ./src/server.js --watch",
     "restart:pm2": "pm2 restart ./src/server.js",
     "stop:pm2": "pm2 stop ./src/server.js",

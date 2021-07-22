@@ -136,7 +136,7 @@ Sentry.init({
 });
 ```
 
-## Test server api
+## Test `server` API
 
 To view the api, open your browser and visit `http://localhost:5000/api-docs`
 Ideally we should add all of the API endpoints into the swagger, but for the demo purpose, we only added Products API endpoint.  
@@ -156,6 +156,21 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 | client  | `npm run start`   | Start the react app                                  |
 | client  | `npm run build`   | Build the react app in production mode               |
 | client  | `npm run test`    | Execute tests using `Testing Library`                |
+
+
+## Types of testing
+In this repository, we have included both unit testing and integration testing. For now, the code coverage is very low, but we are working on it to make it more than 90% somewhere in the future
+
+### Client side
+- We incorporated only unit tests in client side, and mock all the externals dependencies like `localStorage` and `axios`.
+
+To run the tests, we can run `npm run test` command.
+
+### Server side
+- Integration testing: We have integrated the `Jest` as the testing library, and we have added `supertest` and `mongodb-memory-server` packages to make the integration testing easier.
+- Unit testing: We have used `Jest` to test the service layers and mock the external dependencies like `MongoDB`. 
+
+To run the tests, we can run `npm run test` command.
 
 ## License
 

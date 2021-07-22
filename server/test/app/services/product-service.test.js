@@ -11,7 +11,7 @@ afterAll(async () => await dbHandler.closeDatabase());
 /**
  * Product test suite.
  */
-describe('product', () => {
+describe('Product', () => {
 
   // create and search product test
   it('can be created and searched successfully', async () => {
@@ -28,13 +28,13 @@ describe('product', () => {
     const productId = await productService.save(productComplete);
     expect(productId).toBeDefined();
 
-    const product = await productService.get(productId);
+    const product = await productService.getById(productId);
     expect(product.productName).toBe('iPhone 11');
 
     product.productName = 'iPhone X';
     await productService.update(product);
 
-    const updatedProduct = await productService.get(productId);
+    const updatedProduct = await productService.getById(productId);
     expect(updatedProduct.productName).toBe('iPhone X');
   });
 
@@ -49,3 +49,4 @@ describe('product', () => {
     createdAt: "2020-01-01",
     updatedAt: "2020-04-01"
   };
+});

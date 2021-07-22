@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
+// import * as Sentry from "@sentry/react"; // Uncommnet to enable Sentry 
+// import { Integrations } from "@sentry/tracing"; // Uncomment to enable Sentry
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './contexts/AuthContext';
-import { Config } from "./env.config";
+// import { Config } from "./env.config"; // Uncomment to enable Sentry
 
-Sentry.init({
-  dsn: Config.dsn,
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+// NOTE: Uncomment the below to enable Sentry error reporting
+// Sentry.init({
+//   dsn: Config.dsn,
+//   integrations: [new Integrations.BrowserTracing()],
+//   tracesSampleRate: 1.0,
+// });
 
 ReactDOM.render(
   <React.StrictMode>
