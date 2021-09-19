@@ -2,10 +2,11 @@ const Joi = require("joi");
 
 const schema = Joi.object().keys({
     productName: Joi.string().min(3).max(30).required(),
+    description: Joi.string().min(3).max(30).required(),
     sku: Joi.string().min(3).max(30).required(),    
     cost: Joi.number().required(),
     price: Joi.number().required(),    
-});
+}).unknown(true);
 
 const validate = (data) => {
     const result = schema.validate(data);
