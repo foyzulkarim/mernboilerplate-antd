@@ -6,7 +6,8 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { rule, addRule, updateRule, removeRule } from './service';
+import { getProducts, addRule, updateRule, removeRule } from './service';
+import { request } from 'umi';
 
 /**
  * 添加节点
@@ -178,7 +179,7 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="_id"
         search={{
-          labelWidth: 120,
+          labelWidth: 'auto',
         }}
         toolBarRender={() => [
           <Button
@@ -189,9 +190,17 @@ const TableList = () => {
             }}
           >
             <PlusOutlined /> New
-          </Button>,          
+          </Button>,
         ]}
-        request={rule}
+        request={getProducts}
+        // request={async (params = {}, sort, filter) => {
+        //   console.log(params, sort, filter);
+        //   let r = await request('https://proapi.azurewebsites.net/github/issues', {
+        //     params,
+        //   });
+        //   console.log(r);
+        //   return r;
+        // }}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {

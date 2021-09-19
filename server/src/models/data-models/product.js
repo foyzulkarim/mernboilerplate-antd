@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema({
     sku: { type: String, required: true },    
     cost: { type: Number, required: true },
     price: { type: Number, required: true },
+    description: { type: String, required: true },
+    manufacturingDate: { type: Date, required: true },
+    expiryDate: { type: Date, required: true },
+    size: { type: Number, required: true },
     createdAt: { type: Date, required: true },
     updatedAt: { type: Date, required: true },
 });
