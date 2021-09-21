@@ -9,12 +9,15 @@ import ProForm, {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest } from 'umi';
+import { useRequest, useModel } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import { submitForm } from './service';
 import styles from './style.less';
 
 const BasicForm = () => {
+  const { initialState, setInitialState } = useModel('@@initialState');
+  console.log(initialState);
+
   const { run } = useRequest(submitForm, {
     manual: true,
     onSuccess: () => {
@@ -86,18 +89,10 @@ const BasicForm = () => {
             ]}
             placeholder="Please enter product description"
           />
-          <ProFormDatePicker
-            width="md"
-            name="manufacturingDate"
-            label="Manufacturing date"
-          />
+          <ProFormDatePicker width="md" name="manufacturingDate" label="Manufacturing date" />
 
           <ProFormDigit
-            label={
-              <span>
-                Cost
-              </span>
-            }
+            label={<span>Cost</span>}
             name="cost"
             placeholder="Please enter product cost"
             min={0}
@@ -108,11 +103,7 @@ const BasicForm = () => {
           />
 
           <ProFormDigit
-            label={
-              <span>
-                Price
-              </span>
-            }
+            label={<span>Price</span>}
             name="price"
             placeholder="Please enter product price"
             min={0}

@@ -7,7 +7,6 @@ import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
 import { getProducts, addRule, updateRule, removeRule } from './service';
-import { request } from 'umi';
 
 /**
  * 添加节点

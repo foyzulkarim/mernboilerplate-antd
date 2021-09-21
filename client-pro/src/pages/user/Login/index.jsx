@@ -37,7 +37,7 @@ const Login = () => {
     const userInfo = await initialState?.fetchUserInfo?.();
 
     if (userInfo) {
-      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
+      await setInitialState((s) => ({ ...s, currentUser: userInfo, data: { value: new Date(), key: 'X' } }));
     }
   };
 

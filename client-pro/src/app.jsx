@@ -32,7 +32,9 @@ export async function getInitialState() {
     return {
       fetchUserInfo,
       currentUser,
-      settings: {},
+      settings: {
+        title: 'my amazing title',
+      },
     };
   }
 
