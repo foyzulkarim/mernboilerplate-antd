@@ -1,17 +1,25 @@
 [
   {
     "productName": "Loaf",
-    "sku": "soo300dvd",   
+    "sku": "soo300dvd",
     "cost": 50,
     "price": 35,
+    "description": "A description",
+    "manufacturingDate": "2021-01-01T00:00:00.000Z",
+    "expiryDate": "2021-01-01T00:00:00.000Z",
+    "size": 1,
     "createdAt": "2021-01-01T00:00:00.000Z",
     "updatedAt": "2021-01-01T00:00:00.000Z"
   },
   {
     "productName": "Biscuit",
-    "sku": "seo300dvd",   
+    "sku": "seo300dvd",
     "cost": 40,
     "price": 25,
+    "description": "A description",
+    "manufacturingDate": "2021-01-01T00:00:00.000Z",
+    "expiryDate": "2021-01-01T00:00:00.000Z",
+    "size": 1,
     "createdAt": "2021-02-01T00:00:00.000Z",
     "updatedAt": "2021-02-01T00:00:00.000Z"
   },
@@ -20,14 +28,22 @@
     "sku": "seg300dvd",
     "cost": 200,
     "price": 180,
+    "description": "A description",
+    "manufacturingDate": "2021-01-01T00:00:00.000Z",
+    "expiryDate": "2021-01-01T00:00:00.000Z",
+    "size": 1,
     "createdAt": "2021-03-01T00:00:00.000Z",
-    "updatedAt": "2021-03-01T00:00:00.000Z"    
+    "updatedAt": "2021-03-01T00:00:00.000Z"
   },
   {
     "productName": "Orange",
     "sku": "seg300dve",
     "cost": 20,
     "price": 180,
+    "description": "A description",
+    "manufacturingDate": "2021-01-01T00:00:00.000Z",
+    "expiryDate": "2021-01-01T00:00:00.000Z",
+    "size": 1,
     "createdAt": "2021-04-01T00:00:00.000Z",
     "updatedAt": "2021-04-01T00:00:00.000Z"
   },
@@ -36,6 +52,10 @@
     "sku": "seg300dvf",
     "cost": 100,
     "price": 180,
+    "description": "A description",
+    "manufacturingDate": "2021-01-01T00:00:00.000Z",
+    "expiryDate": "2021-01-01T00:00:00.000Z",
+    "size": 1,
     "createdAt": "2021-05-01T00:00:00.000Z",
     "updatedAt": "2021-05-01T00:00:00.000Z"
   }
