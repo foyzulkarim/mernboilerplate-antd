@@ -5,7 +5,7 @@ import { request } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
 
 export async function currentUser(options) {
-  return request('/api/currentUser', {
+  return request('http://localhost:5000/api/auth/currentUser', {
     method: 'GET',
     ...(options || {}),
   });
@@ -21,7 +21,7 @@ export async function outLogin(options) {
 /** 登录接口 POST /api/login/account */
 
 export async function login(body, options) {
-  return request('/api/login/account', {
+  return request('http://localhost:5000/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

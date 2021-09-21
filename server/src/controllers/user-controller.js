@@ -66,7 +66,7 @@ const deleteHandler = async (req, res, next) => {
 };
 
 router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validators.userSchemaValidate), postHandler);
+router.post("/register", handleValidation(validators.userSchemaValidate), postHandler);
 router.put("/:id", putHandler);
 router.get("/", getHandler);
 router.delete("/:id", deleteHandler);
