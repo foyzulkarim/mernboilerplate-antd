@@ -3,6 +3,16 @@
 /* eslint-disable */
 import { request } from 'umi';
 
+// request.interceptors.use((url, options) => {
+//   console.log('url', url);
+//   console.log('options', options);
+//   return {
+//     url: `${url}&interceptors=yes`,
+//     options: { ...options, interceptors: true },
+//   };
+// });
+console.log('request', request);
+
 /** 获取规则列表 GET /api/rule */
 export async function getProducts(params, options) {
   console.log('GET /api/product', params, options);

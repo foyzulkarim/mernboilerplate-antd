@@ -15,6 +15,8 @@ export const initialStateConfig = {
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 
+import { extend } from 'umi-request';
+
 export async function getInitialState() {
   const fetchUserInfo = async () => {
     try {
@@ -27,6 +29,28 @@ export async function getInitialState() {
     return undefined;
   }; // 如果是登录页面，不执行
 
+  const request = extend({
+    // prefix: '/api/v1',
+    timeout: 1000,
+    headers: {
+      'special-header': 'amazing123',
+    },
+  });
+
+  request.interceptors.request.use((url, options) => {
+    const token = localStorage.getItem('token');
+
+    options.headers['special-agent-3'] = `${token} ${new Date()} `;
+    if(token){
+      options.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return {
+      url: `${url}`,
+      options: { ...options, interceptors: true },
+    };
+  });
+
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
     return {
@@ -34,10 +58,14 @@ export async function getInitialState() {
       currentUser,
       settings: {
         title: 'my amazing title',
+        now: new Date().toLocaleString(),
       },
     };
   }
-
+  console.log(
+    'why i am i here? is is just because the route is user/login?',
+    history.location.pathname,
+  );
   return {
     fetchUserInfo,
     settings: {},

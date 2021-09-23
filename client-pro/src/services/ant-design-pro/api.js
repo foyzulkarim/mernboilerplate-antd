@@ -1,10 +1,24 @@
 // @ts-ignore
 
 /* eslint-disable */
-import { request } from 'umi';
+import { useModel } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
+//console.log(request);
+
+import request from 'umi-request';
+
+// request.interceptors.request.use((url, options) => {
+//   const token = localStorage.getItem('token');
+
+//   options.headers['special-agent-2'] = `${token} ${new Date()} `;
+//   return {
+//     url: `${url}`,
+//     options: { ...options, interceptors: true },
+//   };
+// });
 
 export async function currentUser(options) {
+
   return request('http://localhost:5000/api/auth/currentUser', {
     method: 'GET',
     ...(options || {}),
@@ -13,6 +27,7 @@ export async function currentUser(options) {
 /** 退出登录接口 POST /api/login/outLogin */
 
 export async function outLogin(options) {
+  localStorage.removeItem('token');
   return request('/api/login/outLogin', {
     method: 'POST',
     ...(options || {}),

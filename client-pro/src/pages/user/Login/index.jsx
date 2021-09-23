@@ -32,12 +32,22 @@ const Login = () => {
   const [type, setType] = useState('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
+  const { auth, setAuth } = useModel('getAuthState');
 
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
+  console.log(['Login', initialState, 'user', auth.user, auth.token]);
 
-    if (userInfo) {
-      await setInitialState((s) => ({ ...s, currentUser: userInfo, data: { value: new Date(), key: 'X' } }));
+  const fetchUserInfo = async (msg) => {
+    // const userInfo = await initialState?.fetchUserInfo?.();
+
+    if (msg.userInfo) {
+      await setInitialState((s) => {
+        console.log('Login>fetchUserInfo>setInitialState', s, auth.user, auth.token);
+        return {
+          ...s,
+          currentUser: msg.userInfo,
+          data: { value: new Date().toDateString(), key: 'X' },
+        };
+      });
     }
   };
 
@@ -47,14 +57,16 @@ const Login = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
-
+      console.log('Login>handleSubmit>response', msg);
+      setAuth({ user: msg.userInfo, token: msg.accessToken, isAuthenticated: true });
+      localStorage.setItem('token', msg.accessToken);
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
           defaultMessage: '登录成功！',
         });
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+        await fetchUserInfo(msg);
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
         if (!history) return;
