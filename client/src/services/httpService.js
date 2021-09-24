@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BaseUrl = "http://localhost:5000/api";
+console.log('envs', process.env);
+
+const BaseUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API_URL : "http://localhost:5000/api";
 
 export const getUsers = async () => {
     const response = await axios.get(BaseUrl + "/users");
