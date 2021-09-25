@@ -35,8 +35,11 @@ services:
     networks:
       - mydockernet
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=dev
       - REACT_APP_API_URL=http://apiserver:5000
+    volumes: # For webpack dev server to use our local files
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - 3000:3000
     depends_on:

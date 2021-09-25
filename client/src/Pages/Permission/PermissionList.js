@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Table, Space, Divider, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
-import { getPermissions } from "../../services/httpService";
+import Permission from "../../models/Permission";
 const columns = [
     {
         title: "Name",
@@ -36,7 +36,7 @@ const PermissionList = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const response = await getPermissions();
+                const response = await Permission.all();
                 console.log("response", response);
                 setData(response);
             } catch (error) {

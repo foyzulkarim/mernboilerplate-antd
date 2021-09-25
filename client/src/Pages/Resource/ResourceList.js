@@ -3,14 +3,13 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Table, Space, Divider, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
-import { getResources } from "../../services/httpService";
+import Resource from "../../models/Resource";
 const columns = [
     {
         title: "Name",
         // dataIndex: 'name',
         key: "name",
         render: (obj) => {
-            console.log(obj);
             return <Link to={`/resources/list/${obj.key}`}>{obj.name}</Link>;
         },
     },
@@ -37,8 +36,7 @@ const ResourceList = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const response = await getResources();
-                console.log("response", response);
+                const response = await Resource.all();
                 setData(response);
             } catch (error) {
                 console.log(error);

@@ -5,7 +5,8 @@ import { SearchOutlined, SaveOutlined, DeleteOutlined } from '@ant-design/icons'
 import { AppProtectedComponent } from "./../../components/AppProtectedComponent";
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import * as API from "../../services/httpService";
+import Product from "../../models/Product";
+import Filter from "../../models/Filter";
 
 
 const columns = [
@@ -79,12 +80,11 @@ const ProductList = () => {
 
 
     const searchProducts = async () => {
-        const products = await API.searchProducts(fromDate, toDate, searchText);
+        const products = await Product.search(fromDate, toDate, searchText);
         setData(products);
     }
 
     const onDateChange = (values) => {
-        console.log(values);
         if (values) {
             setFromDate(values[0]);
             setToDate(values[1]);
@@ -98,14 +98,14 @@ const ProductList = () => {
     const saveFilter = async () => {
         console.log(filterName, filterId);
         const payload = { collectionName: 'products', searchText, fromDate, toDate, id: filterId, filterName };
-        filterId ? await API.updateFilter(payload) : await API.addFilter(payload);
+        filterId ? await Filter.update(payload) : await Filter.create(payload);
         message.success('Filter is saved');
         clearFilter();
         reloadFilters();
     }
 
     const deleteSelectedFilter = async () => {
-        await API.deleteFilter(filterId);
+        await Filter.delete(filterId);
         clearFilter();
         reloadFilters();
     }
@@ -153,7 +153,7 @@ const ProductList = () => {
     }
 
     const reloadFilters = async () => {
-        const fs = await API.searchFilters();
+        const fs = await Filter.search();
         setFilters(fs);
     }
 
@@ -161,7 +161,7 @@ const ProductList = () => {
     useEffect(() => {
         const load = async () => {
             setIsLoading(true);
-            const products = await API.searchProducts();
+            const products = await Product.search();
             console.log(products);
             setData(products);
             setIsLoading(false);

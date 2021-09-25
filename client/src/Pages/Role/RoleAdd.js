@@ -10,7 +10,7 @@ import {
     message
 } from "antd";
 
-import * as API from "../../services/httpService";
+import Role from "../../models/Role";
 
 const layout = {
     labelCol: {
@@ -26,8 +26,12 @@ const RoleAdd = () => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const handleSubmit = async (values) => {
-        await API.addRole({ name: values.name, alias: values.alias, isAdmin: isAdmin });
-        message.success('Role is saved');
+        try {
+            await Role.create({ name: values.name, alias: values.alias, isAdmin: isAdmin });
+            message.success('Role is saved');
+        } catch(error) {
+            console.log(error);
+        }
         form.resetFields();
     };
 

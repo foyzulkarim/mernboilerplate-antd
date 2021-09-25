@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Table, Tag, Space, Divider, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../services/httpService";
+import User from "../../models/User";
 
 const columns = [
     {
@@ -67,7 +67,7 @@ const UserList = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const response = await getUsers();
+                const response = await User.all();
                 console.log("response", response);
                 setData(response);
             } catch (error) {

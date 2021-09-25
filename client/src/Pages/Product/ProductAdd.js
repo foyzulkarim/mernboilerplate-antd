@@ -1,8 +1,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { Form, Input, Button, PageHeader, Divider, InputNumber, message } from "antd";
-
-import * as API from "../../services/httpService";
+import Product from "../../models/Product";
 
 const layout = {
     labelCol: {
@@ -16,7 +15,7 @@ const layout = {
 const ProductAdd = () => {
     const [form] = Form.useForm();
     const handleSubmit = async (values) => {
-        await API.addProduct(values);
+        await Product.create(values);
         message.success('Product is saved');        
         form.resetFields();       
     };

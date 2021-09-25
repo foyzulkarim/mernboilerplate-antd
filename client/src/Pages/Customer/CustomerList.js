@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Table, Tag, Space, Button } from "antd";
 import { Link } from "react-router-dom";
 import { AppProtectedComponent } from "./../../components/AppProtectedComponent";
-import { getCustomers } from "../../services/httpService";
+import Customer from "../../models/Customer";
 
 const columns = [
     {
@@ -75,7 +75,7 @@ const CustomerList = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const response = await getCustomers();
+                const response = await Customer.all();
                 setData(response);
             } catch (error) {
                 console.log(error);

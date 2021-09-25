@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Table, Space, Divider, DatePicker, Input, PageHeader } from "antd";
 import { Link } from "react-router-dom";
-import * as API from "../../services/httpService";
+import Role from "../../models/Role";
 const columns = [
     {
         title: "Name",
@@ -36,8 +36,7 @@ const RoleList = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const response = await API.searchRoles();
-                console.log("response", response);
+                const response = await Role.search();
                 setData(response);
             } catch (error) {
                 console.log(error);
