@@ -28,7 +28,11 @@ export async function getInitialState() {
 
     return undefined;
   }; // 如果是登录页面，不执行
-
+  console.log(
+    'App>getInitialState>response',
+    localStorage.getItem('token'),
+    localStorage.getItem('userInfo'),
+  );
   const request = extend({
     // prefix: '/api/v1',
     timeout: 1000,
@@ -40,8 +44,9 @@ export async function getInitialState() {
   request.interceptors.request.use((url, options) => {
     const token = localStorage.getItem('token');
 
-    options.headers['special-agent-3'] = `${token} ${new Date()} `;
-    if(token){
+    options.headers['special-agent-3'] = `${new Date()} `;
+
+    if (token) {
       options.headers['Authorization'] = `Bearer ${token}`;
     }
 
@@ -51,10 +56,17 @@ export async function getInitialState() {
     };
   });
 
-  if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
+  const userStr = localStorage.getItem('userInfo');
+
+  if (userStr) {
+    // const currentUser = await fetchUserInfo();
+    let currentUser = {};
+    if (userStr && userStr.length > 0) {
+      currentUser = JSON.parse(userStr);
+    }
+
     return {
-      fetchUserInfo,
+      // fetchUserInfo,
       currentUser,
       settings: {
         title: 'my amazing title',
@@ -62,12 +74,13 @@ export async function getInitialState() {
       },
     };
   }
+
   console.log(
     'why i am i here? is is just because the route is user/login?',
     history.location.pathname,
   );
   return {
-    fetchUserInfo,
+    // fetchUserInfo,
     settings: {},
   };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -82,6 +95,10 @@ export const layout = ({ initialState }) => {
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
+      console.log('onPageChange', location.pathname, initialState);
+      if (initialState.currentUser && location.pathname === loginPath) {
+        history.push('/');
+      }
 
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);

@@ -34,8 +34,6 @@ const Login = () => {
   const intl = useIntl();
   const { auth, setAuth } = useModel('getAuthState');
 
-  console.log(['Login', initialState, 'user', auth.user, auth.token]);
-
   const fetchUserInfo = async (msg) => {
     // const userInfo = await initialState?.fetchUserInfo?.();
 
@@ -60,6 +58,8 @@ const Login = () => {
       console.log('Login>handleSubmit>response', msg);
       setAuth({ user: msg.userInfo, token: msg.accessToken, isAuthenticated: true });
       localStorage.setItem('token', msg.accessToken);
+      localStorage.setItem('userInfo', JSON.stringify(msg.userInfo));
+
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
