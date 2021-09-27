@@ -16,9 +16,9 @@ import styles from './style.less';
 
 const BasicForm = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  console.log('ProductForm', initialState);
-  const { user } = useModel('getAuthState');
-  console.log('Product Entry > user', user);
+  console.log('ProductForm > initialState', initialState);
+  const { auth } = useModel('getAuthState');
+  console.log('Product Entry > auth', auth);
 
   const { run } = useRequest(submitForm, {
     manual: true,

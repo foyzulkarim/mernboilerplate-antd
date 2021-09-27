@@ -32,16 +32,18 @@ const Login = () => {
   const [type, setType] = useState('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
-  const { auth, setAuth } = useModel('getAuthState');
+  const { auth, setAuthentication } = useModel('getAuthState');
 
-  const fetchUserInfo = async (msg) => {
+  const setUserInfo = async (msg) => {
     // const userInfo = await initialState?.fetchUserInfo?.();
 
     if (msg.userInfo) {
-      await setInitialState((s) => {
-        console.log('Login>fetchUserInfo>setInitialState', s, auth.user, auth.token);
+      await setInitialState((oldInitialState) => {
+        const data = { userInfo: msg.userInfo, token: msg.accessToken, isAuthenticated: true };
+        setAuthentication(data);
+        initialState?.initialize?.(data);
         return {
-          ...s,
+          ...oldInitialState,
           currentUser: msg.userInfo,
           data: { value: new Date().toDateString(), key: 'X' },
         };
@@ -55,10 +57,7 @@ const Login = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
-      console.log('Login>handleSubmit>response', msg);
-      setAuth({ user: msg.userInfo, token: msg.accessToken, isAuthenticated: true });
-      localStorage.setItem('token', msg.accessToken);
-      localStorage.setItem('userInfo', JSON.stringify(msg.userInfo));
+      console.log('1.Login>handleSubmit>response', msg);
 
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = intl.formatMessage({
@@ -66,7 +65,8 @@ const Login = () => {
           defaultMessage: '登录成功！',
         });
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo(msg);
+
+        await setUserInfo(msg);
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
         if (!history) return;

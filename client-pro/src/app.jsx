@@ -1,5 +1,5 @@
 import { PageLoading } from '@ant-design/pro-layout';
-import { history, Link } from 'umi';
+import { history, Link, useModel } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
@@ -18,61 +18,43 @@ export const initialStateConfig = {
 import { extend } from 'umi-request';
 
 export async function getInitialState() {
-  const fetchUserInfo = async () => {
-    try {
-      const msg = await queryCurrentUser();
-      return msg.data;
-    } catch (error) {
-      history.push(loginPath);
-    }
+  console.log('getInitialState is called');
 
-    return undefined;
-  }; // 如果是登录页面，不执行
-  console.log(
-    'App>getInitialState>response',
-    localStorage.getItem('token'),
-    localStorage.getItem('userInfo'),
-  );
-  const request = extend({
-    // prefix: '/api/v1',
-    timeout: 1000,
-    headers: {
-      'special-header': 'amazing123',
-    },
-  });
+  const initialize = (auth) => {
+    console.log('getInitialState is called, auth:', auth);
+    const request = extend({
+      // prefix: '/api/v1',
+      timeout: 1000,
+    });
 
-  request.interceptors.request.use((url, options) => {
-    const token = localStorage.getItem('token');
+    request.interceptors.request.use((url, options) => {
+      const token = auth.token;
 
-    options.headers['special-agent-3'] = `${new Date()} `;
+      options.headers['rbac-client-time'] = `${new Date()} `;
 
-    if (token) {
-      options.headers['Authorization'] = `Bearer ${token}`;
-    }
+      if (token) {
+        options.headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      return {
+        url: `${url}`,
+        options: { ...options, interceptors: true },
+      };
+    });
 
     return {
-      url: `${url}`,
-      options: { ...options, interceptors: true },
-    };
-  });
-
-  const userStr = localStorage.getItem('userInfo');
-
-  if (userStr) {
-    // const currentUser = await fetchUserInfo();
-    let currentUser = {};
-    if (userStr && userStr.length > 0) {
-      currentUser = JSON.parse(userStr);
-    }
-
-    return {
-      // fetchUserInfo,
-      currentUser,
+      initialize,
+      currentUser: auth.userInfo,
       settings: {
         title: 'my amazing title',
         now: new Date().toLocaleString(),
       },
     };
+  };
+
+  let authStr = localStorage.getItem('auth');
+  if (authStr && JSON.parse(authStr)) {
+    return initialize(JSON.parse(authStr));
   }
 
   console.log(
@@ -81,6 +63,7 @@ export async function getInitialState() {
   );
   return {
     // fetchUserInfo,
+    initialize,
     settings: {},
   };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -96,7 +79,7 @@ export const layout = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
       console.log('onPageChange', location.pathname, initialState);
-      if (initialState.currentUser && location.pathname === loginPath) {
+      if (initialState && initialState.currentUser && location.pathname === loginPath) {
         history.push('/');
       }
 
