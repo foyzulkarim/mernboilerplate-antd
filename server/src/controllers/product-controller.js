@@ -17,7 +17,12 @@ const router = express.Router();
 const getHandler = async (req, res, next) => {
     try {
         const items = await getAll();
-        res.status(200).send(items);
+        const result = {
+            data: items,
+            total: items.length,
+            success: true,            
+          };
+        res.status(200).send(result);
     } catch (error) {
         return next(error, req, res);
     }

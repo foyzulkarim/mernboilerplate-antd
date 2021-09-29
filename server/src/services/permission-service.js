@@ -42,4 +42,10 @@ const getById = async (id) => {
     return viewModel;
 };
 
-module.exports = { getAll, save, update, deleteById, getById };
+const search = async (searchRequest) => {
+    const items = await Model.find(searchRequest);
+    let viewModels = items.map(item => PermissionViewModel.convert(item));
+    return viewModels;
+}
+
+module.exports = { getAll, save, update, deleteById, getById, search };
