@@ -34,6 +34,8 @@ export async function getInitialState() {
 
       if (token) {
         options.headers['Authorization'] = `Bearer ${token}`;
+      } else {
+        options.headers['Authorization'] = null;
       }
 
       return {

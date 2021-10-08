@@ -7,6 +7,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 import { outLogin } from '@/services/ant-design-pro/api';
 
+
 /**
  * 退出登录，并且将当前的 url 保存
  */
@@ -27,12 +28,23 @@ const loginOut = async () => {
 
 const AvatarDropdown = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const { auth, setAuthentication } = useModel('getAuthState');
   const onMenuClick = useCallback(
     (event) => {
       const { key } = event;
 
       if (key === 'logout') {
-        setInitialState((s) => ({ ...s, currentUser: undefined }));
+        // setInitialState((s) => ({ ...s, currentUser: undefined }));
+        setInitialState((oldInitialState) => {
+          const data = { userInfo: null, token: null, isAuthenticated: false };
+          setAuthentication(data);
+          initialState?.initialize?.(data);
+          return {
+            ...oldInitialState,
+            currentUser: null,
+            data: { value: new Date().toDateString(), key: 'X' },
+          };
+        });
         loginOut();
         return;
       }

@@ -16,12 +16,13 @@ const router = express.Router();
 
 const getHandler = async (req, res, next) => {
     try {
+        console.log('user:', req.user);
         const items = await getAll();
         const result = {
             data: items,
             total: items.length,
-            success: true,            
-          };
+            success: true,
+        };
         res.status(200).send(result);
     } catch (error) {
         return next(error, req, res);

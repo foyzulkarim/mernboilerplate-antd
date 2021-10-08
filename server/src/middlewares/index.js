@@ -1,7 +1,11 @@
 const { GeneralError, BadRequest } = require('../utils/errors')
-const logger = require('pino')()
+const logger = require('pino')();
 
 const handleError = async (err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err)
+    }
+    
     let code = 500;
     if (err instanceof GeneralError) {
         code = err.getCode();
@@ -22,7 +26,8 @@ const handleRequest = async (req, res, next) => {
     }
 
     res.set('x-correlation-id', correlationId);
-    logger.info(`${req.method} ${req.url}`, { correlationId })
+
+    logger.info(`this is my log info: ${req.method} ${req.url}`, { correlationId });
     return next();
 }
 
@@ -40,4 +45,4 @@ const handleValidation = (validate) => {
         throw new BadRequest(msg);
     }
 }
-module.exports = {handleError, handleRequest, handleValidation}
+module.exports = { handleError, handleRequest, handleValidation }

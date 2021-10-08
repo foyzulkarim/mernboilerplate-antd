@@ -6,7 +6,7 @@ const productRoutes = require('./product-controller');
 const resourceRoutes = require('./resource-controller');
 const permissionRoutes = require('./permission-controller');
 const filterRoutes = require('./filter-controller');
-const authRoutes = require('./auth-controller');
+//const authRoutes = require('./auth-controller');
 
 let router = express.Router();
 
@@ -17,6 +17,6 @@ router.use("/products", productRoutes);
 router.use("/resources", resourceRoutes);
 router.use("/permissions", permissionRoutes);
 router.use("/filters", filterRoutes);
-router.use("/auth", authRoutes);
+//router.use("/auth", authRoutes);
 
 module.exports = router;
