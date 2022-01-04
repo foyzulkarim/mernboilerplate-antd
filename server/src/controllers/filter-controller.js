@@ -60,8 +60,9 @@ const searchHandler = async (req, res, next) => {
 
 const putHandler = async (req, res, next) => {
     try {
-        const body = req.body;
-        const id = await update(body);
+        const id = req.params.id;
+        const body = { ...req.body, id: id };
+        await update(body);
         res.status(200).send(id);
     } catch (error) {
         return next(error, req, res);
