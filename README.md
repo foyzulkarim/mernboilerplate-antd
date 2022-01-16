@@ -76,7 +76,7 @@ npm start
 #### Client commands
 
 ```sh
-cd client
+cd client-basic
 npm i
 npm start
 ```

@@ -30,7 +30,7 @@ services:
   appclient:
     container_name: appclient
     build:
-      context: ./client
+      context: ./client-basic
       dockerfile: Dockerfile
     networks:
       - mydockernet
@@ -45,4 +45,4 @@ networks:
   mydockernet:
     driver: bridge
 volumes:
-  app_mongo:
+  app_mongo: null
