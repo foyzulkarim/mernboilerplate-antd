@@ -53,14 +53,13 @@ const search = async (payload) => {
     }
 
     let searchQuery = {};
-    if (payload.searchText) {
-        searchQuery = { productName: { '$regex': payload.searchText, '$options': 'i' } };
+    if (payload.name) {
+        searchQuery = { name: { '$regex': payload.name, '$options': 'i' } };
     }
 
     let query = { $and: [dateQuery, searchQuery] };
-
-    const items = await Model.find(query)
-        .limit(10).sort({ updatedAt: -1 });
+    let skip = (parseInt(payload.current) - 1) * parseInt(payload.pageSize);
+    const items = await Model.find(query).skip(skip).limit(parseInt(payload.pageSize)).sort({ updatedAt: -1 });
     let viewModels = items.map((item) => ProductViewModel.convert(item));
     return viewModels;
 }

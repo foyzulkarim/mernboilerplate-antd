@@ -55,8 +55,13 @@ const postHandler = async (req, res, next) => {
 
 const searchHandler = async (req, res, next) => {
     try {
-        const body = req.body;
-        const result = await search(body);
+        const body = req.query;
+        const items = await search(body);
+        const result = {
+            data: items,
+            total: 100,
+            success: true,
+        };
         res.status(200).send(result);
     } catch (error) {
         return next(error, req, res);

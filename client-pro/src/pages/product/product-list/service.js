@@ -16,8 +16,8 @@ console.log('request', request);
 /** 获取规则列表 GET /api/rule */
 export async function getProducts(params, options) {
   console.log('GET /api/product', params, options);
-  return request('http://localhost:5000/api/products', {
-    method: 'GET',
+  return request('http://localhost:5000/api/products/search', {
+    method: 'POST',
     params: { ...params },
     ...(options || {}),
   });
