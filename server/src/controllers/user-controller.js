@@ -35,16 +35,6 @@ const getByIdHandler = async (req, res, next) => {
     }
 };
 
-const postHandler = async (req, res, next) => {
-    try {
-        const body = req.body;
-        const id = await save(body);
-        res.status(201).send(id);
-    } catch (error) {
-        return next(error, req, res);
-    }
-};
-
 const putHandler = async (req, res, next) => {
     try {
         const body = req.body;
@@ -123,7 +113,6 @@ const currentUserHandler = async (req, res) => {
 }
 
 router.get("/:id", getByIdHandler);
-router.post("/register", handleValidation(validators.userSchemaValidate), postHandler);
 router.put("/:id", putHandler);
 router.get("/", getHandler);
 router.delete("/:id", deleteHandler);

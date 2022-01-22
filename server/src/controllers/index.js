@@ -2,6 +2,9 @@ const appRoutes = require('./routes');
 const authRoutes = require('./auth-controller');
 const healthHandler = require('./health-controller');
 var jwt = require('jsonwebtoken');
+const validators = require("../models/request-models");
+const { handleValidation } = require("../middlewares");
+const { save } = require("../services/user-service");
 
 
 const authenticateRequest = async (req, res, next) => {
@@ -26,8 +29,18 @@ const authenticateRequest = async (req, res, next) => {
     }
 }
 
+const userRegistrationHandler = async (req, res, next) => {
+    try {
+        const body = req.body;
+        const id = await save(body);
+        res.status(201).send(id);
+    } catch (error) {
+        return next(error, req, res);
+    }
+};  
 
 const configure = (app) => {
+    app.post("/api/users/register", handleValidation(validators.userSchemaValidate), userRegistrationHandler);
     app.use("/api/auth", authRoutes);
     app.use('/api', authenticateRequest, appRoutes);
     app.use('/health', healthHandler.healthHandler);

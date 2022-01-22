@@ -14,20 +14,20 @@ const { NotFound } = require("../utils/errors");
 
 const router = express.Router();
 
-const getHandler = async (req, res, next) => {
-    try {
-        console.log('user:', req.user);
-        const items = await getAll();
-        const result = {
-            data: items,
-            total: items.length,
-            success: true,
-        };
-        res.status(200).send(result);
-    } catch (error) {
-        return next(error, req, res);
-    }
-};
+// const getHandler = async (req, res, next) => {
+//     try {
+//         console.log('user:', req.user);
+//         const items = await getAll();
+//         const result = {
+//             data: items,
+//             total: items.length,
+//             success: true,
+//         };
+//         res.status(200).send(result);
+//     } catch (error) {
+//         return next(error, req, res);
+//     }
+// };
 
 const getByIdHandler = async (req, res, next) => {
     try {
@@ -87,7 +87,7 @@ router.get("/:id", getByIdHandler);
 router.post("/", handleValidation(validators.productSchemaValidate), postHandler);
 router.post('/search', searchHandler);
 router.put("/:id", putHandler);
-router.get("/", getHandler);
+// router.get("/", getHandler);
 router.delete("/:id", deleteHandler);
 
 module.exports = router;
