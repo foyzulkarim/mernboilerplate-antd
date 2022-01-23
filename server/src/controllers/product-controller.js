@@ -6,7 +6,8 @@ const {
     update,
     deleteById,
     getById,
-    search
+    search,
+    count,
 } = require("../services/product-service");
 const validators = require("../models/request-models");
 const { handleValidation } = require("../middlewares");
@@ -55,14 +56,26 @@ const postHandler = async (req, res, next) => {
 
 const searchHandler = async (req, res, next) => {
     try {
-        const body = req.query;
-        const items = await search(body);
-        const result = {
-            data: items,
-            total: 100,
-            success: true,
-        };
-        res.status(200).send(result);
+        if (!req.query.pageSize) {
+            req.query.pageSize = 10;
+        }
+        if (!req.query.current) {
+            req.query.current = 1;
+        }
+        const result = await search(req.query);
+        const response = { success: true, ...result };
+        res.status(200).send(response);
+    } catch (error) {
+        return next(error, req, res);
+    }
+};
+
+
+const countHandler = async (req, res, next) => {
+    try {
+        const result = await count(req.query);
+        const response = { success: true, ...result };
+        res.status(200).send(response);
     } catch (error) {
         return next(error, req, res);
     }
@@ -91,6 +104,7 @@ const deleteHandler = async (req, res, next) => {
 router.get("/:id", getByIdHandler);
 router.post("/", handleValidation(validators.productSchemaValidate), postHandler);
 router.post('/search', searchHandler);
+router.post('/count', countHandler);
 router.put("/:id", putHandler);
 // router.get("/", getHandler);
 router.delete("/:id", deleteHandler);

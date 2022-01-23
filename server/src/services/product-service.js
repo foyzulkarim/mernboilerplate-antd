@@ -137,4 +137,4 @@ const upsert = async (product) => {
     return 'Already exists';
 }
 
-module.exports = { getAll, save, update, deleteById, getById, search, upsert };
+module.exports = { getAll, save, update, deleteById, getById, search, count, upsert };
