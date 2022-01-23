@@ -1,12 +1,12 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+import { Button, message, Input, Drawer, Pagination } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { getProducts, addRule, updateRule, removeRule } from './service';
+import { searchProducts, searchProductsCount, addRule, updateRule, removeRule } from './service';
 
 /**
  * 添加节点
@@ -81,6 +81,29 @@ const TableList = () => {
   const actionRef = useRef();
   const [currentRow, setCurrentRow] = useState();
   const [selectedRowsState, setSelectedRows] = useState([]);
+
+  const fetchProductData = async () => {
+    console.log('current', current, 'param', param);
+    const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
+    console.log(result);
+    setData(result);
+  };
+
+  const fetchProductCount = async () => {
+    const result = await searchProductsCount({ ...param });
+    console.log(result);
+    setTotal(result.total);
+  };
+
+  useEffect(() => {
+    fetchProductData();
+    fetchProductCount();
+  }, [param]);
+
+  useEffect(() => {
+    fetchProductData();
+  }, [current, sort]);
+
   /** 国际化配置 */
 
   const columns = [
@@ -172,14 +195,16 @@ const TableList = () => {
     },
   ];
   return (
+    <>
     <PageContainer>
       <ProTable
         headerTitle="Products"
         actionRef={actionRef}
         rowKey="_id"
-        search={{
-          labelWidth: 'auto',
-        }}
+        // search={{
+        //   labelWidth: 'auto',
+        // }}
+        search={false}
         toolBarRender={() => [
           <Button
             type="primary"
@@ -191,21 +216,18 @@ const TableList = () => {
             <PlusOutlined /> New
           </Button>,
         ]}
-        request={getProducts}
-        // request={async (params = {}, sort, filter) => {
-        //   console.log(params, sort, filter);
-        //   let r = await request('https://proapi.azurewebsites.net/github/issues', {
-        //     params,
-        //   });
-        //   console.log(r);
-        //   return r;
-        // }}
-        columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
+        onChange={(_, _filter, _sorter) => {
+          console.log('_sorter', _sorter);
+          let sort = {};
+          sort['sort'] = _sorter.field;
+          sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
+          setSort(sort);
         }}
+        onSubmit={(params) => { console.log(params); setParam(params); }}
+        dataSource={data.data}
+        columns={columns}
+        rowSelection={false}
+        pagination={false}
       />
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
@@ -312,6 +334,16 @@ const TableList = () => {
         )}
       </Drawer>
     </PageContainer>
+      <Pagination
+      total={total}
+      showSizeChanger={false}
+      showQuickJumper={false}
+      showTotal={total => `Total ${total} items`}
+      onChange={(page, pageSize) => { setCurrent(page); }}
+      // style={{ background: 'white', padding: '10px' }}
+      style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
+    />
+    </>
   );
 };
 

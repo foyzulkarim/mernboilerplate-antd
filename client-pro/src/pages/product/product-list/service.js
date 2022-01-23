@@ -14,6 +14,27 @@ import { request } from 'umi';
 console.log('request', request);
 
 /** 获取规则列表 GET /api/rule */
+export async function searchProducts(params, options) {
+  console.log('GET /api/product', params, options);
+  const newLocal = request('http://localhost:5000/api/products/search', {
+    method: 'POST',
+    params: { ...params },
+    ...(options || {})
+  });
+  return newLocal;
+}
+
+export async function searchProductsCount(params, options) {
+  console.log('GET /api/product/count', params, options);
+  const newLocal = request('http://localhost:5000/api/products/count', {
+    method: 'POST',
+    params: { ...params },
+    ...(options || {})
+  });
+  return newLocal;
+}
+
+/** 获取规则列表 GET /api/rule */
 export async function getProducts(params, options) {
   console.log('GET /api/product', params, options);
   return request('http://localhost:5000/api/products/search', {
