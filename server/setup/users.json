@@ -1,0 +1,22 @@
+[
+    {
+        "firstName": "Super",
+        "lastName": "Admin",
+        "username": "superadmin",
+        "address": "Wakanda",
+        "phoneNumber": "00000000001",
+        "email": "superadmin@mernboilerplate.com",
+        "roleName": "superadmin",
+        "password": "superadmin"
+    },
+    {
+        "firstName": "Admin",
+        "lastName": "Admin",
+        "username": "admin",
+        "address": "Wakanda",
+        "phoneNumber": "00000000002",
+        "email": "admin@mernboilerplate.com",
+        "roleName": "admin",
+        "password": "admin"
+    }
+]

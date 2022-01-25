@@ -9,6 +9,18 @@ const getAll = async () => {
     return viewModels;
 };
 
+// get user by email 
+const getByEmail = async (email) => {
+    const item = await Model.findOne({ email });
+    return UserViewModel.convert(item);
+};
+
+// get user by username
+const getByUsername = async (username) => {
+    const item = await Model.findOne({ username });
+    return UserViewModel.convert(item);
+};
+
 const save = async (user) => {
     const model = await Model.createNew(user);
     const savedItem = await model.save();
@@ -47,4 +59,4 @@ const getById = async (id) => {
     return viewModel;
 };
 
-module.exports = { getAll, save, update, deleteById, getById };
+module.exports = { getAll, save, update, deleteById, getById, getByEmail, getByUsername };
