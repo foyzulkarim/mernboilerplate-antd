@@ -9,9 +9,12 @@ const uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.e
 console.log(uri);
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 const connectWithDb = async () => {
-  const mongooseObj = await mongoose.connect(uri, options);
-  console.log("Connected to DB");
-  console.log('Press Ctrl+C to exit');
+  try {
+    await mongoose.connect(uri, options);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 connectWithDb();
