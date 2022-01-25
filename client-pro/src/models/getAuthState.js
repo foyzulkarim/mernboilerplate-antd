@@ -9,8 +9,10 @@ export default function useAuthModel() {
     if (dbAuthData) {
       const authData = JSON.parse(dbAuthData);
       console.log('useAuthModel>useEffect>authData', authData);
-      authData.token && authData.userInfo &&
+      if (authData && authData.token && authData.userInfo) {
         setAuth({ isAuthenticated: true, token: authData.token, userInfo: authData.userInfo });
+      }
+      else localStorage.removeItem('auth');
     }
   }, []);
 

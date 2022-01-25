@@ -16,6 +16,7 @@ export const initialStateConfig = {
  * */
 
 import { extend } from 'umi-request';
+// const { initialState, setInitialState } = useModel('@@initialState');
 
 export async function getInitialState() {
   console.log('getInitialState is called');
@@ -44,9 +45,24 @@ export async function getInitialState() {
       };
     });
 
+    request.interceptors.response.use(async (response, options) => {
+      console.log('response:', response);
+      // if resposne is 401, return initialize with null 
+      if (response.status === 401) {
+        localStorage.removeItem('auth');
+        history.replace({
+          pathname: '/user/login',
+          search: stringify({
+            redirect: pathname,
+          }),
+        });
+      }
+      return response;
+    });
+
     return {
       initialize,
-      currentUser: auth.userInfo,
+      currentUser: auth?.userInfo,
       settings: {
         title: 'my amazing title',
         now: new Date().toLocaleString(),
@@ -91,15 +107,15 @@ export const layout = ({ initialState }) => {
     },
     links: isDev
       ? [
-          <Link to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-          <Link to="/~docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>,
-        ]
+        <Link to="/umi/plugin/openapi" target="_blank">
+          <LinkOutlined />
+          <span>OpenAPI 文档</span>
+        </Link>,
+        <Link to="/~docs">
+          <BookOutlined />
+          <span>业务组件文档</span>
+        </Link>,
+      ]
       : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面

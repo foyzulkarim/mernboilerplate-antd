@@ -10,8 +10,16 @@ console.log(uri);
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 const connectWithDb = async () => {
   try {
-    await mongoose.connect(uri, options);    
+    await mongoose.connect(uri, options);
     console.log("Connected to MongoDB");
+
+    // seed products data to db
+    const products = require("./products.json");
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      await upsert(product);
+    }
+    console.log("Seeded products");
   } catch (error) {
     console.log(error);
   }
