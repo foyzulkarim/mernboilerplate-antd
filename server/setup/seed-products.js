@@ -15,11 +15,15 @@ const connectWithDb = async () => {
 
     // seed products data to db
     const products = require("./products.json");
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      await upsert(product);
-    }
+    // promise all wait for all promises to resolve
+    await Promise.all(products.map(async (product) => {
+      // upsert product
+      const result = await upsert(product);
+      console.log(`Saved product id: ${result}`);
+    }));
     console.log("Seeded products");
+    // exit process
+    process.exit(0);
   } catch (error) {
     console.log(error);
   }
