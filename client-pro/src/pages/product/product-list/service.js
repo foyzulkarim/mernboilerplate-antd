@@ -18,7 +18,8 @@ export async function searchProducts(params, options) {
   console.log('GET /api/product', params, options);
   const newLocal = request('http://localhost:5000/api/products/search', {
     method: 'POST',
-    params: { ...params },
+    // params: { ...params },
+    data: params,
     ...(options || {})
   });
   return newLocal;
@@ -28,7 +29,8 @@ export async function searchProductsCount(params, options) {
   console.log('GET /api/product/count', params, options);
   const newLocal = request('http://localhost:5000/api/products/count', {
     method: 'POST',
-    params: { ...params },
+    // params: { ...params },
+    data: params,
     ...(options || {})
   });
   return newLocal;

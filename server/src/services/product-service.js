@@ -69,8 +69,10 @@ const search = async (payload) => {
     }
 
     // payload.fromDate && payload.toDate
-    if (payload.fromDate && payload.toDate) {
-        queries.push({ createdAt: { $gte: new Date(payload.fromDate), $lte: new Date(payload.toDate) } });
+    if (payload.manufacturingDateRange) {
+        let fromDate = payload.manufacturingDateRange[0];
+        let toDate = payload.manufacturingDateRange[1];
+        queries.push({ manufacturingDate: { $gte: new Date(fromDate), $lte: new Date(toDate) } });
     }
 
     const query = queries.length > 1 ? { $and: queries } : queries.length == 1 ? queries[0] : {};

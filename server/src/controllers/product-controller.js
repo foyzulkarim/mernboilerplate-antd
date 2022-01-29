@@ -56,13 +56,13 @@ const postHandler = async (req, res, next) => {
 
 const searchHandler = async (req, res, next) => {
     try {
-        if (!req.query.pageSize) {
-            req.query.pageSize = 10;
+        if (!req.body.pageSize) {
+            req.body.pageSize = 10;
         }
-        if (!req.query.current) {
-            req.query.current = 1;
+        if (!req.body.current) {
+            req.body.current = 1;
         }
-        const result = await search(req.query);
+        const result = await search(req.body);
         const response = { success: true, ...result };
         res.status(200).send(response);
     } catch (error) {
