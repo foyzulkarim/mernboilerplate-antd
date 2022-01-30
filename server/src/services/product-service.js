@@ -10,8 +10,7 @@ const getAll = async () => {
 };
 
 const save = async (product) => {
-    const model = await Model.createNew(product);
-    const savedItem = await model.save();
+    const savedItem = await Model.save(product);
     return savedItem._id;
 };
 
@@ -53,16 +52,6 @@ const search = async (payload) => {
         queries.push({ name: { $regex: payload.name, $options: 'i' } });
     }
 
-    // payload.product
-    if (payload.product) {
-        queries.push({ product: { $regex: payload.product, $options: 'i' } });
-    }
-
-    // payload.company
-    if (payload.company) {
-        queries.push({ company: { $regex: payload.company, $options: 'i' } });
-    }
-
     // product.size (number)
     if (payload.size) {
         queries.push({ size: parseInt(payload.size) });
@@ -87,7 +76,7 @@ const search = async (payload) => {
         sort[key] = value;
     }
     else {
-        sort = { _id: -1 };
+        sort = { manufacturingDate: -1 };
     }
 
     const data = await Model.collection.find(query).sort(sort).skip(skip).limit(take);
@@ -101,16 +90,6 @@ const count = async (payload) => {
 
     if (payload.name) {
         queries.push({ name: { $regex: payload.name, $options: 'i' } });
-    }
-
-    // payload.product
-    if (payload.product) {
-        queries.push({ product: { $regex: payload.product, $options: 'i' } });
-    }
-
-    // payload.company
-    if (payload.company) {
-        queries.push({ company: { $regex: payload.company, $options: 'i' } });
     }
 
     // product.size (number)

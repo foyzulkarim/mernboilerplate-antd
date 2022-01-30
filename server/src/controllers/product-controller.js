@@ -73,7 +73,7 @@ const searchHandler = async (req, res, next) => {
 
 const countHandler = async (req, res, next) => {
     try {
-        const result = await count(req.query);
+        const result = await count(req.body);
         const response = { success: true, ...result };
         res.status(200).send(response);
     } catch (error) {

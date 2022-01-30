@@ -52,9 +52,6 @@ export async function getInitialState() {
         localStorage.removeItem('auth');
         history.replace({
           pathname: '/user/login',
-          search: stringify({
-            redirect: pathname,
-          }),
         });
       }
       return response;

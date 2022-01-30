@@ -98,7 +98,7 @@ const TableList = () => {
 
   const fetchProductCount = async () => {
     const result = await searchProductsCount({ ...param });
-    console.log(result);
+    console.log('fetchProductCount ', result);
     setTotal(result.total);
   };
 
@@ -124,8 +124,9 @@ const TableList = () => {
 
   const columns = [
     {
-      title: 'Title',
+      title: 'Name',
       dataIndex: 'name',
+      sorter: true,
       tip: 'Name of the product',
       render: (dom, entity) => {
         return (

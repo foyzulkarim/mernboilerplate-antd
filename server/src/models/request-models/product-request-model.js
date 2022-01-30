@@ -1,20 +1,18 @@
 const Joi = require("joi");
 
 const schema = Joi.object().keys({
-    productName: Joi.string().min(3).max(30).required(),
+    name: Joi.string().min(3).max(30).required(),
     sku: Joi.string().min(3).max(30).required(),
+    description: Joi.string().min(3).max(30),
     cost: Joi.number().required(),
     price: Joi.number().required(),
-    description: Joi.string().min(3).max(30),
+    size: Joi.number().min(1).max(10).required(),
     manufacturingDate: Joi.date().optional(),
     expiryDate: Joi.date().optional(),
-    size: Joi.number().min(1).max(10).required(),
 });
 
 const validate = (data) => {
     const result = schema.validate(data);
-    data.createdAt = new Date();
-    data.updatedAt = new Date();
 
     if (!data.manufacturingDate) {
         data.manufacturingDate = new Date();

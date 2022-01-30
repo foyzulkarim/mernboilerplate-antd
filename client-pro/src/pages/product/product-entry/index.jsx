@@ -22,12 +22,12 @@ const BasicForm = () => {
 
   const { run } = useRequest(submitForm, {
     manual: true,
-    onSuccess: () => {
-      message.success('Product is saved');
+    onSuccess: (x) => {
+      message.success('Product is saved', x);
     },
     onError: (e) => {
       console.log(e);
-      message.error('Error happened ');
+      message.error('Error happened ', e);
     },
   });
 
@@ -56,11 +56,11 @@ const BasicForm = () => {
           <ProFormText
             width="md"
             label="Name"
-            name="productName"
+            name="name"
             rules={[
               {
                 required: true,
-                message: 'Please enter the name',
+                message: 'Please enter product name',
               },
             ]}
             placeholder="Please enter product name"
@@ -91,7 +91,6 @@ const BasicForm = () => {
             ]}
             placeholder="Please enter product description"
           />
-          <ProFormDatePicker width="md" name="manufacturingDate" label="Manufacturing date" />
 
           <ProFormDigit
             label={<span>Cost</span>}
@@ -133,6 +132,8 @@ const BasicForm = () => {
             label="Size"
             name="size"
           />
+          <ProFormDatePicker width="md" name="manufacturingDate" label="Manufacturing date" />
+          <ProFormDatePicker width="md" name="expiryDate" label="Expiry date" />
         </ProForm>
       </Card>
     </PageContainer>
