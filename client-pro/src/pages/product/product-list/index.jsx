@@ -3,6 +3,7 @@ import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker 
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import { useRequest, useModel } from 'umi';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import ProDescriptions from '@ant-design/pro-descriptions';
@@ -91,10 +92,23 @@ const TableList = () => {
 
   const fetchProductData = async () => {
     console.log('current', current, 'param', param);
-    const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
-    console.log(result);
-    setData(result);
-  };
+    const hide = message.loading('Loading...');
+    try {
+      const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
+      console.log(result);
+      hide();
+      setData(result);
+      return result;
+    } catch (error) {
+      hide();
+      const str = JSON.stringify(error);
+      const ex = JSON.parse(str);
+      console.log(ex);
+      message.error(ex.data.errorMessage);
+      return false;
+    }
+  }
+
 
   const fetchProductCount = async () => {
     const result = await searchProductsCount({ ...param });
@@ -104,11 +118,11 @@ const TableList = () => {
 
   useEffect(() => {
     fetchProductData();
-    fetchProductCount();
+    //fetchProductCount();
   }, [param]);
 
   useEffect(() => {
-    fetchProductData();
+    //fetchProductData();
   }, [current, sort]);
 
 

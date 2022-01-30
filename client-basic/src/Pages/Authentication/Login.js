@@ -2,6 +2,7 @@
 import React from 'react';
 import { message } from 'antd';
 import { useHistory } from "react-router-dom";
+import { useModel } from 'umi';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { MailOutlined } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
@@ -19,6 +20,8 @@ const waitTime = (time = 100) => {
 export const Login = () => {
     // eslint-disable-next-line no-unused-vars
     const [auth, handleAuth] = useAuth();
+    const { auth: myCustomAuth, setAuthentication } = useModel('getAuthState');
+    console.log('myCustomAuth', myCustomAuth);
     let history = useHistory();
 
     return (

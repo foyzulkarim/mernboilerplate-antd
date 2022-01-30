@@ -20,6 +20,12 @@ export async function searchProducts(params, options) {
     method: 'POST',
     // params: { ...params },
     data: params,
+    // errorHandler: function (error) {
+    //   if (error) {
+    //     throw error;
+    //   }
+    // },
+    skipErrorHandler: true,
     ...(options || {})
   });
   return newLocal;
