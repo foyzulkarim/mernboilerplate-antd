@@ -3,6 +3,7 @@ import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker 
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import { useRequest, useModel } from 'umi';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import ProDescriptions from '@ant-design/pro-descriptions';
@@ -87,14 +88,28 @@ const TableList = () => {
   const [param, setParam] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
+  const [fetchProducts, setFetchProducts] = useState(false);
   const { RangePicker } = DatePicker;
-
   const fetchProductData = async () => {
-    console.log('current', current, 'param', param);
-    const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
-    console.log(result);
-    setData(result);
-  };
+    // console.log('current', current, 'param', param);
+    const hide = message.loading('Loading...');
+    try {
+      const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
+      // console.log(result);
+      hide();
+      setData(result);
+      setFetchProducts(false);
+      return result;
+    } catch (error) {
+      hide();
+      const str = JSON.stringify(error);
+      const ex = JSON.parse(str);
+      console.log(ex);
+      message.error(ex.data.errorMessage);
+      return false;
+    }
+  }
+
 
   const fetchProductCount = async () => {
     const result = await searchProductsCount({ ...param });
@@ -102,15 +117,23 @@ const TableList = () => {
     setTotal(result.total);
   };
 
+
   useEffect(() => {
-    fetchProductData();
+    console.log('useEffect for current or sort', current, sort);
+    if (fetchProducts) {
+      console.log('useEffect for current or sort only fetching products');
+      fetchProductData();
+    }
+  }, [fetchProducts]);
+
+
+  useEffect(() => {
+    setCurrent(1);
+    setSort(null);
+    console.log('useEffect for fetchProductData', param);
+    setFetchProducts(true);
     fetchProductCount();
   }, [param]);
-
-  useEffect(() => {
-    fetchProductData();
-  }, [current, sort]);
-
 
 
   /** 国际化配置 */
@@ -251,6 +274,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
+            setFetchProducts(true);
           }}
           onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
@@ -368,7 +392,8 @@ const TableList = () => {
         showSizeChanger={false}
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
-        onChange={(page, pageSize) => { setCurrent(page); }}
+        defaultCurrent={current}
+        onChange={(page, pageSize) => { console.log('pagination\t', page); setCurrent(page); setFetchProducts(true); }}
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />

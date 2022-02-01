@@ -65,6 +65,8 @@ const searchHandler = async (req, res, next) => {
         const result = await search(req.body);
         const response = { success: true, ...result };
         res.status(200).send(response);
+        // const response = { success: false, errorMessage: 'Super duper error handling mechanism', ...result };
+        // res.status(400).send(response);
     } catch (error) {
         return next(error, req, res);
     }

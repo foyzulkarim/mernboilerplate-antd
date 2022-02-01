@@ -15,7 +15,11 @@ const authenticateRequest = async (req, res, next) => {
         jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 res.status(401).send({
-                    error: err.message || 'Invalid token',
+                    success: false,
+                    // error: err.message || 'Invalid token',
+                    // data: '401 Unauthorized',
+                    // message: 'Invalid token',
+                    errorMessage: err.message || 'Invalid token',
                 });
             }
             else {
@@ -37,7 +41,7 @@ const userRegistrationHandler = async (req, res, next) => {
     } catch (error) {
         return next(error, req, res);
     }
-};  
+};
 
 const configure = (app) => {
     app.post("/api/users/register", handleValidation(validators.userSchemaValidate), userRegistrationHandler);
