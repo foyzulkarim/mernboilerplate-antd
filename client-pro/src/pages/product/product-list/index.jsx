@@ -88,16 +88,17 @@ const TableList = () => {
   const [param, setParam] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
+  const [fetchProducts, setFetchProducts] = useState(false);
   const { RangePicker } = DatePicker;
-
   const fetchProductData = async () => {
-    console.log('current', current, 'param', param);
+    // console.log('current', current, 'param', param);
     const hide = message.loading('Loading...');
     try {
       const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
-      console.log(result);
+      // console.log(result);
       hide();
       setData(result);
+      setFetchProducts(false);
       return result;
     } catch (error) {
       hide();
@@ -116,15 +117,23 @@ const TableList = () => {
     setTotal(result.total);
   };
 
+
   useEffect(() => {
-    fetchProductData();
-    //fetchProductCount();
+    console.log('useEffect for current or sort', current, sort);
+    if (fetchProducts) {
+      console.log('useEffect for current or sort only fetching products');
+      fetchProductData();
+    }
+  }, [fetchProducts]);
+
+
+  useEffect(() => {
+    setCurrent(1);
+    setSort(null);
+    console.log('useEffect for fetchProductData', param);
+    setFetchProducts(true);
+    fetchProductCount();
   }, [param]);
-
-  useEffect(() => {
-    //fetchProductData();
-  }, [current, sort]);
-
 
 
   /** 国际化配置 */
@@ -265,6 +274,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
+            setFetchProducts(true);
           }}
           onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
@@ -382,7 +392,8 @@ const TableList = () => {
         showSizeChanger={false}
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
-        onChange={(page, pageSize) => { setCurrent(page); }}
+        defaultCurrent={current}
+        onChange={(page, pageSize) => { console.log('pagination\t', page); setCurrent(page); setFetchProducts(true); }}
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />

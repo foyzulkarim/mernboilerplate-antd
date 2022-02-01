@@ -11,7 +11,7 @@ const loginHandler = async (req, res) => {
               if (user) {
                      // console.log("user", user);
                      // const permissions = await searchPermissions({ roleId });
-                     var token = jwt.sign({ id: user._id, username: req.body.username, exp: Math.floor(Date.now() / 1000) + 16 }, process.env.JWT_SECRET);
+                     var token = jwt.sign({ id: user._id, username: req.body.username, exp: Math.floor(Date.now() / 1000) + parseInt(process.env.EXP_SECONDS) }, process.env.JWT_SECRET);
                      const { passwordHash, ...rest } = user;
 
                      const antdPayload = {

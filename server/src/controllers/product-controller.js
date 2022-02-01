@@ -63,10 +63,10 @@ const searchHandler = async (req, res, next) => {
             req.body.current = 1;
         }
         const result = await search(req.body);
-        // const response = { success: true, ...result };
-        // res.status(200).send(response);
-        const response = { success: false, errorMessage: 'test error', ...result };
-        res.status(400).send(response);
+        const response = { success: true, ...result };
+        res.status(200).send(response);
+        // const response = { success: false, errorMessage: 'Super duper error handling mechanism', ...result };
+        // res.status(400).send(response);
     } catch (error) {
         return next(error, req, res);
     }
@@ -76,8 +76,8 @@ const searchHandler = async (req, res, next) => {
 const countHandler = async (req, res, next) => {
     try {
         const result = await count(req.body);
-        const response = { success: false, errorMessage: 'test error', ...result };
-        res.status(400).send(response);
+        const response = { success: true, ...result };
+        res.status(200).send(response);
     } catch (error) {
         return next(error, req, res);
     }
