@@ -14,9 +14,9 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { submitForm } from './service';
 import styles from './style.less';
 
-const BasicForm = () => {
+const BasicForm = (props) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  console.log('ProductForm > initialState', initialState);
+  console.log('ProductForm > props', props.match.params.id);
   const { auth } = useModel('getAuthState');
   console.log('Product Entry > auth', auth);
 

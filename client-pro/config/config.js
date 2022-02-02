@@ -196,6 +196,12 @@ export default defineConfig({
           component: './product/product-entry',
         },
         {
+          name: 'Product update',
+          icon: 'smile',
+          path: '/product/product-update/:id',
+          component: './product/product-entry',
+        },
+        {
           name: 'Product list',
           icon: 'smile',
           path: '/product/product-list',

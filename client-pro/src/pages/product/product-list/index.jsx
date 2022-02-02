@@ -3,7 +3,7 @@ import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker 
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { useRequest, useModel } from 'umi';
+import { useRequest, useModel, history } from 'umi';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import ProDescriptions from '@ant-design/pro-descriptions';
@@ -157,6 +157,8 @@ const TableList = () => {
             onClick={() => {
               setCurrentRow(entity);
               setShowDetail(true);
+              console.log('entity', entity);
+              history.push(`/product/product-update/${entity._id}`);
             }}
           >
             {dom}
@@ -262,6 +264,7 @@ const TableList = () => {
               onClick={() => {
                 // handleModalVisible(true);
                 console.log('plus button clicked');
+                history.push('/product/product-entry');
               }}
             >
               <PlusOutlined /> New
