@@ -3,75 +3,10 @@ import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker 
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { useRequest, useModel, history } from 'umi';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { history } from 'umi';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import UpdateForm from './components/UpdateForm';
-import { searchProducts, searchProductsCount, addRule, updateRule, removeRule } from './service';
+import { searchProducts, searchProductsCount } from '../service';
 
-/**
- * 添加节点
- *
- * @param fields
- */
-const handleAdd = async (fields) => {
-  const hide = message.loading('正在添加');
-
-  try {
-    await addRule({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
-};
-/**
- * 更新节点
- *
- * @param fields
- */
-
-const handleUpdate = async (fields, currentRow) => {
-  const hide = message.loading('正在配置');
-
-  try {
-    await updateRule({ ...currentRow, ...fields });
-    hide();
-    message.success('配置成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('配置失败请重试！');
-    return false;
-  }
-};
-/**
- * 删除节点
- *
- * @param selectedRows
- */
-
-const handleRemove = async (selectedRows) => {
-  const hide = message.loading('正在删除');
-  if (!selectedRows) return true;
-
-  try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
 
 const TableList = () => {
   /** 新建窗口的弹窗 */
@@ -158,7 +93,7 @@ const TableList = () => {
               setCurrentRow(entity);
               setShowDetail(true);
               console.log('entity', entity);
-              history.push(`/product/product-update/${entity._id}`);
+              history.push(`/products/edit/${entity._id}`);
             }}
           >
             {dom}
@@ -316,55 +251,6 @@ const TableList = () => {
             <Button type="primary">批量审批</Button>
           </FooterToolbar>
         )}
-        <ModalForm
-          title="Modal form 新建规则"
-          width="400px"
-          visible={createModalVisible}
-          onVisibleChange={handleModalVisible}
-          onFinish={async (value) => {
-            const success = await handleAdd(value);
-
-            if (success) {
-              handleModalVisible(false);
-
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-        >
-          <ProFormText
-            rules={[
-              {
-                required: true,
-                message: '规则名称为必填项',
-              },
-            ]}
-            width="md"
-            name="name"
-          />
-          <ProFormTextArea width="md" name="desc" />
-        </ModalForm>
-        <UpdateForm
-          onSubmit={async (value) => {
-            const success = await handleUpdate(value, currentRow);
-
-            if (success) {
-              handleUpdateModalVisible(false);
-              setCurrentRow(undefined);
-
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setCurrentRow(undefined);
-          }}
-          updateModalVisible={updateModalVisible}
-          values={currentRow || {}}
-        />
 
         <Drawer
           width={600}

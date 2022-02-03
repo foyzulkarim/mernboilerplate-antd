@@ -11,28 +11,41 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useRequest, useModel } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { submitForm } from './service';
+import { getProductById } from '../service';
 import styles from './style.less';
+import React, { useEffect, useState } from 'react';
 
 const BasicForm = (props) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  console.log('ProductForm > props', props);
+  const [product, setProduct] = useState({});
   const { auth } = useModel('getAuthState');
+  console.log('ProductUpdateForm > props', props.match.params.id);
 
-  const { run } = useRequest(submitForm, {
-    manual: true,
-    onSuccess: (x) => {
-      message.success('Product is saved', x);
-    },
-    onError: (e) => {
-      console.log(e);
-      message.error('Error happened ', e);
-    },
-  });
+  useEffect(() => {
+    console.log('ProductUpdateForm > useEffect', props);
+    const { id } = props.match.params;
+    const getProduct = async (id) => {
+      const res = await getProductById(id);
+      console.log('ProductUpdateForm > useEffect > getProductById', res);
+      setProduct(res);
+    }
+    getProduct(id);
+  }, [props]);
+
+  // const { run } = useRequest(submitForm, {
+  //   manual: true,
+  //   onSuccess: (x) => {
+  //     message.success('Product is saved', x);
+  //   },
+  //   onError: (e) => {
+  //     console.log(e);
+  //     message.error('Error happened ', e);
+  //   },
+  // });
 
   const onFinish = async (values) => {
     console.log(values);
-    run(values);
+    // run(values);
   };
 
   return (
@@ -56,6 +69,7 @@ const BasicForm = (props) => {
             width="md"
             label="Name"
             name="name"
+            value={product.name}
             rules={[
               {
                 required: true,
@@ -69,6 +83,7 @@ const BasicForm = (props) => {
             width="md"
             label="SKU"
             name="sku"
+            value={product.sku}
             rules={[
               {
                 required: true,
@@ -82,6 +97,7 @@ const BasicForm = (props) => {
             label="Description"
             width="xl"
             name="description"
+            value={product.description}
             rules={[
               {
                 required: true,
@@ -94,6 +110,7 @@ const BasicForm = (props) => {
           <ProFormDigit
             label={<span>Cost</span>}
             name="cost"
+            value={product.cost}
             placeholder="Please enter product cost"
             min={0}
             width="md"
@@ -105,6 +122,7 @@ const BasicForm = (props) => {
           <ProFormDigit
             label={<span>Price</span>}
             name="price"
+            value={product.price}
             placeholder="Please enter product price"
             min={0}
             width="md"
@@ -127,12 +145,22 @@ const BasicForm = (props) => {
                 value: '3',
                 label: 'Large',
               },
+              {
+                value: '*',
+                label: 'X Large',
+              },
             ]}
             label="Size"
             name="size"
           />
-          <ProFormDatePicker width="md" name="manufacturingDate" label="Manufacturing date" />
-          <ProFormDatePicker width="md" name="expiryDate" label="Expiry date" />
+          <ProFormDatePicker width="md"
+            name="manufacturingDate"
+            value={product.manufacturingDate}
+            label="Manufacturing date" />
+          <ProFormDatePicker width="md"
+            name="expiryDate"
+            value={product.expiryDate}
+            label="Expiry date" />
         </ProForm>
       </Card>
     </PageContainer>
