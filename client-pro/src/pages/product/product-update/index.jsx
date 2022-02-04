@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 
 const BasicForm = (props) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const { auth } = useModel('getAuthState');
   console.log('ProductUpdateForm > props', props.match.params.id);
 
@@ -26,11 +26,10 @@ const BasicForm = (props) => {
     const { id } = props.match.params;
     const getProduct = async (id) => {
       const res = await getProductById(id);
-      console.log('ProductUpdateForm > useEffect > getProductById', res);
       setProduct(res);
     }
     getProduct(id);
-  }, [props]);
+  }, []);
 
   // const { run } = useRequest(submitForm, {
   //   manual: true,
@@ -49,10 +48,10 @@ const BasicForm = (props) => {
   };
 
   return (
-    <PageContainer content="My amazing product entry form">
+    product && <PageContainer content="My amazing product entry form">
       <Card bordered={false}>
         <ProForm
-          hideRequiredMark
+          hideRequiredMark={false}
           style={{
             margin: 'auto',
             marginTop: 8,
@@ -60,9 +59,7 @@ const BasicForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={{
-            public: '1',
-          }}
+          initialValues={product}
           onFinish={onFinish}
         >
           <ProFormText
@@ -70,6 +67,9 @@ const BasicForm = (props) => {
             label="Name"
             name="name"
             value={product.name}
+            initialValue={product.name}
+            fieldProps={product.name}
+            onChange={(e) => { console.log('onChange', e) }}
             rules={[
               {
                 required: true,
@@ -144,11 +144,7 @@ const BasicForm = (props) => {
               {
                 value: '3',
                 label: 'Large',
-              },
-              {
-                value: '*',
-                label: 'X Large',
-              },
+              }
             ]}
             label="Size"
             name="size"
