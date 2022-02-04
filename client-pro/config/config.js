@@ -181,26 +181,33 @@ export default defineConfig({
       ],
     },
     {
-      path: '/product',
+      path: '/products',
       icon: 'form',
-      name: 'Product',
+      name: 'Products',
       routes: [
         {
-          path: '/product',
-          redirect: '/product/product-list',
+          path: '/products',
+          redirect: '/products/list',
         },
         {
-          name: 'Product entry',
+          name: 'List',
           icon: 'smile',
-          path: '/product/product-entry',
+          path: '/products/list',
+          component: './product/product-list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/products/new',
           component: './product/product-entry',
         },
         {
-          name: 'Product list',
+          name: 'Update',
           icon: 'smile',
-          path: '/product/product-list',
-          component: './product/product-list',
+          path: '/products/edit/:id',
+          component: './product/product-update',
         },
+
       ],
     },
     {

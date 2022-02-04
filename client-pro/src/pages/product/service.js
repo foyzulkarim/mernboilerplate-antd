@@ -3,9 +3,7 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** 获取规则列表 GET /api/rule */
 export async function searchProducts(params, options) {
-  // console.log('GET /api/product', params, options);
   const newLocal = request('http://localhost:5000/api/products/search', {
     method: 'POST',
     data: params,
@@ -34,6 +32,32 @@ export async function getProducts(params, options) {
     ...(options || {}),
   });
 }
+
+export async function getProductById(id, options) {
+  console.log('GET /api/product', id, options);
+  return request(`http://localhost:5000/api/products/${id}`, {
+    method: 'GET',
+    // params: { ...params },
+    ...(options || {}),
+  });
+}
+
+export async function update(params) {  
+  return request('http://localhost:5000/api/products', {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+export async function save(params) {
+  return request('http://localhost:5000/api/products', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+
+
 /** 新建规则 PUT /api/rule */
 
 export async function updateRule(data, options) {

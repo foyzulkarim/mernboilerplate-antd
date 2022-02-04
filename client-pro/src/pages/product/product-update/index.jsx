@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Form, Card, message } from 'antd';
+import { Card, message } from 'antd';
 import ProForm, {
   ProFormDatePicker,
   ProFormDateRangePicker,
@@ -10,20 +9,30 @@ import ProForm, {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest, useModel } from 'umi';
+import { useRequest, useModel, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { save } from '../service';
+import { getProductById, update } from '../service';
 import styles from './style.less';
+import React, { useEffect, useState } from 'react';
 
 const BasicForm = (props) => {
+  const [product, setProduct] = useState(null);    
 
-  const [form] = Form.useForm();
+  useEffect(() => {
+    console.log('ProductUpdateForm > useEffect', props);
+    const { id } = props.match.params;
+    const getProduct = async (id) => {
+      const res = await getProductById(id);
+      setProduct(res);
+    }
+    getProduct(id);
+  }, []);
 
-  const { run } = useRequest(save, {
+  const { run } = useRequest(update, {
     manual: true,
     onSuccess: (x) => {
       message.success('Product is saved', x);
-      form.resetFields();
+      history.push('/products');
     },
     onError: (e) => {
       console.log(e);
@@ -32,15 +41,15 @@ const BasicForm = (props) => {
   });
 
   const onFinish = async (values) => {
-    console.log(values, form);
-    run(values);
+    console.log(values);
+    run({ _id: product._id, ...values });
   };
 
   return (
-    <PageContainer content="My amazing product entry form">
+    product && <PageContainer content="My amazing product update form">
       <Card bordered={false}>
         <ProForm
-          hideRequiredMark
+          hideRequiredMark={false}
           style={{
             margin: 'auto',
             marginTop: 8,
@@ -48,13 +57,14 @@ const BasicForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          onFinish={(v) => onFinish(v)}
-          form={form}
+          initialValues={product}
+          onFinish={onFinish}
         >
           <ProFormText
             width="md"
             label="Name"
             name="name"
+            value={product.name}
             rules={[
               {
                 required: true,
@@ -68,6 +78,7 @@ const BasicForm = (props) => {
             width="md"
             label="SKU"
             name="sku"
+            value={product.sku}
             rules={[
               {
                 required: true,
@@ -81,6 +92,7 @@ const BasicForm = (props) => {
             label="Description"
             width="xl"
             name="description"
+            value={product.description}
             rules={[
               {
                 required: true,
@@ -93,6 +105,7 @@ const BasicForm = (props) => {
           <ProFormDigit
             label={<span>Cost</span>}
             name="cost"
+            value={product.cost}
             placeholder="Please enter product cost"
             min={0}
             width="md"
@@ -104,6 +117,7 @@ const BasicForm = (props) => {
           <ProFormDigit
             label={<span>Price</span>}
             name="price"
+            value={product.price}
             placeholder="Please enter product price"
             min={0}
             width="md"
@@ -115,23 +129,30 @@ const BasicForm = (props) => {
           <ProFormRadio.Group
             options={[
               {
-                value: '1',
+                value: 1,
                 label: 'Small',
               },
               {
-                value: '2',
+                value: 2,
                 label: 'Medium',
               },
               {
-                value: '3',
+                value: 3,
                 label: 'Large',
-              },
+              }
             ]}
             label="Size"
+            value={product.size}
             name="size"
           />
-          <ProFormDatePicker width="md" name="manufacturingDate" label="Manufacturing date" />
-          <ProFormDatePicker width="md" name="expiryDate" label="Expiry date" />
+          <ProFormDatePicker width="md"
+            name="manufacturingDate"
+            value={product.manufacturingDate}
+            label="Manufacturing date" />
+          <ProFormDatePicker width="md"
+            name="expiryDate"
+            value={product.expiryDate}
+            label="Expiry date" />
         </ProForm>
       </Card>
     </PageContainer>
