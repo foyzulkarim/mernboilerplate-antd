@@ -15,18 +15,8 @@ const save = async (product) => {
 };
 
 const update = async (product) => {
-    const id = product._id;
-    let model = await Model.findById(id);
-    if (model) {
-        model.productName = product.productName;
-        model.cost = product.cost;
-        model.sku = product.sku;
-        model.price = product.price;
-        model.updatedAt = Date.now().toString();
-        await model.save();
-        return model._id;
-    }
-    throw new NotFound("Product not found by the id: " + id);
+    let doc = await Model.findOneAndUpdate({ _id: product._id }, product);
+    return doc;
 };
 
 const deleteById = async (id) => {
@@ -76,7 +66,7 @@ const search = async (payload) => {
         sort[key] = value;
     }
     else {
-        sort = { manufacturingDate: -1 };
+        sort = { updatedAt: -1 };
     }
 
     const data = await Model.collection.find(query).sort(sort).skip(skip).limit(take);

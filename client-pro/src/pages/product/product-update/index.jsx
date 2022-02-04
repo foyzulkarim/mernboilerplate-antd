@@ -9,17 +9,14 @@ import ProForm, {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest, useModel } from 'umi';
+import { useRequest, useModel, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getProductById } from '../service';
+import { getProductById, update } from '../service';
 import styles from './style.less';
 import React, { useEffect, useState } from 'react';
 
 const BasicForm = (props) => {
-  const { initialState, setInitialState } = useModel('@@initialState');
-  const [product, setProduct] = useState(null);
-  const { auth } = useModel('getAuthState');
-  console.log('ProductUpdateForm > props', props.match.params.id);
+  const [product, setProduct] = useState(null);    
 
   useEffect(() => {
     console.log('ProductUpdateForm > useEffect', props);
@@ -31,24 +28,25 @@ const BasicForm = (props) => {
     getProduct(id);
   }, []);
 
-  // const { run } = useRequest(submitForm, {
-  //   manual: true,
-  //   onSuccess: (x) => {
-  //     message.success('Product is saved', x);
-  //   },
-  //   onError: (e) => {
-  //     console.log(e);
-  //     message.error('Error happened ', e);
-  //   },
-  // });
+  const { run } = useRequest(update, {
+    manual: true,
+    onSuccess: (x) => {
+      message.success('Product is saved', x);
+      history.push('/products');
+    },
+    onError: (e) => {
+      console.log(e);
+      message.error('Error happened ', e);
+    },
+  });
 
   const onFinish = async (values) => {
     console.log(values);
-    // run(values);
+    run({ _id: product._id, ...values });
   };
 
   return (
-    product && <PageContainer content="My amazing product entry form">
+    product && <PageContainer content="My amazing product update form">
       <Card bordered={false}>
         <ProForm
           hideRequiredMark={false}
@@ -67,9 +65,6 @@ const BasicForm = (props) => {
             label="Name"
             name="name"
             value={product.name}
-            initialValue={product.name}
-            fieldProps={product.name}
-            onChange={(e) => { console.log('onChange', e) }}
             rules={[
               {
                 required: true,
@@ -134,19 +129,20 @@ const BasicForm = (props) => {
           <ProFormRadio.Group
             options={[
               {
-                value: '1',
+                value: 1,
                 label: 'Small',
               },
               {
-                value: '2',
+                value: 2,
                 label: 'Medium',
               },
               {
-                value: '3',
+                value: 3,
                 label: 'Large',
               }
             ]}
             label="Size"
+            value={product.size}
             name="size"
           />
           <ProFormDatePicker width="md"

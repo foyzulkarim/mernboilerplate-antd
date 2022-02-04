@@ -42,6 +42,22 @@ export async function getProductById(id, options) {
   });
 }
 
+export async function update(params) {  
+  return request('http://localhost:5000/api/products', {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+export async function save(params) {
+  return request('http://localhost:5000/api/products', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+
+
 /** 新建规则 PUT /api/rule */
 
 export async function updateRule(data, options) {

@@ -1,7 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import { PageContainer, FooterToolbar, ProFormText, } from '@ant-design/pro-layout';
+import { ModalForm, } from '@ant-design/pro-form';
 import ProTable from '@ant-design/pro-table';
 import { history } from 'umi';
 import ProDescriptions from '@ant-design/pro-descriptions';
@@ -132,14 +133,11 @@ const TableList = () => {
         <a
           key="config"
           onClick={() => {
-            handleUpdateModalVisible(true);
+            setShowDetail(true);
             setCurrentRow(record);
           }}
         >
-          配置
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          订阅警报
+          Delete
         </a>,
       ],
     },
@@ -220,61 +218,6 @@ const TableList = () => {
           rowSelection={false}
           pagination={false}
         />
-        {selectedRowsState?.length > 0 && (
-          <FooterToolbar
-            extra={
-              <div>
-                已选择{' '}
-                <a
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  {selectedRowsState.length}
-                </a>{' '}
-                项 &nbsp;&nbsp;
-                <span>
-                  XYZ服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
-                </span>
-              </div>
-            }
-          >
-            <Button
-              onClick={async () => {
-                await handleRemove(selectedRowsState);
-                setSelectedRows([]);
-                actionRef.current?.reloadAndRest?.();
-              }}
-            >
-              批量删除
-            </Button>
-            <Button type="primary">批量审批</Button>
-          </FooterToolbar>
-        )}
-
-        <Drawer
-          width={600}
-          visible={showDetail}
-          onClose={() => {
-            setCurrentRow(undefined);
-            setShowDetail(false);
-          }}
-          closable={false}
-        >
-          {currentRow?.name && (
-            <ProDescriptions
-              column={1}
-              title={currentRow?.name}
-              request={async () => ({
-                data: currentRow || {},
-              })}
-              params={{
-                id: currentRow?.name,
-              }}
-              columns={columns}
-            />
-          )}
-        </Drawer>
       </PageContainer>
       <Pagination
         total={total}
@@ -286,6 +229,9 @@ const TableList = () => {
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
+      <ModalForm>
+        <ProFormText width="sm" name="id" label="主合同编号" />
+      </ModalForm>
     </>
   );
 };

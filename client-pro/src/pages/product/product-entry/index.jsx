@@ -1,4 +1,5 @@
-import { Card, message } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
+import { Form, Card, message } from 'antd';
 import ProForm, {
   ProFormDatePicker,
   ProFormDateRangePicker,
@@ -11,18 +12,18 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useRequest, useModel } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { submitForm } from './service';
+import { save } from '../service';
 import styles from './style.less';
 
 const BasicForm = (props) => {
-  const { initialState, setInitialState } = useModel('@@initialState');
-  console.log('ProductForm > props', props);
-  const { auth } = useModel('getAuthState');
 
-  const { run } = useRequest(submitForm, {
+  const [form] = Form.useForm();
+
+  const { run } = useRequest(save, {
     manual: true,
     onSuccess: (x) => {
       message.success('Product is saved', x);
+      form.resetFields();
     },
     onError: (e) => {
       console.log(e);
@@ -31,7 +32,7 @@ const BasicForm = (props) => {
   });
 
   const onFinish = async (values) => {
-    console.log(values);
+    console.log(values, form);
     run(values);
   };
 
@@ -47,10 +48,8 @@ const BasicForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={{
-            public: '1',
-          }}
-          onFinish={onFinish}
+          onFinish={(v) => onFinish(v)}
+          form={form}
         >
           <ProFormText
             width="md"

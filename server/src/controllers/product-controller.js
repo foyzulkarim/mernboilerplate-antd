@@ -105,10 +105,9 @@ const deleteHandler = async (req, res, next) => {
 
 router.get("/:id", getByIdHandler);
 router.post("/", handleValidation(validators.productSchemaValidate), postHandler);
+router.put("/", handleValidation(validators.productSchemaValidate), putHandler);
 router.post('/search', searchHandler);
 router.post('/count', countHandler);
-router.put("/:id", putHandler);
-// router.get("/", getHandler);
 router.delete("/:id", deleteHandler);
 
 module.exports = router;
