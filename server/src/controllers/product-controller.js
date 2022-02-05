@@ -97,7 +97,7 @@ const deleteHandler = async (req, res, next) => {
     try {
         const id = req.params.id;
         await deleteById(id);
-        res.status(200).send("Product deleted");
+        res.status(200).send({ success: true, message: "Deleted successfully" });
     } catch (error) {
         return next(error, req, res);
     }
