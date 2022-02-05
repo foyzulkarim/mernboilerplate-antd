@@ -203,6 +203,7 @@ export default defineConfig({
         },
         {
           name: 'Update',
+          hideInMenu: true,
           icon: 'smile',
           path: '/products/edit/:id',
           component: './product/product-update',
