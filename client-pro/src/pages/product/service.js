@@ -42,7 +42,7 @@ export async function getProductById(id, options) {
   });
 }
 
-export async function update(params) {  
+export async function update(params) {
   return request('http://localhost:5000/api/products', {
     method: 'PUT',
     data: params,
@@ -55,6 +55,14 @@ export async function save(params) {
     data: params,
   });
 }
+
+export async function remove(id, options) {
+  return request(`http://localhost:5000/api/products/${id}`, {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
 
 
 

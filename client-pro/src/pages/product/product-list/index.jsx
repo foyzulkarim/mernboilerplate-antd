@@ -1,12 +1,12 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker } from 'antd';
+import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker, Modal } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar, ProFormText, } from '@ant-design/pro-layout';
 import { ModalForm, } from '@ant-design/pro-form';
 import ProTable from '@ant-design/pro-table';
 import { history } from 'umi';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import { searchProducts, searchProductsCount } from '../service';
+import { searchProducts, searchProductsCount, remove } from '../service';
 
 
 const TableList = () => {
@@ -26,6 +26,8 @@ const TableList = () => {
   const [total, setTotal] = useState(0);
   const [fetchProducts, setFetchProducts] = useState(false);
   const { RangePicker } = DatePicker;
+  const { confirm } = Modal;
+
   const fetchProductData = async () => {
     // console.log('current', current, 'param', param);
     const hide = message.loading('Loading...');
@@ -46,6 +48,27 @@ const TableList = () => {
     }
   }
 
+  const showDeleteConfirm = (product) => {
+    confirm({
+      title: `Do you Want to delete ${product.name}?`,
+      icon: <ExclamationCircleOutlined />,
+      content: `${product.name} will be deleted permanently`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        console.log('OK');
+        const r = await remove(product._id);
+        if (r.success) {
+          message.success(r.message);
+          setFetchProducts(true);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
 
   const fetchProductCount = async () => {
     const result = await searchProductsCount({ ...param });
@@ -135,6 +158,7 @@ const TableList = () => {
           onClick={() => {
             setShowDetail(true);
             setCurrentRow(record);
+            showDeleteConfirm(record);
           }}
         >
           Delete
