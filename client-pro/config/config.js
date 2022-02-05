@@ -5,6 +5,7 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 
 const { REACT_APP_ENV } = process.env;
+console.log('REACT_APP_ENV', REACT_APP_ENV);
 export default defineConfig({
   hash: true,
   antd: {},
@@ -381,4 +382,8 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
+  define: {
+    API_KEY: 'js3jhkj4n2kjnd',
+    API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5005',
+  },
 });

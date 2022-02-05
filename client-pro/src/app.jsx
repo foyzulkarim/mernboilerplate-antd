@@ -17,17 +17,17 @@ export const initialStateConfig = {
 
 import { extend } from 'umi-request';
 import { message } from 'antd';
-// const { initialState, setInitialState } = useModel('@@initialState');
 
 export async function getInitialState() {
   console.log('getInitialState is called');
 
+
   const initialize = (auth) => {
     // console.log('getInitialState is called, auth:', auth);
 
-
+    console.log('API_URL', API_URL);
     const request = extend({
-      // prefix: '/api/v1',
+      prefix: API_URL,
       timeout: 1000,
     });
 
@@ -41,9 +41,9 @@ export async function getInitialState() {
       } else {
         options.headers['Authorization'] = null;
       }
-
+      console.log('url:', url);
       return {
-        url: `${url}`,
+        url: `${API_URL}${url}`,
         options: { ...options, interceptors: true },
       };
     });
@@ -86,7 +86,7 @@ export async function getInitialState() {
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
 export const layout = ({ initialState }) => {
-
+  console.log('layout is called', initialState);
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
