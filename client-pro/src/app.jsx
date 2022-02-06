@@ -16,7 +16,6 @@ export const initialStateConfig = {
  * */
 
 import { extend } from 'umi-request';
-// import { request } from 'umi';
 import { message } from 'antd';
 
 export async function getInitialState() {
