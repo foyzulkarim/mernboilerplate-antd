@@ -8,7 +8,7 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getProductById, update } from '../product-service';
+import { getById, update } from '../product-service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
@@ -17,7 +17,7 @@ const EditForm = (props) => {
   useEffect(() => {
     const { id } = props.match.params;
     const getProduct = async (id) => {
-      const p = await getProductById(id);
+      const p = await getById(id);
       if (p.size > 3) { p.size = 4 }
       setProduct(p);
     }

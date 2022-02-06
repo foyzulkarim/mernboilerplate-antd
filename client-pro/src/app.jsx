@@ -34,7 +34,7 @@ export async function getInitialState() {
       } else {
         options.headers['Authorization'] = null;
       }
-      console.log('url:', url, API_URL);
+
       return {
         url: `${API_URL}${url}`,
         options: { ...options, interceptors: true },

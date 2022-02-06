@@ -383,7 +383,6 @@ export default defineConfig({
   webpack5: {},
   exportStatic: {},
   define: {
-    API_KEY: 'js3jhkj4n2kjnd',
     API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5005',
   },
 });
