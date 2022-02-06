@@ -16,22 +16,16 @@ export const initialStateConfig = {
  * */
 
 import { extend } from 'umi-request';
+// import { request } from 'umi';
 import { message } from 'antd';
 
 export async function getInitialState() {
-  console.log('getInitialState is called');
-
-
   const initialize = (auth) => {
-    // console.log('getInitialState is called, auth:', auth);
-
-    console.log('API_URL', API_URL);
-    const request = extend({
-      prefix: API_URL,
+    const requestInstance = extend({
       timeout: 1000,
     });
 
-    request.interceptors.request.use((url, options) => {
+    requestInstance.interceptors.request.use((url, options) => {
       const token = auth.token;
 
       options.headers['rbac-client-time'] = `${new Date()} `;
@@ -41,18 +35,17 @@ export async function getInitialState() {
       } else {
         options.headers['Authorization'] = null;
       }
-      console.log('url:', url);
+      console.log('url:', url, API_URL);
       return {
         url: `${API_URL}${url}`,
         options: { ...options, interceptors: true },
       };
     });
 
-    request.interceptors.response.use(async (response, options) => {
+    requestInstance.interceptors.response.use(async (response, options) => {
       // if resposne is 401, return initialize with null 
       if (response.status === 401) {
         const data = await response.clone().json();
-        console.log('response data:', response, options, data);
         localStorage.removeItem('auth');
         history.replace({
           pathname: '/user/login',
@@ -79,14 +72,13 @@ export async function getInitialState() {
   }
 
   return {
-    // fetchUserInfo,
     initialize,
     settings: {},
   };
-} // ProLayout 支持的api https://procomponents.ant.design/components/layout
+}
 
+// ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout = ({ initialState }) => {
-  console.log('layout is called', initialState);
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,

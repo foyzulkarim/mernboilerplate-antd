@@ -1,21 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Form, Card, message } from 'antd';
 import ProForm, {
   ProFormDatePicker,
-  ProFormDateRangePicker,
-  ProFormDependency,
   ProFormDigit,
   ProFormRadio,
-  ProFormSelect,
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest, useModel } from 'umi';
+import { useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { save } from '../service';
-import styles from './style.less';
+import { save } from '../product-service';
 
-const BasicForm = (props) => {
+const EntryForm = (props) => {
 
   const [form] = Form.useForm();
 
@@ -138,4 +134,4 @@ const BasicForm = (props) => {
   );
 };
 
-export default BasicForm;
+export default EntryForm;

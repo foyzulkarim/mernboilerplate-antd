@@ -1,29 +1,25 @@
 import { Card, message } from 'antd';
 import ProForm, {
   ProFormDatePicker,
-  ProFormDateRangePicker,
-  ProFormDependency,
   ProFormDigit,
   ProFormRadio,
-  ProFormSelect,
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest, useModel, history } from 'umi';
+import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getProductById, update } from '../service';
-import styles from './style.less';
+import { getProductById, update } from '../product-service';
 import React, { useEffect, useState } from 'react';
 
-const BasicForm = (props) => {
-  const [product, setProduct] = useState(null);    
+const EditForm = (props) => {
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    console.log('ProductUpdateForm > useEffect', props);
     const { id } = props.match.params;
     const getProduct = async (id) => {
-      const res = await getProductById(id);
-      setProduct(res);
+      const p = await getProductById(id);
+      if (p.size > 3) { p.size = 4 }
+      setProduct(p);
     }
     getProduct(id);
   }, []);
@@ -139,6 +135,10 @@ const BasicForm = (props) => {
               {
                 value: 3,
                 label: 'Large',
+              },
+              {
+                value: 4,
+                label: 'X-Large',
               }
             ]}
             label="Size"
@@ -159,4 +159,4 @@ const BasicForm = (props) => {
   );
 };
 
-export default BasicForm;
+export default EditForm;
