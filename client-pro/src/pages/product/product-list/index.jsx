@@ -1,24 +1,14 @@
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Button, message, Drawer, Pagination, Form, Row, Col, Input, DatePicker, Modal } from 'antd';
+import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import { PageContainer, FooterToolbar, ProFormText, } from '@ant-design/pro-layout';
-import { ModalForm, } from '@ant-design/pro-form';
+import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { history } from 'umi';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import { searchProducts, searchProductsCount, remove } from '../service';
+import { count, search, remove } from '../product-service';
 
 
 const TableList = () => {
-  /** 新建窗口的弹窗 */
-  const [createModalVisible, handleModalVisible] = useState(false);
-  /** 分布更新窗口的弹窗 */
-
-  const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
   const actionRef = useRef();
-  const [currentRow, setCurrentRow] = useState();
-  const [selectedRowsState, setSelectedRows] = useState([]);
   const [data, setData] = useState({ data: [] });
   const [current, setCurrent] = useState(1);
   const [param, setParam] = useState({});
@@ -29,11 +19,9 @@ const TableList = () => {
   const { confirm } = Modal;
 
   const fetchProductData = async () => {
-    // console.log('current', current, 'param', param);
     const hide = message.loading('Loading...');
     try {
-      const result = await searchProducts({ current: current, pageSize: 10, ...param, ...sort });
-      // console.log(result);
+      const result = await search({ current: current, pageSize: 10, ...param, ...sort });
       hide();
       setData(result);
       setFetchProducts(false);
@@ -52,7 +40,7 @@ const TableList = () => {
     confirm({
       title: `Do you Want to delete ${product.name}?`,
       icon: <ExclamationCircleOutlined />,
-      content: `${product.name} will be deleted permanently`,
+      content: `${product.name} will be deleted permanently.`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -71,16 +59,12 @@ const TableList = () => {
   };
 
   const fetchProductCount = async () => {
-    const result = await searchProductsCount({ ...param });
-    console.log('fetchProductCount ', result);
+    const result = await count({ ...param });
     setTotal(result.total);
   };
 
-
   useEffect(() => {
-    console.log('useEffect for current or sort', current, sort);
     if (fetchProducts) {
-      console.log('useEffect for current or sort only fetching products');
       fetchProductData();
     }
   }, [fetchProducts]);
@@ -89,18 +73,13 @@ const TableList = () => {
   useEffect(() => {
     setCurrent(1);
     setSort(null);
-    console.log('useEffect for fetchProductData', param);
     setFetchProducts(true);
     fetchProductCount();
   }, [param]);
 
-
-  /** 国际化配置 */
-
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
     setParam(values);
   };
 
@@ -114,9 +93,6 @@ const TableList = () => {
         return (
           <a
             onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-              console.log('entity', entity);
               history.push(`/products/edit/${entity._id}`);
             }}
           >
@@ -134,13 +110,11 @@ const TableList = () => {
       title: 'Price',
       dataIndex: 'price',
       sorter: true,
-      hideInForm: true,
       renderText: (val) => `${val}`,
     },
     {
       title: 'Size',
       dataIndex: 'size',
-      hideInForm: true,
     },
     {
       title: 'Manufacturing date',
@@ -156,8 +130,6 @@ const TableList = () => {
         <a
           key="config"
           onClick={() => {
-            setShowDetail(true);
-            setCurrentRow(record);
             showDeleteConfirm(record);
           }}
         >
@@ -193,7 +165,7 @@ const TableList = () => {
                 <Input placeholder="Search keyword for size" />
               </Form.Item>
             </Col>
-            <Form.Item name="manufacturingDateRange" label="Manuf. date">
+            <Form.Item name="manufacturingDateRange" label="M. date">
               <RangePicker />
             </Form.Item>
             <Col flex={6}>
@@ -210,24 +182,19 @@ const TableList = () => {
           headerTitle="Products"
           actionRef={actionRef}
           rowKey="_id"
-          // search={{
-          //   labelWidth: 'auto',
-          // }}
           search={false}
+          options={{ reload: false }}
           toolBarRender={() => [
             <Button
               type="primary"
               key="primary"
               onClick={() => {
-                // handleModalVisible(true);
-                console.log('plus button clicked');
-                history.push('/product/product-entry');
+                history.push('/products/new');
               }}
             >
               <PlusOutlined /> New
             </Button>,
           ]}
-          // request={getProducts}
           onChange={(_, _filter, _sorter) => {
             console.log('_sorter', _sorter);
             let sort = {};
@@ -249,13 +216,10 @@ const TableList = () => {
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
-        onChange={(page, pageSize) => { console.log('pagination\t', page); setCurrent(page); setFetchProducts(true); }}
+        onChange={(page, pageSize) => { setCurrent(page); setFetchProducts(true); }}
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
-      <ModalForm>
-        <ProFormText width="sm" name="id" label="主合同编号" />
-      </ModalForm>
     </>
   );
 };
