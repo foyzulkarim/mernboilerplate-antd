@@ -36,8 +36,4 @@ schema.index({ cost: 1 });
 // reference model
 const Product = mongoose.model("Product", schema);
 
-Product.save = async (product) => {
-    return await save(product, "Product");
-};
-
 module.exports = Product;
