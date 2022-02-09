@@ -1,38 +1,31 @@
-const models = require("../models/data-models");
-const { ProductViewModel } = require("../models/view-models/product-view-model");
+const { save: saveProduct, update: updateProduct, getById: getProductById, deleteById: deleteProduct } = require("../models/data-models/common");
+const Model = require("../models/data-models/product");
 const { NotFound } = require("../utils/errors");
-const Model = models.Product;
+const eventEmitter = require('../event-manager').getInstance();
 
-const getAll = async () => {
-    const items = await Model.find();
-    let viewModels = items.map((item) => ProductViewModel.convert(item));
-    return viewModels;
-};
+const modelName = 'Product';
 
 const save = async (product) => {
-    const savedItem = await Model.save(product);
+    const savedItem = await saveProduct(product, modelName);
     return savedItem._id;
 };
 
 const update = async (product) => {
-    let doc = await Model.findOneAndUpdate({ _id: product._id }, product);
-    return doc;
+    const updatedItem = await updateProduct(product, modelName);
+    return updatedItem._id;
 };
 
 const deleteById = async (id) => {
-    let model = await Model.findById(id);
-    if (model) {
-        let result = await Model.deleteOne({ _id: id });
-        return result;
-    }
-
-    throw new NotFound("Product not found by the id: " + id);
+    const result = await deleteProduct(id, modelName);
+    return result;
 };
 
 const getById = async (id) => {
-    let model = await Model.findById(id);
-    let viewModel = ProductViewModel.convert(model);
-    return viewModel;
+    const item = await getProductById(id, modelName);
+    if (item == null) {
+        throw new NotFound("Product not found by the id: " + id);
+    }
+    return item;
 };
 
 const search = async (payload) => {
@@ -72,7 +65,7 @@ const search = async (payload) => {
     const data = await Model.collection.find(query).sort(sort).skip(skip).limit(take);
     let items = { data: (await data.toArray()), total: 200 };
     return items;
-}
+};
 
 const count = async (payload) => {
     // let searchQuery = null;
@@ -96,16 +89,22 @@ const count = async (payload) => {
     const t = await Model.collection.find(query).count();
     let items = { total: t };
     return items;
+};
+
+const setupEventListeners = () => {
+    eventEmitter.on('ProductCreated', (product) => {
+        console.log('productCreated event received', product);
+    });
+
+    eventEmitter.on('ProductUpdated', (product) => {
+        console.log('productUpdated event received', product);
+    });
+
+    eventEmitter.on('ProductDeleted', (product) => {
+        console.log('productDeleted event received', product);
+    });
 }
 
-const upsert = async (product) => {
-    const item = await Model.findOne(product);
-    if (item == null) {
-        const model = await Model.createNew(product);
-        const savedItem = await model.save();
-        return savedItem._id;
-    }
-    return 'Already exists';
-}
+setupEventListeners();
 
-module.exports = { getAll, save, update, deleteById, getById, search, count, upsert };
+module.exports = { save, update, deleteById, getById, search, count };
