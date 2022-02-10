@@ -1,6 +1,6 @@
 const express = require("express");
-const configureRoutes = require("./controllers");
-const { handleRequest, handleError } = require("./middlewares");
+const configureRoutes = require("../controllers");
+const { handleRequest, handleError } = require("../middlewares");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -25,7 +25,7 @@ app.use(helmet());
 app.use(pino);
 app.use(handleRequest);
 
-const swaggerDocument = require('./swagger.json')
+const swaggerDocument = require('../swagger.json')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 try {
