@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const eventEmitter = require('../../event-manager').getInstance();
+const eventEmitter = require('../../core/event-manager').getInstance();
 
 const save = async (item, modelName) => {
     const model = new mongoose.models[modelName](item);

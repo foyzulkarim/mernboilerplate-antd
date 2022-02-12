@@ -28,14 +28,4 @@ app.use(handleRequest);
 const swaggerDocument = require('../swagger.json')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
-try {
-  configureRoutes(app);
-}
-catch (err) {
-  handleError(err);
-}
-// configureRoutes(app);
-
-app.use(handleError);
-
 module.exports = app;

@@ -1,7 +1,7 @@
 const { save: saveProduct, update: updateProduct, getById: getProductById, deleteById: deleteProduct } = require("../models/data-models/common");
 const Model = require("../models/data-models/product");
 const { NotFound } = require("../utils/errors");
-const eventEmitter = require('../event-manager').getInstance();
+const eventEmitter = require('../core/event-manager').getInstance();
 
 const modelName = 'Product';
 
