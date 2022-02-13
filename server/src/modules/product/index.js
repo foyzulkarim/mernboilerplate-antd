@@ -1,3 +1,8 @@
 const routes = require('./controller');
 
-module.exports = { routes };
+const init = async (app) => {
+    app.use('/api/products', routes);
+    return app;
+}
+
+module.exports = { init };
