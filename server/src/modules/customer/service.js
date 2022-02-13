@@ -1,45 +1,25 @@
-const models = require("../models/data-models");
-const { CustomerViewModel } = require("../models/view-models/customer-view-model");
-const { NotFound } = require("../utils/errors");
-const Model = models.Customer;
+// load repository.js functions
+const { save, update, getById, deleteById } = require('../../core/repository');
+const Model = require("./model");
+const { NotFound } = require("../../common/errors");
+const eventEmitter = require('../../core/event-manager').getInstance();
 
-const getAll = async () => {
-    const items = await Model.find();
-    let viewModels = items.map((item) => CustomerViewModel.convert(item));
-    return viewModels;
-};
+const modelName = 'Customer';
 
-const save = async (customer) => {
-    const model = await Model.createNew(customer);
-    const savedItem = await model.save();
-    return savedItem._id;
-};
+const setupEventListeners = () => {
+    eventEmitter.on(`${modelName}Created`, (model) => {
+        console.log(`${modelName} created`, model);
+    });
 
-const update = async (customer) => {
-    const id = customer.id;
-    let model = await Model.findById(id);
-    if (model) {
-        model.name = customer.name;
-        model.updatedAt = Date.now().toString();
-        model.save();
-        return model._id;
-    }
-    throw new NotFound("Customer not found by the id: " + id);
-};
+    eventEmitter.on(`${modelName}Updated`, (model) => {
+        console.log(`${modelName} updated`, model);
+    });
 
-const deleteById = async (id) => {
-    let model = await Model.findById(id);
-    if (model) {
-        let result = await Model.deleteOne({ _id: id });
-        return result;
-    }
+    eventEmitter.on(`${modelName}Deleted`, (model) => {
+        console.log(`${modelName} deleted`, model);
+    });
+}
 
-    throw new NotFound("Customer not found by the id: " + id);
-};
-const getById = async (id) => {
-    let model = await Model.findById(id);
-    let viewModel = CustomerViewModel.convert(model);
-    return viewModel;
-};
+setupEventListeners();
 
-module.exports = { getAll, save, update, deleteById, getById };
+module.exports = { save, update, deleteById, getById };

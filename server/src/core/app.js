@@ -1,5 +1,5 @@
 const express = require("express");
-const configureRoutes = require("../controllers");
+// const configureRoutes = require("../controllers");
 const { handleRequest, handleError } = require("../middlewares");
 const cors = require("cors");
 const helmet = require("helmet");
