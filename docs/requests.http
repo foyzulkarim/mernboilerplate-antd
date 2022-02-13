@@ -1,0 +1,8 @@
+# demo GET
+GET http://localhost:5000/api/products
+
+# search
+POST http://localhost:5000/api/products/search
+
+# get by id
+GET http://localhost:5000/api/products/62085610abc1ff4ae442ad0d

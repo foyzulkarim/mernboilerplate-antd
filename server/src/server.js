@@ -1,9 +1,12 @@
 const PORT = 5000;
 const { setup } = require('./core');
 const { app, eventEmitter, connectWithDb, logger } = setup();
+const { init } = require('./modules')
 
-const loadFeatures = async () => {
-    console.log(__dirname);
+const initModules = async () => {
+    // console.log(__dirname);
+    await init(app);
+    return app;
 }
 
 
@@ -11,7 +14,7 @@ const handleError = async (err, req, res, next) => {
     if (res.headersSent) {
         return next(err)
     }
-    
+
     let code = 500;
     if (err instanceof GeneralError) {
         code = err.getCode();
@@ -29,7 +32,7 @@ const configureRoutes = async (app) => {
     // app.use("/api/auth", authRoutes);
     // app.use('/api', authenticateRequest, appRoutes);
     // app.use('/health', healthHandler.healthHandler);
-    await loadFeatures();
+    app = await initModules(app);
     // add default route 
     app.get('/', (req, res) => {
         res.send('Hello World!');
@@ -39,13 +42,13 @@ const configureRoutes = async (app) => {
 
 try {
     configureRoutes(app);
-  }
-  catch (err) {
+}
+catch (err) {
     handleError(err);
-  } 
-  
-  app.use(handleError);
-  
+}
+
+app.use(handleError);
+
 
 
 app.listen(PORT, async () => {

@@ -8,7 +8,7 @@ const {
 } = require("../services/permission-service");
 const validators = require("../models/request-models");
 const { handleValidation } = require("../middlewares");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 
 const router = express.Router();
 

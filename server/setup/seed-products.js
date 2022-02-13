@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var faker = require('faker');
 require('dotenv').config()
 
-const { save } = require("../src/services/product-service");
+const { save } = require("../src/modules/product/service");
 
 console.log('Seed starting');
 const uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;

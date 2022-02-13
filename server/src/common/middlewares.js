@@ -1,11 +1,11 @@
-const { GeneralError, BadRequest } = require('../common/errors')
+const { GeneralError, BadRequest } = require('./errors')
 const logger = require('pino')();
 
 const handleError = async (err, req, res, next) => {
     if (res.headersSent) {
         return next(err)
     }
-    
+
     let code = 500;
     if (err instanceof GeneralError) {
         code = err.getCode();
@@ -45,4 +45,5 @@ const handleValidation = (validate) => {
         throw new BadRequest(msg);
     }
 }
+
 module.exports = { handleError, handleRequest, handleValidation }

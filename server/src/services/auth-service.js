@@ -1,6 +1,6 @@
 const models = require("../models/data-models");
 const { UserViewModel } = require("../models/view-models/user-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 // import { getByName as getRoleByName, getAll as getAllRoles, } from "./roleService";
 const bcrypt = require("bcrypt");
 

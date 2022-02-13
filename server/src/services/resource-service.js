@@ -1,6 +1,6 @@
 const models = require("../models/data-models");
 const { ResourceViewModel } = require("../models/view-models/resource-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 const Model = models.Resource;
 
 const getAll = async () => {
