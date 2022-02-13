@@ -1,7 +1,7 @@
 const models = require("../models/data-models");
 const { ProductViewModel } = require("../models/view-models/product-view-model");
 const { FilterViewModel } = require("../models/view-models/filter-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 const Model = models.Filter;
 
 const getAll = async () => {

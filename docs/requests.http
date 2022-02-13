@@ -1,0 +1,33 @@
+# demo GET
+GET http://localhost:5000/api/products
+
+# search
+POST http://localhost:5000/api/products/search
+
+# get by id
+GET http://localhost:5000/api/products/6208643e2b0e7b8b1649a393
+
+
+# customer requests
+# demo GET
+GET http://localhost:5000/api/customers
+
+# get customer by id 
+GET http://localhost:5000/api/customers/62087080e9c6ff0804390267
+
+# save customer request
+PUT http://localhost:5000/api/customers/62087080e9c6ff0804390267
+content-type: application/json
+
+{
+    "_id": "62087080e9c6ff0804390267",
+    "name": "sample4-update",
+    "phone": "1234",
+    "email": "sample-update-4@example.com",    
+    "address": "sample address",
+    "area": "sample area",
+    "city": "sample city",
+    "state": "sample state",
+    "postcode": "3000",
+    "country": "sample country"  
+}

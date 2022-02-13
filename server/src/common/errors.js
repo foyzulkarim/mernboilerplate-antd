@@ -21,7 +21,7 @@ class NotFound extends GeneralError {
         this.name = 'NotFound';
     }
 
-    getCode() { return 404; }    
+    getCode() { return 404; }
 }
 
-module.exports = {GeneralError, BadRequest, NotFound}
+module.exports = { GeneralError, BadRequest, NotFound }

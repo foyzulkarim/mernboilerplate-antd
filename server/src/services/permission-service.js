@@ -1,6 +1,6 @@
 const models = require("../models/data-models");
 const { PermissionViewModel } = require("../models/view-models/permission-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 const Model = models.Permission;
 
 const getAll = async () => {

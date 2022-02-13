@@ -1,32 +1,10 @@
-const { save: saveProduct, update: updateProduct, getById: getProductById, deleteById: deleteProduct } = require("../models/data-models/common");
-const Model = require("../models/data-models/product");
-const { NotFound } = require("../common/errors");
-const eventEmitter = require('../core/event-manager').getInstance();
+// load repository.js
+const { save, update, getById, deleteById } = require('../../core/repository');
+const Model = require("./model");
+const { NotFound } = require("../../common/errors");
+const eventEmitter = require('../../core/event-manager').getInstance();
 
 const modelName = 'Product';
-
-const save = async (product) => {
-    const savedItem = await saveProduct(product, modelName);
-    return savedItem._id;
-};
-
-const update = async (product) => {
-    const updatedItem = await updateProduct(product, modelName);
-    return updatedItem._id;
-};
-
-const deleteById = async (id) => {
-    const result = await deleteProduct(id, modelName);
-    return result;
-};
-
-const getById = async (id) => {
-    const item = await getProductById(id, modelName);
-    if (item == null) {
-        throw new NotFound("Product not found by the id: " + id);
-    }
-    return item;
-};
 
 const search = async (payload) => {
     const queries = [];
@@ -92,16 +70,16 @@ const count = async (payload) => {
 };
 
 const setupEventListeners = () => {
-    eventEmitter.on('ProductCreated', (product) => {
-        console.log('productCreated event received', product);
+    eventEmitter.on(`${modelName}Created`, (model) => {
+        console.log(`${modelName} created`, model);
     });
 
-    eventEmitter.on('ProductUpdated', (product) => {
-        console.log('productUpdated event received', product);
+    eventEmitter.on(`${modelName}Updated`, (model) => {
+        console.log(`${modelName} updated`, model);
     });
 
-    eventEmitter.on('ProductDeleted', (product) => {
-        console.log('productDeleted event received', product);
+    eventEmitter.on(`${modelName}Deleted`, (model) => {
+        console.log(`${modelName} deleted`, model);
     });
 }
 

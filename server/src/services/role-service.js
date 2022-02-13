@@ -1,6 +1,6 @@
 const models = require("../models/data-models");
 const { RoleViewModel } = require("../models/view-models/role-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 const Model = models.Role;
 
 const getAll = async () => {

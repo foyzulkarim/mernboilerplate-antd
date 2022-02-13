@@ -1,39 +1,38 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const {
-    getAll,
     save,
     update,
     deleteById,
     getById,
     search,
     count,
-} = require("../services/product-service");
-const validators = require("../models/request-models");
-const { handleValidation } = require("../middlewares");
-const { NotFound } = require("../common/errors");
+} = require("./service");
+const { validate } = require("./request");
+const { handleValidation } = require("../../common/middlewares");
+const { NotFound } = require("../../common/errors");
 
 const router = express.Router();
+const ModelName = "Product";
 
-// const getHandler = async (req, res, next) => {
-//     try {
-//         console.log('user:', req.user);
-//         const items = await getAll();
-//         const result = {
-//             data: items,
-//             total: items.length,
-//             success: true,
-//         };
-//         res.status(200).send(result);
-//     } catch (error) {
-//         return next(error, req, res);
-//     }
-// };
+const getHandler = async (req, res, next) => {
+    try {        
+        const items = [{ id: 1, name: "Product 1" }, { id: 2, name: "Product 2" }];
+        const result = {
+            data: items,
+            total: items.length,
+            success: true,
+        };
+        res.status(200).send(result);
+    } catch (error) {
+        return next(error, req, res);
+    }
+};
 
 const getByIdHandler = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const item = await getById(id);
+        const item = await getById(id, ModelName);
         if (item) {
             res.status(200).send(item);
         } else {
@@ -47,7 +46,7 @@ const getByIdHandler = async (req, res, next) => {
 const postHandler = async (req, res, next) => {
     try {
         const body = req.body;
-        const id = await save(body);
+        const id = await save(body, ModelName);
         res.status(201).send(id);
     } catch (error) {
         return next(error, req, res);
@@ -72,7 +71,6 @@ const searchHandler = async (req, res, next) => {
     }
 };
 
-
 const countHandler = async (req, res, next) => {
     try {
         const result = await count(req.body);
@@ -86,7 +84,7 @@ const countHandler = async (req, res, next) => {
 const putHandler = async (req, res, next) => {
     try {
         const body = req.body;
-        const id = await update(body);
+        const id = await update(body, ModelName);
         res.status(200).send(id);
     } catch (error) {
         return next(error, req, res);
@@ -96,16 +94,17 @@ const putHandler = async (req, res, next) => {
 const deleteHandler = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await deleteById(id);
-        res.status(200).send({ success: true, message: "Deleted successfully" });
+        await deleteById(id, ModelName);
+        res.status(200).send({ success: true, message: `${ModelName} deleted` });
     } catch (error) {
         return next(error, req, res);
     }
 };
 
+router.get("/", getHandler);
 router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validators.productSchemaValidate), postHandler);
-router.put("/", handleValidation(validators.productSchemaValidate), putHandler);
+router.post("/", handleValidation(validate), postHandler);
+router.put("/", handleValidation(validate), putHandler);
 router.post('/search', searchHandler);
 router.post('/count', countHandler);
 router.delete("/:id", deleteHandler);

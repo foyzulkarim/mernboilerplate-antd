@@ -1,6 +1,6 @@
 const models = require("../models/data-models");
 const { CustomerViewModel } = require("../models/view-models/customer-view-model");
-const { NotFound } = require("../utils/errors");
+const { NotFound } = require("../common/errors");
 const Model = models.Customer;
 
 const getAll = async () => {
