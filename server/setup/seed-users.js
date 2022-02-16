@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
-require('dotenv').config()
+require('dotenv').config();
 
 const { save, getByUsername } = require("../src/services/user-service");
 const data = require("./users.json");

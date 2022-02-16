@@ -38,6 +38,7 @@
     "eslint": "^7.31.0",
     "eslint-plugin-security": "^1.4.0",
     "jest": "^27.0.6",
+    "jshint": "^2.13.4",
     "mongodb-memory-server": "^7.3.1",
     "supertest": "^6.1.4"
   },
