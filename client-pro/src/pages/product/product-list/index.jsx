@@ -34,7 +34,7 @@ const TableList = () => {
       message.error(ex.data.errorMessage);
       return false;
     }
-  }
+  };
 
   const showDeleteConfirm = (product) => {
     confirm({

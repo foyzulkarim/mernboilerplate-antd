@@ -20,41 +20,6 @@ import { message } from 'antd';
 
 export async function getInitialState() {
   const initialize = (auth) => {
-    const requestInstance = extend({
-      timeout: 1000,
-    });
-
-    requestInstance.interceptors.request.use((url, options) => {
-      const token = auth.token;
-
-      options.headers['rbac-client-time'] = `${new Date()} `;
-
-      if (token) {
-        options.headers['Authorization'] = `Bearer ${token}`;
-      } else {
-        options.headers['Authorization'] = null;
-      }
-
-      return {
-        url: `${API_URL}${url}`,
-        options: { ...options, interceptors: true },
-      };
-    });
-
-    requestInstance.interceptors.response.use(async (response, options) => {
-      // if resposne is 401, return initialize with null 
-      if (response.status === 401) {
-        const data = await response.clone().json();
-        localStorage.removeItem('auth');
-        history.replace({
-          pathname: '/user/login',
-        });
-        message.error(data.errorMessage);
-        return { name: response.name };
-      }
-      return response;
-    });
-
     return {
       initialize,
       currentUser: auth?.userInfo,

@@ -24,16 +24,16 @@ export async function outLogin(options) {
 }
 /** 登录接口 POST /api/login/account */
 
-export async function login(body, options) {
-  return request('http://localhost:5000/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
+// export async function login(body, options) {
+//   return request('http://localhost:5000/api/auth/login', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     data: body,
+//     ...(options || {}),
+//   });
+// }
 /** 此处后端没有提供注释 GET /api/notices */
 
 export async function getNotices(options) {

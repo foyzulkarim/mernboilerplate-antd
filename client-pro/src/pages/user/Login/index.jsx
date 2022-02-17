@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import { login } from './login-service';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import styles from './index.less';
 
@@ -56,6 +56,7 @@ const Login = () => {
 
     try {
       // 登录
+      console.log('values', values, type);
       const msg = await login({ ...values, type });
       console.log('1.Login>handleSubmit>response', msg);
 
