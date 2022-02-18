@@ -110,7 +110,7 @@ const forgotPasswordHandler = async (req, res) => {
        return;
 };
 
-router.post("/register", handleValidation(validate),createUserHandler);
+router.post("/register", handleValidation(validate), createUserHandler);
 router.post('/login', loginHandler);
 router.post('/forgotPassword', forgotPasswordHandler);
 
