@@ -1,9 +1,22 @@
 const express = require("express");
-const { checkUser, searchOne, changePassword } = require("./service");
+const { handleValidation } = require("../../common/middlewares");
+const { validate } = require("./request");
+const { createUser, checkUser, searchOne, changePassword } = require("./service");
 var jwt = require('jsonwebtoken');
 // import { search as searchPermissions } from "../services/permission-service";
 
 const router = express.Router();
+
+const createUserHandler = async (req, res) => {
+       try {
+              const user = req.body;
+              const id = await createUser(user);
+              res.status(201).send(id);
+       } catch (error) {
+
+              res.status(400).send(error);
+       }
+};
 
 const loginHandler = async (req, res) => {
        if (req.body.username && req.body.password) {
@@ -80,7 +93,7 @@ const loginHandler = async (req, res) => {
 
        res.status(400).send("Invalid username or password xyz");
        return;
-}
+};
 
 const forgotPasswordHandler = async (req, res) => {
        if (req.body.email) {
@@ -95,9 +108,9 @@ const forgotPasswordHandler = async (req, res) => {
 
        res.status(400).send("Invalid email");
        return;
-}
+};
 
-
+router.post("/register", handleValidation(validate), createUserHandler);
 router.post('/login', loginHandler);
 router.post('/forgotPassword', forgotPasswordHandler);
 

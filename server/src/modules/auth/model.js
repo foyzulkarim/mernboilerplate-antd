@@ -10,9 +10,7 @@ const userSchema = new mongoose.Schema({
         email: { type: String, required: true, unique: true },
         roleName: { type: String, required: true },
         passwordHash: { type: String, required: true },
-        createdAt: { type: Date, required: true },
-        updatedAt: { type: Date, required: true },
-});
+}, { timestamps: true });
 
 // create index for username and email individually
 userSchema.index({ username: 'text' });

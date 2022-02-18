@@ -31,3 +31,17 @@ content-type: application/json
     "postcode": "3000",
     "country": "sample country"  
 }
+
+# save user request
+POST http://localhost:5000/api/auth/register
+content-type: application/json
+
+ {
+        "firstName": "User",
+        "lastName": "Two",
+        "username": "two",
+        "address": "Wakanda",
+        "phoneNumber": "00000000102",
+        "email": "two@mernboilerplate.com",
+        "password": "two"
+ }

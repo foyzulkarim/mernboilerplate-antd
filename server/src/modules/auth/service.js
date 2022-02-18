@@ -1,8 +1,9 @@
+const bcrypt = require('bcrypt');
 const { NotFound } = require("../../common/errors");
-// import { getByName as getRoleByName, getAll as getAllRoles, } from "./roleService";
-const bcrypt = require("bcrypt");
+const { save, update, getById, deleteById } = require('../../core/repository');
 
 const Model = require("./model");
+const ModelName = "User";
 
 const searchOne = async (searchRequest) => {
   const item = await Model.findOne(searchRequest);
@@ -33,4 +34,15 @@ const checkUser = async (username, password) => {
   return undefined;
 };
 
-module.exports = { searchOne, changePassword, checkUser };
+async function getPasswordHash(password) {
+  return await bcrypt.hash(password, 10);
+}
+
+const createUser = async (user) => {
+  let hash = await getPasswordHash(user.password);
+  user.passwordHash = hash;
+  const { _id } = await save(user, ModelName);
+  return _id;
+};
+
+module.exports = { searchOne, changePassword, checkUser, createUser };
