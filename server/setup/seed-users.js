@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 require('dotenv').config();
 
-const { save, getByUsername } = require("../src/services/user-service");
+const { save, getByUsername } = require("../src/modules/auth/service");
 const data = require("./users.json");
 
 console.log('Seed starting');
@@ -16,9 +16,7 @@ const connectWithDb = async () => {
         await Promise.all(data.map(async (user) => {
             // check if user exists by username
             const userExists = await getByUsername(user.username);
-            if (!userExists) {
-                user.createdAt = Date.now().toString();
-                user.updatedAt = Date.now().toString();
+            if (!userExists) {             
                 const savedUser = await save(user);
                 console.log(`Saved user id: ${savedUser._id}`);
             } else {

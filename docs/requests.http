@@ -1,5 +1,6 @@
 # demo GET
 GET http://localhost:5000/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGNlZjUzNTYxMGVhNjkwYjE1Yzk2YyIsInVzZXJuYW1lIjoidHdvIiwiZXhwIjoxNjQ1MTkzOTA3LCJpYXQiOjE2NDUxOTAzMDd9.toTME4KKSuOLVOrnPGIXlbLXT7UmaOfshDHvheryDak
 
 # search
 POST http://localhost:5000/api/products/search
@@ -45,3 +46,12 @@ content-type: application/json
         "email": "two@mernboilerplate.com",
         "password": "two"
  }
+
+ # login user request
+POST http://localhost:5000/api/auth/login
+content-type: application/json
+
+{
+    "username": "two",
+    "password": "two"
+}
