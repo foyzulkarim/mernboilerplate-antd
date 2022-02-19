@@ -166,7 +166,40 @@ const Register = () => {
         <div className={styles.main}>
           <Form form={form} name="UserRegister" onFinish={onFinish}>
             <FormItem
-              name="mail"
+              name="firstName"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the first name!',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="First name" />
+            </FormItem>
+            <FormItem
+              name="lastName"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the last name!',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="Last name" />
+            </FormItem>
+            <FormItem
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the username!',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="Username" />
+            </FormItem>
+            <FormItem
+              name="email"
               rules={[
                 {
                   required: true,
@@ -179,6 +212,21 @@ const Register = () => {
               ]}
             >
               <Input size="large" placeholder="Email" />
+            </FormItem>
+            <FormItem
+              name="phoneNumber"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter phone number!',
+                },
+                {
+                  pattern: /\d{11}$/,
+                  message: 'Malformed phone number!',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="eg. 01XXXXXXXXX" />
             </FormItem>
             <Popover
               getPopupContainer={(node) => {
@@ -243,23 +291,6 @@ const Register = () => {
             >
               <Input size="large" type="password" placeholder="Confirm password" />
             </FormItem>
-            <InputGroup>
-              <FormItem
-                name="mobile"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter phone number!',
-                  },
-                  {
-                    pattern: /\d{11}$/,
-                    message: 'Malformed phone number!',
-                  },
-                ]}
-              >
-                <Input size="large" placeholder="eg. 01XXXXXXXXX" />
-              </FormItem>
-            </InputGroup>
             <FormItem>
               <div>
                 <Button

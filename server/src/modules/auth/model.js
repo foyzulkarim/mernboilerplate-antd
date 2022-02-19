@@ -5,11 +5,11 @@ const userSchema = new mongoose.Schema({
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         username: { type: String, required: true, unique: true },
-        address: { type: String, required: false },
         phoneNumber: { type: String, required: true, unique: true },
         email: { type: String, required: true, unique: true },
         roleName: { type: String, required: true },
         passwordHash: { type: String, required: true },
+        address: { type: String, required: false },
 }, { timestamps: true });
 
 // create index for username and email individually
@@ -22,7 +22,6 @@ const User = mongoose.model("User", userSchema);
 async function getPasswordHash(password) {
         return await bcrypt.hash(password, 10);
 }
-
 
 User.createNew = async (user) => {
         user._id = new mongoose.Types.ObjectId();
