@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Col, Input, Popover, Progress, Row, Select, message } from 'antd';
-import { Link, useRequest, history } from 'umi';
+import { useIntl, Link, useRequest, history, FormattedMessage } from 'umi';
 import { fakeRegister } from './service';
 import styles from './style.less';
 
@@ -35,6 +35,7 @@ const Register = () => {
   const [visible, setVisible] = useState(false);
   const [prefix, setPrefix] = useState('86');
   const [popover, setPopover] = useState(false);
+  const intl = useIntl();
   const confirmDirty = false;
   let interval;
   const [form] = Form.useForm();
@@ -147,119 +148,143 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.main}>
-      <h3>Register</h3>
-      <Form form={form} name="UserRegister" onFinish={onFinish}>
-        <FormItem
-          name="mail"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the email address!',
-            },
-            {
-              type: 'email',
-              message: 'Email address format error!',
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Email" />
-        </FormItem>
-        <Popover
-          getPopupContainer={(node) => {
-            if (node && node.parentNode) {
-              return node.parentNode;
-            }
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.top}>
+          <div className={styles.header}>
+            <Link to="/">
+              <img alt="logo" className={styles.logo} src="/logo.svg" />
+              <span className={styles.title}>Register</span>
+            </Link>
+          </div>
+          <div className={styles.desc}>
+            {intl.formatMessage({
+              id: 'pages.layouts.userLayout.title',
+            })}
+          </div>
+        </div>
+        <div className={styles.main}>
+          <Form form={form} name="UserRegister" onFinish={onFinish}>
+            <FormItem
+              name="mail"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the email address!',
+                },
+                {
+                  type: 'email',
+                  message: 'Email address format error!',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="Email" />
+            </FormItem>
+            <Popover
+              getPopupContainer={(node) => {
+                if (node && node.parentNode) {
+                  return node.parentNode;
+                }
 
-            return node;
-          }}
-          content={
-            visible && (
-              <div
-                style={{
-                  padding: '4px 0',
-                }}
+                return node;
+              }}
+              content={
+                visible && (
+                  <div
+                    style={{
+                      padding: '4px 0',
+                    }}
+                  >
+                    {passwordStatusMap[getPasswordStatus()]}
+                    {renderPasswordProgress()}
+                    <div
+                      style={{
+                        marginTop: 10,
+                      }}
+                    >
+                      <span>Please enter at least 6 characters. Please do not use passwords that are easy to guess.</span>
+                    </div>
+                  </div>
+                )
+              }
+              overlayStyle={{
+                width: 240,
+              }}
+              placement="right"
+              visible={visible}
+            >
+              <FormItem
+                name="password"
+                className={
+                  form.getFieldValue('password') &&
+                  form.getFieldValue('password').length > 0 &&
+                  styles.password
+                }
+                rules={[
+                  {
+                    validator: checkPassword,
+                  },
+                ]}
               >
-                {passwordStatusMap[getPasswordStatus()]}
-                {renderPasswordProgress()}
-                <div
-                  style={{
-                    marginTop: 10,
-                  }}
+                <Input size="large" type="password" placeholder="At least 6 digit password, case sensitive" />
+              </FormItem>
+            </Popover>
+            <FormItem
+              name="confirm"
+              rules={[
+                {
+                  required: true,
+                  message: 'Confirm password',
+                },
+                {
+                  validator: checkConfirm,
+                },
+              ]}
+            >
+              <Input size="large" type="password" placeholder="Confirm password" />
+            </FormItem>
+            <InputGroup>
+              <FormItem
+                name="mobile"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter phone number!',
+                  },
+                  {
+                    pattern: /\d{11}$/,
+                    message: 'Malformed phone number!',
+                  },
+                ]}
+              >
+                <Input size="large" placeholder="eg. 01XXXXXXXXX" />
+              </FormItem>
+            </InputGroup>
+            <FormItem>
+              <div>
+                <Button
+                  block
+                  loading={submitting}
+                  className={styles.submit}
+                  type="primary"
+                  htmlType="submit"
                 >
-                  <span>Please enter at least 6 characters. Please do not use passwords that are easy to guess.</span>
-                </div>
+                  <span>Register</span>
+                </Button>
               </div>
-            )
-          }
-          overlayStyle={{
-            width: 240,
-          }}
-          placement="right"
-          visible={visible}
-        >
-          <FormItem
-            name="password"
-            className={
-              form.getFieldValue('password') &&
-              form.getFieldValue('password').length > 0 &&
-              styles.password
-            }
-            rules={[
-              {
-                validator: checkPassword,
-              },
-            ]}
-          >
-            <Input size="large" type="password" placeholder="At least 6 digit password, case sensitive" />
-          </FormItem>
-        </Popover>
-        <FormItem
-          name="confirm"
-          rules={[
-            {
-              required: true,
-              message: 'Confirm password',
-            },
-            {
-              validator: checkConfirm,
-            },
-          ]}
-        >
-          <Input size="large" type="password" placeholder="Confirm password" />
-        </FormItem>
-        <InputGroup>
-          <FormItem
-            name="mobile"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter phone number!',
-              },
-              {
-                pattern: /\d{11}$/,
-                message: 'Malformed phone number!',
-              },
-            ]}
-          >
-            <Input size="large" placeholder="eg. 01XXXXXXXXX" />
-          </FormItem>
-        </InputGroup>
-        <FormItem>
-          <Button
-            size="large"
-            loading={submitting}
-            className={styles.submit}
-            type="primary"
-            htmlType="submit"
-          >
-            <span>Register</span>
-          </Button>
-          <Link className={styles.login} to="/user/login">
-            <span>Log in</span>
-          </Link>
-        </FormItem>
-      </Form>
+              <div style={{
+                marginTop: 24,
+              }}>
+                <Button block type="default">
+                  <Link to="/user/login">
+                    <FormattedMessage id="pages.login.register" defaultMessage="Login" />
+                  </Link>
+                </Button>
+              </div>
+            </FormItem>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 };
