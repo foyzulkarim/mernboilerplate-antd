@@ -25,8 +25,11 @@ const changePassword = async (user, newPassword) => {
 
 const getByUsername = async (username) => {
   const item = await Model.findOne({ username }).lean();
-  const { __v, passwordHash, ...rest } = item;
-  return rest;
+  if (item) {
+    const { __v, passwordHash, ...rest } = item;
+    return rest;
+  }
+  return null;
 };
 
 const checkUser = async (username, password) => {
@@ -51,4 +54,4 @@ const createUser = async (user) => {
   return _id;
 };
 
-module.exports = { searchOne, changePassword, checkUser, createUser, getByUsername };
+module.exports = { save, searchOne, changePassword, checkUser, createUser, getByUsername };

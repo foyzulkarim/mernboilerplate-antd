@@ -29,7 +29,6 @@ request.interceptors.response.use(async (response, options) => {
         history.replace({
             pathname: '/user/login',
         });
-        message.error(data.errorMessage);
         return { name: response.name };
     }
     return response;
