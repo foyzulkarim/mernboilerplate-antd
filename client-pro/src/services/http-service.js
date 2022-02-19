@@ -1,5 +1,5 @@
 import request from 'umi-request';
-
+import { history } from 'umi';
 request.interceptors.request.use((url, options) => {
     let authStr = localStorage.getItem('auth');
     if (authStr && JSON.parse(authStr)) {
