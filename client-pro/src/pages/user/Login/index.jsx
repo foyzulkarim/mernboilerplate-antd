@@ -144,10 +144,10 @@ const Login = () => {
                 })}
               />
               <Tabs.TabPane
-                key="mobile"
+                key="register"
                 tab={intl.formatMessage({
-                  id: 'pages.login.phoneLogin.tab',
-                  defaultMessage: '手机号登录',
+                  id: 'pages.login.registerAccount',
+                  defaultMessage: 'Register',
                 })}
               />
             </Tabs>

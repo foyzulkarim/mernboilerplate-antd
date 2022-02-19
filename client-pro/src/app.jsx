@@ -6,6 +6,7 @@ import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+const registerPath = '/user/register';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
 export const initialStateConfig = {
@@ -53,14 +54,17 @@ export const layout = ({ initialState }) => {
     onPageChange: () => {
       let authStr = localStorage.getItem('auth');
       const { location } = history; // 如果没有登录，重定向到 login      
-      // console.log('onPageChange', location.pathname, initialState);
+      console.log('onPageChange', location.pathname, initialState);
 
-      if (authStr && (JSON.parse(authStr).isAuthenticated) && initialState && initialState.currentUser && location.pathname === loginPath) {
-        history.push('/');
+      if (!authStr || (JSON.parse(authStr).isAuthenticated) === false) {
+        if (location.pathname === loginPath || location.pathname === registerPath) {
+          history.push(location.pathname);
+        }
+        else history.push(loginPath);
       }
 
-      if (!authStr || (!initialState?.currentUser && location.pathname !== loginPath)) {
-        history.push(loginPath);
+      if (authStr && (JSON.parse(authStr).isAuthenticated) && (location.pathname === loginPath || location.pathname === registerPath)) {
+        history.push('/');
       }
     },
     links: isDev

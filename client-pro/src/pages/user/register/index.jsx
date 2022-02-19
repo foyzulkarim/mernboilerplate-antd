@@ -10,17 +10,17 @@ const InputGroup = Input.Group;
 const passwordStatusMap = {
   ok: (
     <div className={styles.success}>
-      <span>强度：强</span>
+      <span>Strength: strong</span>
     </div>
   ),
   pass: (
     <div className={styles.warning}>
-      <span>强度：中</span>
+      <span>Strength: Medium</span>
     </div>
   ),
   poor: (
     <div className={styles.error}>
-      <span>强度：太短</span>
+      <span>Strength: too short</span>
     </div>
   ),
 };
@@ -95,7 +95,7 @@ const Register = () => {
     const promise = Promise;
 
     if (value && value !== form.getFieldValue('password')) {
-      return promise.reject('两次输入的密码不匹配!');
+      return promise.reject('The passwords entered twice do not match!');
     }
 
     return promise.resolve();
@@ -106,7 +106,7 @@ const Register = () => {
 
     if (!value) {
       setVisible(!!value);
-      return promise.reject('请输入密码!');
+      return promise.reject('Please enter your password!');
     } // 有值的情况
 
     if (!visible) {
@@ -148,22 +148,22 @@ const Register = () => {
 
   return (
     <div className={styles.main}>
-      <h3>注册</h3>
+      <h3>Register</h3>
       <Form form={form} name="UserRegister" onFinish={onFinish}>
         <FormItem
           name="mail"
           rules={[
             {
               required: true,
-              message: '请输入邮箱地址!',
+              message: 'Please input the email address!',
             },
             {
               type: 'email',
-              message: '邮箱地址格式错误!',
+              message: 'Email address format error!',
             },
           ]}
         >
-          <Input size="large" placeholder="邮箱" />
+          <Input size="large" placeholder="Email" />
         </FormItem>
         <Popover
           getPopupContainer={(node) => {
@@ -187,7 +187,7 @@ const Register = () => {
                     marginTop: 10,
                   }}
                 >
-                  <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
+                  <span>Please enter at least 6 characters. Please do not use passwords that are easy to guess.</span>
                 </div>
               </div>
             )
@@ -211,7 +211,7 @@ const Register = () => {
               },
             ]}
           >
-            <Input size="large" type="password" placeholder="至少6位密码，区分大小写" />
+            <Input size="large" type="password" placeholder="At least 6 digit password, case sensitive" />
           </FormItem>
         </Popover>
         <FormItem
@@ -219,71 +219,32 @@ const Register = () => {
           rules={[
             {
               required: true,
-              message: '确认密码',
+              message: 'Confirm password',
             },
             {
               validator: checkConfirm,
             },
           ]}
         >
-          <Input size="large" type="password" placeholder="确认密码" />
+          <Input size="large" type="password" placeholder="Confirm password" />
         </FormItem>
-        <InputGroup compact>
-          <Select
-            size="large"
-            value={prefix}
-            onChange={changePrefix}
-            style={{
-              width: '20%',
-            }}
-          >
-            <Option value="86">+86</Option>
-            <Option value="87">+87</Option>
-          </Select>
+        <InputGroup>
           <FormItem
-            style={{
-              width: '80%',
-            }}
             name="mobile"
             rules={[
               {
                 required: true,
-                message: '请输入手机号!',
+                message: 'Please enter phone number!',
               },
               {
-                pattern: /^\d{11}$/,
-                message: '手机号格式错误!',
+                pattern: /\d{11}$/,
+                message: 'Malformed phone number!',
               },
             ]}
           >
-            <Input size="large" placeholder="手机号" />
+            <Input size="large" placeholder="eg. 01XXXXXXXXX" />
           </FormItem>
         </InputGroup>
-        <Row gutter={8}>
-          <Col span={16}>
-            <FormItem
-              name="captcha"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入验证码!',
-                },
-              ]}
-            >
-              <Input size="large" placeholder="验证码" />
-            </FormItem>
-          </Col>
-          <Col span={8}>
-            <Button
-              size="large"
-              disabled={!!count}
-              className={styles.getCaptcha}
-              onClick={onGetCaptcha}
-            >
-              {count ? `${count} s` : '获取验证码'}
-            </Button>
-          </Col>
-        </Row>
         <FormItem>
           <Button
             size="large"
@@ -292,10 +253,10 @@ const Register = () => {
             type="primary"
             htmlType="submit"
           >
-            <span>注册</span>
+            <span>Register</span>
           </Button>
           <Link className={styles.login} to="/user/login">
-            <span>使用已有账户登录</span>
+            <span>Log in</span>
           </Link>
         </FormItem>
       </Form>
