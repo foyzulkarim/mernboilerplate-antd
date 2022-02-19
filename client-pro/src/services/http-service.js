@@ -1,5 +1,5 @@
 import request from 'umi-request';
-
+import { history } from 'umi';
 request.interceptors.request.use((url, options) => {
     let authStr = localStorage.getItem('auth');
     if (authStr && JSON.parse(authStr)) {
@@ -29,7 +29,6 @@ request.interceptors.response.use(async (response, options) => {
         history.replace({
             pathname: '/user/login',
         });
-        message.error(data.errorMessage);
         return { name: response.name };
     }
     return response;

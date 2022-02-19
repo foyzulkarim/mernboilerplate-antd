@@ -1,3 +1,4 @@
+var jwt = require('jsonwebtoken');
 const { GeneralError, BadRequest } = require('./errors')
 const logger = require('pino')();
 
@@ -46,4 +47,29 @@ const handleValidation = (validate) => {
     }
 }
 
-module.exports = { handleError, handleRequest, handleValidation }
+const authenticateRequest = async (req, res, next) => {
+    let auth = req.headers['authorization'];
+    if (auth) {
+        auth = auth.replace('Bearer ', '');
+        jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.status(401).send({
+                    success: false,
+                    // error: err.message || 'Invalid token',
+                    // data: '401 Unauthorized',
+                    // message: 'Invalid token',
+                    errorMessage: err.message || 'Invalid token',
+                });
+            }
+            else {
+                req.user = decoded;
+                next();
+            }
+        });
+    }
+    else {
+        res.status(401).send({ error: 'Unauthenticated request' });
+    }
+}
+
+module.exports = { handleError, handleRequest, handleValidation, authenticateRequest }

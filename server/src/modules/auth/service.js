@@ -23,8 +23,17 @@ const changePassword = async (user, newPassword) => {
   throw new NotFound("User not found by the id: " + id);
 };
 
+const getByUsername = async (username) => {
+  const item = await Model.findOne({ username }).lean();
+  if (item) {
+    const { __v, passwordHash, ...rest } = item;
+    return rest;
+  }
+  return null;
+};
+
 const checkUser = async (username, password) => {
-  let user = await Model.findOne({ username: username }); // status: "Active"
+  let user = await Model.findOne({ username: username }).lean(); // status: "Active"
   if (user) {
     const match = await bcrypt.compare(password, user.passwordHash);
     const { __v, passwordHash, ...rest } = user;
@@ -45,4 +54,4 @@ const createUser = async (user) => {
   return _id;
 };
 
-module.exports = { searchOne, changePassword, checkUser, createUser };
+module.exports = { save, searchOne, changePassword, checkUser, createUser, getByUsername };
