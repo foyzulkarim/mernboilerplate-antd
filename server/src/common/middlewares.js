@@ -3,7 +3,7 @@ const { GeneralError, BadRequest } = require('./errors')
 const logger = require('pino')();
 
 const handleError = async (err, req, res, next) => {
-    if (res.headersSent) {
+    if (res?.headersSent) {
         return next(err)
     }
 
@@ -12,10 +12,10 @@ const handleError = async (err, req, res, next) => {
         code = err.getCode();
     }
 
-    let correlationId = req.headers['x-correlation-id'];
+    let correlationId = req?.headers['x-correlation-id'];
     logger.error(err, { correlationId });
-    return res.status(code).json({
-        correlationId: correlationId, message: err.message
+    return res && res.status(code).json({
+        correlationId: correlationId, message: err.message, status: code, error: { ...err }
     });
 }
 

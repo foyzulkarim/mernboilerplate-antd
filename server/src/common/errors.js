@@ -24,4 +24,13 @@ class NotFound extends GeneralError {
     getCode() { return 404; }
 }
 
-module.exports = { GeneralError, BadRequest, NotFound }
+class MongoError extends GeneralError {
+    constructor(message) {
+        super(message);
+        this.name = 'MongoError';
+    }
+
+    getCode() { return 400; }
+}
+
+module.exports = { GeneralError, BadRequest, NotFound, MongoError }

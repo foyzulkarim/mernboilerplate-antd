@@ -24,12 +24,18 @@ request.interceptors.request.use((url, options) => {
 request.interceptors.response.use(async (response, options) => {
     // if resposne is 401, return initialize with null 
     if (response.status === 401) {
-        const data = await response.clone().json();
         localStorage.removeItem('auth');
         history.replace({
             pathname: '/user/login',
         });
         return { name: response.name };
+    }
+    if (response.status === 400) {
+        const data = await response.clone().json();
+        console.log('data', data);
+        const errorObj = new Error(data.message);
+        errorObj.error = data.error;
+        return errorObj;
     }
     return response;
 });

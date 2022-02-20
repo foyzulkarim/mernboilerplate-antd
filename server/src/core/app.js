@@ -23,7 +23,6 @@ app.use(limiter);
 app.use(express.json());
 app.use(helmet());
 app.use(pino);
-app.use(handleRequest);
 
 const swaggerDocument = require('../swagger.json')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))

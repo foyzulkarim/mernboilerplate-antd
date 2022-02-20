@@ -1,20 +1,19 @@
 const express = require("express");
 const { handleValidation } = require("../../common/middlewares");
-const { validate } = require("./request");
+const { validateRegistration, validateUsername } = require("./request");
 const { createUser, checkUser, searchOne, changePassword } = require("./service");
 var jwt = require('jsonwebtoken');
 // import { search as searchPermissions } from "../services/permission-service";
 
 const router = express.Router();
 
-const createUserHandler = async (req, res) => {
+const createUserHandler = async (req, res, next) => {
        try {
               const user = req.body;
               const id = await createUser(user);
-              res.status(201).send(id);
+              res.status(201).send({ status: 'ok', message: 'User created successfully', id });
        } catch (error) {
-
-              res.status(400).send(error);
+              next(error);
        }
 };
 
@@ -110,8 +109,19 @@ const forgotPasswordHandler = async (req, res) => {
        return;
 };
 
-router.post("/register", handleValidation(validate), createUserHandler);
+const checkUsernameHandler = async (req, res) => {
+       const user = await searchOne({ username: req.body.username.toLowerCase() });
+       if (user) {
+              res.status(400).send({ status: 'unavailable', message: 'Username is taken' });
+              return;
+       }
+       return res.status(200).send({ status: 'available', message: 'Username is available' });
+};
+
+
+router.post("/register", handleValidation(validateRegistration), createUserHandler);
 router.post('/login', loginHandler);
 router.post('/forgotPassword', forgotPasswordHandler);
+router.post('/check-username', handleValidation(validateUsername), checkUsernameHandler);
 
 module.exports = router;
