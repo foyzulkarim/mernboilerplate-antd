@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Col, Input, Popover, Progress, Row, Select, message } from 'antd';
 import { useIntl, Link, useRequest, history, FormattedMessage } from 'umi';
-import { fakeRegister } from './service';
+import { registerUser, checkUsername } from './service';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -73,23 +73,41 @@ const Register = () => {
     return 'poor';
   };
 
-  const { loading: submitting, run: register } = useRequest(fakeRegister, {
-    manual: true,
-    onSuccess: (data, params) => {
-      if (data.status === 'ok') {
-        message.success('注册成功！');
-        history.push({
-          pathname: '/user/register-result',
-          state: {
-            account: params.email,
-          },
-        });
-      }
-    },
-  });
+  // const { loading: submitting, run: register } = useRequest(registerUser, {
+  //   manual: true,
+  //   onSuccess: (data, params) => {
+  //     console.log(data, params);
+  //     if (data.status === 'ok') {
+  //       message.success('Registration success!');
+  //       history.push({
+  //         pathname: '/user/register-result',
+  //         state: {
+  //           account: params.email,
+  //         },
+  //       });
+  //     }
+  //   },
+  //   onError: (err, params) => {
+  //     console.log(err, params);
+  //     message.error(err.message);
+  //   }
+  // });
 
-  const onFinish = (values) => {
-    register(values);
+  const onFinish = async (values) => {
+    const result = await registerUser(values);
+    console.log(result);
+    if (result.error) {
+      message.error(result.error.message);
+    }
+    else {
+      message.success('Registration success!');
+      history.push({
+        pathname: '/user/register-result',
+        state: {
+          account: params.email,
+        },
+      });
+    }
   };
 
   const checkConfirm = (_, value) => {
@@ -126,6 +144,22 @@ const Register = () => {
 
     return promise.resolve();
   };
+
+
+  const validateUsername = async (_, value) => {
+    const promise = Promise;
+    if (!value) {
+      setVisible(!!value);
+      return promise.reject('Please enter your username!');
+    }
+    const res = await checkUsername({ username: value });
+    if (res.status === 'available') {
+      return promise.resolve();
+    } else {
+      console.log(JSON.stringify(res));
+      return promise.reject(res.message);
+    }
+  }
 
   const changePrefix = (value) => {
     setPrefix(value);
@@ -191,8 +225,7 @@ const Register = () => {
               name="username"
               rules={[
                 {
-                  required: true,
-                  message: 'Please input the username!',
+                  validator: validateUsername,
                 },
               ]}
             >
@@ -221,7 +254,7 @@ const Register = () => {
                   message: 'Please enter phone number!',
                 },
                 {
-                  pattern: /\d{11}$/,
+                  pattern: /^01[0-9]{9}$/,
                   message: 'Malformed phone number!',
                 },
               ]}
@@ -295,7 +328,7 @@ const Register = () => {
               <div>
                 <Button
                   block
-                  loading={submitting}
+                  // loading={submitting}
                   className={styles.submit}
                   type="primary"
                   htmlType="submit"

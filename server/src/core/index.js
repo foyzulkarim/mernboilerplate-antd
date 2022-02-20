@@ -1,6 +1,6 @@
 
 
-const setup = () => {
+const setup = async () => {
     const logger = require('pino')()
     const eventEmitter = require('./event-manager').getInstance();
     const app = require('./app');
