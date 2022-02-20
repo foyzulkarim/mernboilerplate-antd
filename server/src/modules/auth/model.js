@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { MongoError } = require('../../common/errors');
 
+const keyMapping = {
+        'phoneNumber': 'Phone number',
+        'email': 'Email',
+        'username': 'Username',
+}
+
 const userSchema = new mongoose.Schema({
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
@@ -22,8 +28,9 @@ userSchema.post('save', function (error, doc, next) {
                 console.log(error);
                 // if error.message contains the substring 'duplicate key error' then it's a duplicate username
                 if (error.message.includes('duplicate key error')) {
-                        let msg = `Value (${error.keyValue[Object.keys(error.keyValue)[0]]}) is already exists in database. Please choose a different value.`;
-                        next(new MongoError(msg));
+                        const keyName = Object.keys(error.keyValue)[0];
+                        const errorMessage = `${keyMapping[keyName]} already exists`;
+                        next(new MongoError(errorMessage));
                 } else next(new MongoError(error.message));
         } else {
                 next();
