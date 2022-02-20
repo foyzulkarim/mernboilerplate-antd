@@ -50,7 +50,6 @@ async function getPasswordHash(password) {
 const createUser = async (user) => {
   let hash = await getPasswordHash(user.password);
   user.passwordHash = hash;
-  user.username = user.username.toLowerCase();
   const { _id } = await save(user, ModelName);
   return _id;
 };

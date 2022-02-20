@@ -19,7 +19,7 @@ const createUserHandler = async (req, res, next) => {
 
 const loginHandler = async (req, res) => {
        if (req.body.username && req.body.password) {
-              let user = await checkUser(req.body.username.toLowerCase(), req.body.password);
+              let user = await checkUser(req.body.username, req.body.password);
               if (user) {
                      // console.log("user", user);
                      // const permissions = await searchPermissions({ roleId });

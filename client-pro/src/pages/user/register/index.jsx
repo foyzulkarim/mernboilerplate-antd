@@ -102,10 +102,7 @@ const Register = () => {
     else {
       message.success('Registration success!');
       history.push({
-        pathname: '/user/register-result',
-        state: {
-          account: params.email,
-        },
+        pathname: '/user/login',
       });
     }
   };
