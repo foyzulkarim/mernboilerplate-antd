@@ -31,9 +31,6 @@ class MongoError extends GeneralError {
     }
 
     getCode() { return 400; }
-
-    getMessage(mongoErrorCode) {
-    }
 }
 
 module.exports = { GeneralError, BadRequest, NotFound, MongoError }

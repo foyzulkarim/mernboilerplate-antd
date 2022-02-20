@@ -24,8 +24,7 @@ userSchema.index({ username: 'text' });
 userSchema.index({ email: 'text' });
 
 userSchema.post('save', function (error, doc, next) {
-        if (error.name === 'MongoError' && error.code === 11000) {
-                console.log(error);
+        if (error.name === 'MongoError' && error.code === 11000) {                
                 // if error.message contains the substring 'duplicate key error' then it's a duplicate username
                 if (error.message.includes('duplicate key error')) {
                         const keyName = Object.keys(error.keyValue)[0];

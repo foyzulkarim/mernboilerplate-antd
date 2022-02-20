@@ -23,8 +23,6 @@ request.interceptors.request.use((url, options) => {
 
 request.interceptors.response.use(async (response, options) => {
     // if resposne is 401, return initialize with null 
-
-    console.log('response', response);
     if (response.status === 401) {
         localStorage.removeItem('auth');
         history.replace({
@@ -40,9 +38,6 @@ request.interceptors.response.use(async (response, options) => {
         return errorObj;
     }
     return response;
-    // const data = await response.clone().json();
-    // console.log('response', data);
-    // return data;
 });
 
 export const get = async (url, params, options) => request(url, {

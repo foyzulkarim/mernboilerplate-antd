@@ -27,7 +27,7 @@ const handleRequest = async (req, res, next) => {
     }
 
     res.set('x-correlation-id', correlationId);
-    console.log(`this is my log info: ${req.method} ${req.url}`, { correlationId });
+
     logger.info(`this is my log info: ${req.method} ${req.url}`, { correlationId });
     return next();
 }
@@ -44,9 +44,6 @@ const handleValidation = (validate) => {
         const messages = details.map((e) => e.message);
         const msg = messages.join(',');
         throw new BadRequest(msg);
-        // return res.status(400).json({
-        //     status: 'error', message: msg
-        // });
     }
 }
 

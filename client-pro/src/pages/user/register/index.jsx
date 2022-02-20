@@ -73,26 +73,6 @@ const Register = () => {
     return 'poor';
   };
 
-  // const { loading: submitting, run: register } = useRequest(registerUser, {
-  //   manual: true,
-  //   onSuccess: (data, params) => {
-  //     console.log(data, params);
-  //     if (data.status === 'ok') {
-  //       message.success('Registration success!');
-  //       history.push({
-  //         pathname: '/user/register-result',
-  //         state: {
-  //           account: params.email,
-  //         },
-  //       });
-  //     }
-  //   },
-  //   onError: (err, params) => {
-  //     console.log(err, params);
-  //     message.error(err.message);
-  //   }
-  // });
-
   const onFinish = async (values) => {
     const result = await registerUser(values);
     console.log(result);
@@ -100,7 +80,7 @@ const Register = () => {
       message.error(result.error.message);
     }
     else {
-      message.success('Registration success!');
+      message.success('Registration successful!');
       history.push({
         pathname: '/user/login',
       });
