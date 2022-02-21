@@ -6,7 +6,7 @@ COPY . ./
 RUN yarn
 RUN yarn build
 
-# EXPOSE 3000
+EXPOSE 8001
 CMD [ "yarn", "serve" ]
 
 # production environment

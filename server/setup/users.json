@@ -7,7 +7,7 @@
         "phoneNumber": "00000000001",
         "email": "superadmin@mernboilerplate.com",
         "roleName": "superadmin",
-        "password": "superadmin"
+        "password": "mern-boilerplate"
     },
     {
         "firstName": "Admin",
@@ -17,6 +17,16 @@
         "phoneNumber": "00000000002",
         "email": "admin@mernboilerplate.com",
         "roleName": "admin",
-        "password": "admin"
+        "password": "mern-boilerplate"
+    },
+    {
+        "firstName": "User",
+        "lastName": "User",
+        "username": "user",
+        "address": "Wakanda",
+        "phoneNumber": "00000000003",
+        "email": "user@mernboilerplate.com",
+        "roleName": "user",
+        "password": "mern-boilerplate"
     }
 ]
