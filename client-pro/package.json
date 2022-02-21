@@ -76,7 +76,7 @@
     "react-fittext": "^1.0.0",
     "react-helmet-async": "^1.0.4",
     "react-router": "^4.3.1",
-    "umi": "^3.5.0",
+    "umi": "^3.5.20",
     "umi-request": "^1.4.0",
     "umi-serve": "^1.9.10"
   },
