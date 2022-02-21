@@ -25,12 +25,13 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=appdb
+      - JWT_SECRET=1234567890
     depends_on:
       - mongo
   appclient:
     container_name: appclient
     build:
-      context: ./client-basic
+      context: ./client-pro
       dockerfile: Dockerfile
     networks:
       - mydockernet
