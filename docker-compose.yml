@@ -1,21 +1,21 @@
-version: "3.8"
+version: '3.8'
 services:
   mongo:
     image: mongo
     container_name: mongo
     ports:
-      - 27017:27017
+      - '27017:27017'
     networks:
       - mydockernet
     volumes:
-      - app_mongo:/data/db
+      - 'app_mongo:/data/db'
   appserver:
     container_name: appserver
     build:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - 5000:5000
+      - '5000:5000'
     networks:
       - mydockernet
     environment:
@@ -25,20 +25,21 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=appdb
+      - JWT_SECRET=1234567890
     depends_on:
       - mongo
   appclient:
     container_name: appclient
     build:
-      context: ./client-basic
+      context: ./client-pro
       dockerfile: Dockerfile
     networks:
       - mydockernet
     environment:
       - NODE_ENV=production
-      - REACT_APP_API_URL=http://apiserver:5000
+      - 'REACT_APP_API_URL=http://apiserver:5000'
     ports:
-      - 3000:3000
+      - '8001:8001'
     depends_on:
       - appserver
 networks:

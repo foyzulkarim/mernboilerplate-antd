@@ -1,10 +1,12 @@
 # Welcome to the RBAC MERN Boilerplate project
 
-### _A MERN boilerplate repository with RBAC feature, following all production best practices._
+### _A complete MERN boilerplate repository with RBAC feature, following all production best practices._
 
 In this repository I will keep adding the production best practices we should follow in a MERN (MongoDB, Express.js, React.js, and Node.js) project.
 
-![Product List Page](./docs/images/product-list-search-result.png)
+![Product List Page](./docs/images/product-list.png)
+
+![Product List Page](./docs/images/product-list-search.png)
 
 ## Technology stack
 
@@ -36,20 +38,36 @@ This project can be run basically in two ways. One is using docker, other way is
 
 ### Docker
 
-##### Prerequisites
-
-- [x] Docker : To run `docker-compose` command
+- run `docker-compose` command
 
 Go to the root of the repository and execute `npm start`. This will spin up the server and client containers along with the MongoDB instance inside of Docker environment.
 
 ```sh
 cd project-root
-npm start
+npm run build 
+npm run start
 ```
+
+ - seed data
+ Go inside of the docker container and execute below commands. These will seed the database with users and products data.
+
+  ```sh
+  docker exec -it appserver bash
+  npm run db:seed:users
+  npm run db:seed:products
+  ```
+  You should see the following output:
+  ![Product List Page](./docs/images/appserver-lsla.png)
+
+  ![Product List Page](./docs/images/appserver-db-seed-users.png)
+  
+  ![Product List Page](./docs/images/appserver-db-seed-products.png)
+
+  You should be now login to the application and see the products list.
 
 ### Visual Studio Code
 
-##### Prerequisites
+#### Prerequisites
 
 - [x] Node.js : To run npm packages
 - [x] Docker : To run MongoDB database
@@ -57,11 +75,13 @@ npm start
 ##### Steps
 
 - To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
-- Create a `.env` file inside of the `server` directory. Add the below entries
+- Create a `.env` file inside of the `server` directory. Add the below entries or change accordingly.
   ```
   DB_HOST=localhost
   DB_PORT=27017
   DB_NAME=appdb
+  JWT_SECRET=myawesomesecret
+  EXP_SECONDS=3600
   ```
 
 #### Server commands
@@ -73,12 +93,18 @@ npm run db:up
 npm start
 ```
 
+To seed the database, execute the following command:
+```sh
+npm run db:seed:users
+npm run db:seed:products
+```
+
 #### Client commands
 
 ```sh
-cd client-basic
-npm i
-npm start
+cd client-pro
+yarn
+yarn start
 ```
 
 ## Test client app

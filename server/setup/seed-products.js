@@ -36,7 +36,7 @@ const connectWithDb = async () => {
     for (let i = 0; i < 1000; i++) {
       const product = getFakeProduct();
       console.log('saving product ', product.name);
-      await save(product);
+      await save(product, 'Product');
     }
 
     console.log("Seeded products");
