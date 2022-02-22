@@ -36,7 +36,7 @@ services:
     networks:
       - mydockernet
     environment:
-      - NODE_ENV=production
+      - REACT_APP_NODE_ENV=production
       - REACT_APP_API_URL=http://localhost:5005
     ports:
       - 8001:8001
