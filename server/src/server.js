@@ -1,4 +1,4 @@
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const { setup: setupCore } = require('./core');
 const { init } = require('./modules');
 const { handleError, handleRequest } = require('./common/middlewares');
