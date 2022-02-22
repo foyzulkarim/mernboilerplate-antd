@@ -15,7 +15,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - '5000:5000'
+      - '5005:5005'
     networks:
       - mydockernet
     environment:
@@ -24,7 +24,7 @@ services:
       - TEST=test123
       - DB_HOST=mongo
       - DB_PORT=27017
-      - DB_NAME=appdb
+      - DB_NAME=mbdb
       - JWT_SECRET=1234567890
     depends_on:
       - mongo
@@ -37,9 +37,9 @@ services:
       - mydockernet
     environment:
       - NODE_ENV=production
-      - 'REACT_APP_API_URL=http://apiserver:5000'
+      - REACT_APP_API_URL=http://localhost:5005
     ports:
-      - '8001:8001'
+      - 8001:8001
     depends_on:
       - appserver
 networks:
