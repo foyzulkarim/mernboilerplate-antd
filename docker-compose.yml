@@ -4,18 +4,19 @@ services:
     image: mongo
     container_name: mongo
     ports:
-      - '27017:27017'
+      - 27017:27017
     networks:
       - mydockernet
     volumes:
       - 'app_mongo:/data/db'
   appserver:
+    image: appserver:123
     container_name: appserver
     build:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - '5005:5005'
+      - 8002:8002
     networks:
       - mydockernet
     environment:
@@ -26,18 +27,22 @@ services:
       - DB_PORT=27017
       - DB_NAME=mbdb
       - JWT_SECRET=1234567890
+      - PORT=8002
     depends_on:
       - mongo
   appclient:
+    image: appclient:123
     container_name: appclient
     build:
       context: ./client-pro
+      args:
+        REACT_APP_API_URL: http://localhost:8002
+        REACT_APP_ENV: production
       dockerfile: Dockerfile
     networks:
       - mydockernet
     environment:
-      - REACT_APP_NODE_ENV=production
-      - REACT_APP_API_URL=http://localhost:5005
+      - REACT_APP_ENV=production
     ports:
       - 8001:8001
     depends_on:

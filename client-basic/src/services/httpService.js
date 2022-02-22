@@ -1,8 +1,8 @@
 import axios from "axios";
 
-console.log('envs', process.env);
+console.log('process.env.REACT_APP_API_URL', API_URL);
 
-const BaseUrl = process.env.REACT_APP_API_URL !== null ? process.env.REACT_APP_API_URL : "http://localhost:5000/api";
+const BaseUrl = process.env.REACT_APP_API_URL !== null ? process.env.REACT_APP_API_URL : "http://localhost:5000/";
 
 export const getUsers = async () => {
     const response = await axios.get(BaseUrl + "/users");

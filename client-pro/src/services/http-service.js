@@ -12,7 +12,7 @@ request.interceptors.request.use((url, options) => {
         }
     }
 
-    console.log('url', url);
+    console.log('url', API_URL, url);
     options.headers['rbac-client-time'] = `${new Date()} `;
 
     return {
