@@ -36,7 +36,7 @@ services:
     build:
       context: ./client-pro
       args:
-        REACT_APP_API_URL: http://localhost:8002
+        REACT_APP_API_URL: http://{API_SERVER_IP}:8002
         REACT_APP_ENV: production
       dockerfile: Dockerfile
     networks:

@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build
+FROM node:lts as build
 WORKDIR /usr/src/app
 ARG REACT_APP_API_URL
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
