@@ -81,7 +81,7 @@ npm run start
   DB_PORT=27017
   DB_NAME=appdb
   JWT_SECRET=myawesomesecret
-  EXP_SECONDS=3600
+  JWT_EXPIRES_IN=3600
   ```
 
 #### Server commands

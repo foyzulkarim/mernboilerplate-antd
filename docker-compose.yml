@@ -27,6 +27,7 @@ services:
       - DB_PORT=27017
       - DB_NAME=mbdb
       - JWT_SECRET=1234567890
+      - JWT_EXPIRES_IN=3600
       - PORT=8002
     depends_on:
       - mongo

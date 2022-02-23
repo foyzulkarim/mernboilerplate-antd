@@ -18,6 +18,7 @@ services:
       - DB_PORT=27017
       - DB_NAME=mbdb
       - JWT_SECRET=1234567890
+      - JWT_EXPIRES_IN=3600
       - PORT=8002
       - IS_MONGODB_CLOUD_URL=true
       - MONGODB_CLOUD_URL={PUT_YOUR_MONGO_CLOUD_URL_HERE}
@@ -27,7 +28,7 @@ services:
     build:
       context: ./client-pro
       args:
-        REACT_APP_API_URL: http://159.196.221.233:8002
+        REACT_APP_API_URL: http://localhost:8002
         REACT_APP_ENV: production
       dockerfile: Dockerfile
     networks:
