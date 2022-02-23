@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  appserver:
+    image: appserver:pi
+    container_name: appserver
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 8002:8002
+    networks:
+      - mydockernet
+    environment:
+      - DEBUG=1
+      - NODE_ENV=production
+      - TEST=test123
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_NAME=mbdb
+      - JWT_SECRET=1234567890
+      - PORT=8002
+      - IS_MONGODB_CLOUD_URL=true
+      - MONGODB_CLOUD_URL={PUT_YOUR_MONGO_CLOUD_URL_HERE}
+  appclient:
+    image: appclient:123
+    container_name: appclient
+    build:
+      context: ./client-pro
+      args:
+        REACT_APP_API_URL: http://159.196.221.233:8002
+        REACT_APP_ENV: production
+      dockerfile: Dockerfile
+    networks:
+      - mydockernet
+    environment:
+      - REACT_APP_ENV=production
+    ports:
+      - 8001:8001
+    depends_on:
+      - appserver
+networks:
+  mydockernet:
+    driver: bridge
+volumes:
+  app_mongo: null
