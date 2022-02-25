@@ -101,36 +101,32 @@ The client and server both are up and running and we should see the following sc
 
 #### Prerequisites
 
-- [x] Node.js : To run npm packages
-- [x] Docker : To run MongoDB database
+- Node.js : To run npm packages
+- MongoDB : As a database for the application
 
 ##### Steps
 
 - To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
-- Create a `.env` file inside of the `server` directory. Add the below entries or change accordingly.
+- Create a `.env` file inside of the `server` directory. Add the below entries or change accordingly. You can follow the `.env.sample` file to see the format.
 
   ```
   DB_HOST=localhost
   DB_PORT=27017
   DB_NAME=appdb
-  JWT_SECRET=myawesomesecret
+  JWT_SECRET=secret
   JWT_EXPIRES_IN=3600
+  PORT=5000
+  IS_MONGODB_CLOUD_URL=false
+  MONGODB_CLOUD_URL=mongodb+srv:// <USER >: <PASSWORD >@cluster0.abcd.mongodb.net/myFirstDatabase?retryWrites=true
   ```
 
 #### Server commands
-
+We assume we run the MongoDB in the docker container.
 ```sh
 cd server
 npm i
 npm run db:up
 npm start
-```
-
-To seed the database, execute the following command:
-
-```sh
-npm run db:seed:users
-npm run db:seed:products
 ```
 
 #### Client commands
@@ -141,52 +137,18 @@ yarn
 yarn start
 ```
 
-## Test client app
+## Data seeding
 
-To view the client, open your browser and visit `http://localhost:3000` url.
-For the demo purpose, the authentication and authorization is not controlled from database entry and purely handled in client side.
+To seed the database, we need to run the following commands in the docker container. You can run these commands in the terminal as well if you are running the server and client outside of the docker environment.
+I assume we are running appserver in the docker container.
 
-The system has a `role-based-access-control` system which is controlled by permissions assigned to the role.
-The system supports different types of permissions in the client side.
-Depending on the role, `side menu`, the actual page (`route`) can be visible or not. More of that, any individual control/components can also be enabled / disabled depending on the role as well.
-
-### Superman in the role of `SuperAdmin`
-
-To login as `SuperAdmin` we input `superadmin@example.com` as email and put anything as the password.
-Upon login, the user should see superadmin's menus (Role, User, Resource, Permission) at the left side.
-
-### Pikachu in the role of `User`
-
-To login as `User`, we input any valid email and anything as password.
-Upon login, the user should see menus (Product, Customer) at the left side.
-
-### Change the permissions
-
-Ideally we should handle the permissions in server side and store in database (mongodb), but for this demo, we will modify the data in the clint side and mimic the server side behavior.
-To change `User's` permission, go to `client/src/data/user-pikachu.json` and add/update entry in the permissions array.
-A sample permission entry is like
-
-```json
-{
-  "_id": "5c8d03505653de3f85aa1ff",
-  "resourceName": "customers-add",
-  "resourceType": "route",
-  "isAllowed": true,
-  "isDisabled": false
-}
+```sh
+docker exec -it appserver bash
+npm run db:seed:users
+npm run db:seed:products
 ```
 
-To disable a button, we can set `isDisabled = true` like below
-
-```json
-{
-  "_id": "5c8d0c505653de3985aa0f1",
-  "resourceName": "product-edit-button",
-  "resourceType": "button",
-  "isAllowed": true,
-  "isDisabled": true
-}
-```
+You should be able to see the username and password in the `/server/setup/users.json` file.
 
 ### Centralized log to `Sentry.io`
 
@@ -201,11 +163,11 @@ Sentry.init({
 });
 ```
 
-## Test `server` API
+## ~~Test `server` API~~ (NOT DONE YET)
 
-To view the api, open your browser and visit `http://localhost:5000/api-docs`
+~~To view the api, open your browser and visit `http://localhost:5000/api-docs`
 Ideally we should add all of the API endpoints into the swagger, but for the demo purpose, we only added Products API endpoint.  
-To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boilerplate.postman_collection.json` into [Postman](https://www.postman.com/) and you should see the endpoints with appropriate payloads.
+To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boilerplate.postman_collection.json` into [Postman](https://www.postman.com/) and you should see the endpoints with appropriate payloads.~~
 
 ## Scripts
 
@@ -216,7 +178,7 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 |root|`docker exec -it appserver  /bin/sh` then `npm run db:seed`|Executes seed products inside container|
 | server  | `npm i`           | Install server side dependencies                     |
 | server  | `npm run db:up`   | Start the database in a docker container             |
-| server  | `npm run db:seed` | Seed products data into database                     |
+| server  | `npm run db:seed:products` | Seed products data into database                     |
 | server  | `npm run test`    | Execute tests using `jest`                           |
 | client  | `npm i`           | Install client side dependencies                     |
 | client  | `npm run start`   | Start the react app                                  |
@@ -258,3 +220,15 @@ This project is [MIT licensed](https://github.com/facebook/react/blob/main/LICEN
 [swagger]: https://swagger.io/
 [jest]: https://jestjs.io/
 [super test]: https://github.com/visionmedia/supertest
+
+
+## Contribution 
+For now, I am not taking any community contritutions in terms of code.  But if you have any suggestions or you found any bugs, please feel free to open an issue or a pull request.
+
+On the other hand, if you want to know something, or want to start a discussion about this  project, please start a discussion in our GitHub's discussion board.
+
+## Tutorials about how to build or use this project
+
+I have been screen recording the coding steps of this project. You can find the videos in the [YouTube playlist](https://www.youtube.com/playlist?list=PLEYpvDF6qy8aUl1KnB1oaZbwLE2oPcZmz). These  videos are only in **Bangla**, but I am happy to take special dedicated+paid sessions in English for international intersted audience. Feel free to reach out to me at foyzulkarim@gmail.com for any kind of help.
+
+Thanks. Cheers.
