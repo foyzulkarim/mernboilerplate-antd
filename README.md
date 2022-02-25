@@ -16,21 +16,20 @@ As the name suggests, this repository is built on top of Express.js and React.js
 
 #### Client side
 
-- [React] - A JavaScript library for building user interfaces
-- [MongoDB] - The application data platform
-- [Ant Design Pro] - A design system for enterprise-level products. Create an efficient and enjoyable work experience
-- [Testing Library] - React Testing Library
-- [Umi Request] - HTTP client for the executing HTTP request from browser to server.
-- [Ant Design Pro] - A design system for enterprise-level products. Create an efficient and enjoyable work experience.
+- React - A JavaScript library for building user interfaces
+- Ant Design Pro - A design system for enterprise-level products. Create an efficient and enjoyable work experience
+- Testing Library - React Testing Library
+- Umi Request - HTTP client for the executing HTTP request from browser to server.
 
 #### Server side
 
-- [Node.js] - evented I/O for the backend
-- [Express.js] - Fast, unopinionated, minimalist web framework for Node.js
-- [Mongoose] - mongoose
-- [Swagger] - Swagger (Not done yet)
-- [Jest] - JavaScript testing framework
-- [Super Test] - Super test
+- Node.js - evented I/O for the backend
+- Express.js - Fast, unopinionated, minimalist web framework for Node.js
+- MongoDB - The application data platform for NoSQL databases
+- Mongoose - mongoose
+- Swagger - Swagger (Not done yet)
+- Jest - JavaScript testing framework
+- Super Test - Super test API testing framework
 
 Details frameworks and packages can be found in the package.json files in server and client directory.
 
@@ -54,7 +53,7 @@ Currently we have two docker-compose files:
 1. We need to change the `MONGODB_CLOUD_URL` in `docker-compose.mongocloud.yml` to the appropriate MongoDB URL.
 2. We need to change the `REACT_APP_API_URL` in `docker-compose.yml` to the appropriate API URL. If we want to expose our client to the internet, we need to change the `REACT_APP_API_URL` to the appropriate API URL. Otherwise keep `REACT_APP_API_URL` as `http://localhost:8002`.
 
-##### Run docker-compose commands
+**Run docker-compose commands**
 
 It is expected that the machine must have docker and docker-compose installed. Go to the root of the repository and execute appropriate commands. This will spin up the server and client containers along with the MongoDB container (if we are using local MongoDB server) inside of Docker environment.
 
