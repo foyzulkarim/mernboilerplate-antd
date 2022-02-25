@@ -182,7 +182,7 @@ const Login = () => {
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.password.placeholder',
-                    defaultMessage: '密码: ant.design',
+                    defaultMessage: 'Password: mern-boilerplate',
                   })}
                   rules={[
                     {
@@ -190,7 +190,7 @@ const Login = () => {
                       message: (
                         <FormattedMessage
                           id="pages.login.password.required"
-                          defaultMessage="请输入密码！"
+                          defaultMessage="Please enter password！"
                         />
                       ),
                     },
