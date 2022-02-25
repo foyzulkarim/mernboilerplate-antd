@@ -1,8 +1,10 @@
 # Welcome to the RBAC MERN Boilerplate project
 
-### _A complete MERN boilerplate repository with RBAC feature, following all production best practices._
+### _A complete (Work in progress now) MERN boilerplate repository with RBAC feature, following all production best practices._
 
-In this repository I will keep adding the production best practices we should follow in a MERN (MongoDB, Express.js, React.js, and Node.js) project.
+In this repository I will keep adding the production best practices we should follow in a MERN (MongoDB, Express.js, React.js, and Node.js) project. Also for better UX I am using Antd Pro for the UI. May be later I will use MUI as well.
+
+Below are the sample of a sample list page:
 
 ![Product List Page](./docs/images/product-list.png)
 
@@ -16,39 +18,68 @@ As the name suggests, this repository is built on top of Express.js and React.js
 
 - [React] - A JavaScript library for building user interfaces
 - [MongoDB] - The application data platform
-- [Ant Design] - A design system for enterprise-level products. Create an efficient and enjoyable work experience
+- [Ant Design Pro] - A design system for enterprise-level products. Create an efficient and enjoyable work experience
 - [Testing Library] - React Testing Library
-- [Axios] - Promise based HTTP client for the browser and node.js
-- [Styled Components] - Visual primitives for the component age
+- [Umi Request] - HTTP client for the executing HTTP request from browser to server.
+- [Ant Design Pro] - A design system for enterprise-level products. Create an efficient and enjoyable work experience.
 
 #### Server side
 
 - [Node.js] - evented I/O for the backend
 - [Express.js] - Fast, unopinionated, minimalist web framework for Node.js
 - [Mongoose] - mongoose
-- [Swagger]
-- [Jest]
-- [Super Test]
+- [Swagger] - Swagger (Not done yet)
+- [Jest] - JavaScript testing framework
+- [Super Test] - Super test
 
 Details frameworks and packages can be found in the package.json files in server and client directory.
 
-## Run the application
+## Running the application
 
 This project can be run basically in two ways. One is using docker, other way is to run manually via vscode.
 
 ### Docker
 
-- run `docker-compose` command
+Depending on the MongoDB hosting option, we choose the appropriate docker-compose file.
 
-Go to the root of the repository and execute `npm start`. This will spin up the server and client containers along with the MongoDB instance inside of Docker environment.
+#### Docker compose files
+
+Currently we have two docker-compose files:
+
+- `docker-compose.mongocloud.yml` - MongoDB.com hosted cluster
+- `docker-compose.yml` - Local MongoDB container
+
+##### Notes
+
+1. We need to change the `MONGODB_CLOUD_URL` in `docker-compose.mongocloud.yml` to the appropriate MongoDB URL.
+2. We need to change the `REACT_APP_API_URL` in `docker-compose.yml` to the appropriate API URL. If we want to expose our client to the internet, we need to change the `REACT_APP_API_URL` to the appropriate API URL. Otherwise keep `REACT_APP_API_URL` as `http://localhost:8002`.
+
+##### Run docker-compose commands
+
+It is expected that the machine must have docker and docker-compose installed. Go to the root of the repository and execute appropriate commands. This will spin up the server and client containers along with the MongoDB container (if we are using local MongoDB server) inside of Docker environment.
+
+
+**Using docker containers with cloud hosted MongoDB**
 
 ```sh
-cd project-root
-npm run build 
-npm run start
+> cd project-root
+> docker-compose -f docker-compose.mongocloud.yml build
+> docker-compose -f docker-compose.mongocloud.yml up
 ```
 
- - seed data
+**Using docker containers with local MongoDB**
+```sh
+> cd project-root
+> docker-compose build
+> docker-compose up
+```
+
+The client and server both are up and running and we should see the following screen if we navigate to the client url.
+
+![Login screen](./docs/images/login-screen.png)
+
+
+- seed data
  Go inside of the docker container and execute below commands. These will seed the database with users and products data.
 
   ```sh
@@ -56,6 +87,7 @@ npm run start
   npm run db:seed:users
   npm run db:seed:products
   ```
+
   You should see the following output:
   ![Product List Page](./docs/images/appserver-lsla.png)
 
@@ -76,6 +108,7 @@ npm run start
 
 - To run via vscode, we should run the server and client side projects separately, and also make sure mongodb is up and running.
 - Create a `.env` file inside of the `server` directory. Add the below entries or change accordingly.
+
   ```
   DB_HOST=localhost
   DB_PORT=27017
@@ -94,6 +127,7 @@ npm start
 ```
 
 To seed the database, execute the following command:
+
 ```sh
 npm run db:seed:users
 npm run db:seed:products
@@ -158,6 +192,7 @@ To disable a button, we can set `isDisabled = true` like below
 
 We can also send the logs to [sentry.io](https://sentry.io). To use this feature, we need to add the `dsn` entry into `client/src/env.config.js`.
 Setup snippet is like below in `index.js` file
+
 ```javascript
 Sentry.init({
   dsn: Config.dsn,
@@ -188,18 +223,20 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 | client  | `npm run build`   | Build the react app in production mode               |
 | client  | `npm run test`    | Execute tests using `Testing Library`                |
 
-
 ## Types of testing
+
 In this repository, we have included both unit testing and integration testing. For now, the code coverage is very low, but we are working on it to make it more than 90% somewhere in the future
 
 ### Client side
+
 - We incorporated only unit tests in client side, and mock all the externals dependencies like `localStorage` and `axios`.
 
 To run the tests, we can run `npm run test` command.
 
 ### Server side
+
 - Integration testing: We have integrated the `Jest` as the testing library, and we have added `supertest` and `mongodb-memory-server` packages to make the integration testing easier.
-- Unit testing: We have used `Jest` to test the service layers and mock the external dependencies like `MongoDB`. 
+- Unit testing: We have used `Jest` to test the service layers and mock the external dependencies like `MongoDB`.
 
 To run the tests, we can run `npm run test` command.
 
