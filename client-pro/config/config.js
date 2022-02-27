@@ -5,7 +5,7 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 
 const { REACT_APP_ENV, REACT_APP_API_URL } = process.env;
-console.log('REACT_APP_ENV', REACT_APP_ENV, REACT_APP_API_URL);
+console.log('REACT_APP_ENV', REACT_APP_ENV, 'REACT_APP_API_URL', REACT_APP_API_URL);
 export default defineConfig({
   hash: true,
   antd: {},
