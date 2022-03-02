@@ -12,7 +12,7 @@
 //     expiryDate: { type: Date, required: true },
 // }, { timestamps: true });
 
-// // indices  
+// // indices
 // // text index for name
 // schema.index({ name: 'text' });
 
@@ -20,18 +20,17 @@
 // schema.index({ createdAt: 1 });
 // schema.index({ updatedAt: 1 });
 
-// // index for sku and size 
+// // index for sku and size
 // schema.index({ sku: 1 });
 // schema.index({ size: 1 });
 
-// // index for dates 
+// // index for dates
 // schema.index({ manufacturingDate: 1 });
 // schema.index({ expiryDate: 1 });
 
-// // index for price and cost 
+// // index for price and cost
 // schema.index({ price: 1 });
 // schema.index({ cost: 1 });
-
 
 // // reference model
 // const Product = mongoose.model("Product", schema);

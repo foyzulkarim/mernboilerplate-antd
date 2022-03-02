@@ -11,7 +11,8 @@
     "start": "nodemon ./src/server.js",
     "db:up": "docker-compose -f ./db.yml up",
     "db:seed:products": "node ./setup/seed-products.js",
-    "db:seed:users": "node ./setup/seed-users.js"
+    "db:seed:users": "node ./setup/seed-users.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -32,10 +33,16 @@
     "pino": "^6.0.0-rc.2",
     "pino-http": "^5.5.0",
     "pm2": "^5.1.0",
+    "prettier": "^2.5.1",
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
-    "eslint": "^7.31.0",
+    "@babel/eslint-parser": "^7.17.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-security": "^1.4.0",
     "jest": "^27.0.6",
     "jshint": "^2.13.4",

@@ -7,11 +7,11 @@ const { CustomerViewModel } = require("./customer-view-model");
 const { FilterViewModel } = require("./filter-view-model");
 
 module.exports = {
-    UserViewModel,
-    RoleViewModel,
-    ProductViewModel,
-    PermissionViewModel,
-    ResourceViewModel,
-    CustomerViewModel,
-    FilterViewModel
+  UserViewModel,
+  RoleViewModel,
+  ProductViewModel,
+  PermissionViewModel,
+  ResourceViewModel,
+  CustomerViewModel,
+  FilterViewModel,
 };

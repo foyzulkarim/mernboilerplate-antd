@@ -1,8 +1,9 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
-const { save, update, getById, deleteById } = require('../../core/repository');
+const { save, update, getById, deleteById } = require("../../core/repository");
 
 const Model = require("./model");
+
 const ModelName = "User";
 
 const searchOne = async (searchRequest) => {
@@ -12,7 +13,7 @@ const searchOne = async (searchRequest) => {
 
 const changePassword = async (user, newPassword) => {
   const id = user._id;
-  let model = await Model.findById(id);
+  const model = await Model.findById(id);
   if (model) {
     await Model.setPassword(model, newPassword);
     model.updatedAt = Date.now().toString();
@@ -20,7 +21,7 @@ const changePassword = async (user, newPassword) => {
     return model._id;
   }
 
-  throw new NotFound("User not found by the id: " + id);
+  throw new NotFound(`User not found by the id: ${id}`);
 };
 
 const getByUsername = async (username) => {
@@ -33,7 +34,7 @@ const getByUsername = async (username) => {
 };
 
 const checkUser = async (username, password) => {
-  let user = await Model.findOne({ username: username }).lean(); // status: "Active"
+  const user = await Model.findOne({ username }).lean(); // status: "Active"
   if (user) {
     const match = await bcrypt.compare(password, user.passwordHash);
     const { __v, passwordHash, ...rest } = user;
@@ -48,10 +49,17 @@ async function getPasswordHash(password) {
 }
 
 const createUser = async (user) => {
-  let hash = await getPasswordHash(user.password);
+  const hash = await getPasswordHash(user.password);
   user.passwordHash = hash;
   const { _id } = await save(user, ModelName);
   return _id;
 };
 
-module.exports = { save, searchOne, changePassword, checkUser, createUser, getByUsername };
+module.exports = {
+  save,
+  searchOne,
+  changePassword,
+  checkUser,
+  createUser,
+  getByUsername,
+};
