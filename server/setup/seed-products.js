@@ -4,7 +4,6 @@ require("dotenv").config();
 
 const { save } = require("../src/modules/product/service");
 
-console.log("Seed starting");
 const isMongoDbUrl = process.env.IS_MONGODB_CLOUD_URL;
 const uri = isMongoDbUrl
   ? process.env.MONGODB_CLOUD_URL
@@ -30,22 +29,19 @@ const options = { useNewUrlParser: true, useUnifiedTopology: true };
 const connectWithDb = async () => {
   try {
     await mongoose.connect(uri, options);
-    console.log("Connected to MongoDB");
     // seed 1000 products using getFakeProduct method
     for (let i = 0; i < 1000; i++) {
       const product = getFakeProduct();
-      console.log("saving product ", product.name);
       // eslint-disable-next-line no-await-in-loop
       await save(product, "Product");
     }
 
-    console.log("Seeded products");
     // exit process
     process.exit(0);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 };
 
 connectWithDb();
-console.log(`Seed finished`);
