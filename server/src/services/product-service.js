@@ -42,7 +42,7 @@ const search = async (payload) => {
 
   // product.size (number)
   if (payload.size) {
-    queries.push({ size: parseInt(payload.size) });
+    queries.push({ size: parseInt(payload.size, 10) });
   }
 
   // payload.fromDate && payload.toDate
@@ -54,20 +54,25 @@ const search = async (payload) => {
     });
   }
 
-  const query =
-    queries.length > 1
-      ? { $and: queries }
-      : queries.length == 1
-      ? queries[0]
-      : {};
-  const take = parseInt(payload.pageSize);
-  const skip = (parseInt(payload.current) - 1) * take;
+  let query;
+
+  if (queries.length > 1) {
+    query = { $and: queries };
+  } else if (queries.length === 1) {
+    const queryFirst = queries[0];
+    query = queryFirst;
+  } else {
+    query = {};
+  }
+
+  const take = parseInt(payload.pageSize, 10);
+  const skip = (parseInt(payload.current, 10) - 1) * take;
 
   // sort
   let sort = {};
   if (payload.sort) {
     const key = payload.sort;
-    const value = parseInt(payload.order) ?? 1;
+    const value = parseInt(payload.order, 10) ?? 1;
     sort[key] = value;
   } else {
     sort = { updatedAt: -1 };
@@ -92,7 +97,7 @@ const count = async (payload) => {
 
   // product.size (number)
   if (payload.size) {
-    queries.push({ size: parseInt(payload.size) });
+    queries.push({ size: parseInt(payload.size, 10) });
   }
 
   // payload.fromDate && payload.toDate
@@ -105,12 +110,17 @@ const count = async (payload) => {
     });
   }
 
-  const query =
-    queries.length > 1
-      ? { $and: queries }
-      : queries.length == 1
-      ? queries[0]
-      : {};
+  let query;
+
+  if (queries.length > 1) {
+    query = { $and: queries };
+  } else if (queries.length === 1) {
+    const queryFirst = queries[0];
+    query = queryFirst;
+  } else {
+    query = {};
+  }
+
   const t = await Model.collection.find(query).count();
   const items = { total: t };
   return items;
@@ -118,14 +128,17 @@ const count = async (payload) => {
 
 const setupEventListeners = () => {
   eventEmitter.on("ProductCreated", (product) => {
+    // eslint-disable-next-line no-console
     console.log("productCreated event received", product);
   });
 
   eventEmitter.on("ProductUpdated", (product) => {
+    // eslint-disable-next-line no-console
     console.log("productUpdated event received", product);
   });
 
   eventEmitter.on("ProductDeleted", (product) => {
+    // eslint-disable-next-line no-console
     console.log("productDeleted event received", product);
   });
 };
