@@ -32,7 +32,8 @@
     "pino": "^6.0.0-rc.2",
     "pino-http": "^5.5.0",
     "pm2": "^5.1.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.6.0"
   },
   "devDependencies": {
     "eslint": "^7.31.0",
