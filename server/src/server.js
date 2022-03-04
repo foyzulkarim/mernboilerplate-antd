@@ -26,7 +26,7 @@ const start = async () => {
     try {
         await configureRoutes(app);
         app.listen(PORT, async () => {
-            logger.info("server is running on port", PORT);
+            logger.info(`Server started on port ${PORT}`);
 
             const broadcastDatabaseConnectionEstablished = (em) => {
                 em.emit('databaseConnectionEstablished');
