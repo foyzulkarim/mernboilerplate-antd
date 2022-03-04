@@ -18,7 +18,7 @@ const getHandler = async (req, res, next) => {
       total: items.length,
       success: true,
     };
-    res.status(200).send(result);
+    return res.status(200).send(result);
   } catch (error) {
     return next(error, req, res);
   }
@@ -28,11 +28,10 @@ const getByIdHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const item = await getById(id, ModelName);
-    if (item) {
-      res.status(200).send(item);
-    } else {
+    if (!item) {
       throw new NotFound(`${ModelName} not found by the id: ${id}`);
     }
+    return res.status(200).send(item);
   } catch (error) {
     return next(error, req, res);
   }
@@ -42,7 +41,7 @@ const postHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const { _id } = await save(body, ModelName);
-    res.status(201).send(_id);
+    return res.status(201).send(_id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -52,7 +51,7 @@ const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const { _id } = await update(body, ModelName);
-    res.status(200).send(_id);
+    return res.status(200).send(_id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -62,7 +61,7 @@ const deleteHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     await deleteById(id, ModelName);
-    res.status(200).send(`${ModelName} deleted`);
+    return res.status(200).send(`${ModelName} deleted`);
   } catch (error) {
     return next(error, req, res);
   }
