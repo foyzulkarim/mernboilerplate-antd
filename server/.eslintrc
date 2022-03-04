@@ -15,7 +15,12 @@
         "allowImportExportEverywhere": true
     },
     "rules": {
-        "prettier/prettier": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
         "import/no-unresolved": 0,
         "import/no-absolute-path": 0,
         "import/extensions": 0,
