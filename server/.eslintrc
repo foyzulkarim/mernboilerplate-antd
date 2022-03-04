@@ -1,5 +1,5 @@
 {
-    "extends": ["airbnb-base", "prettier"],
+    "extends": ["airbnb", "prettier"],
     "parser": "@babel/eslint-parser",
     "plugins": [
       "prettier"
@@ -15,12 +15,6 @@
         "allowImportExportEverywhere": true
     },
     "rules": {
-        "prettier/prettier": [
-            "error",
-            {
-                "endOfLine": "auto"
-            }
-        ],
         "import/no-unresolved": 0,
         "import/no-absolute-path": 0,
         "import/extensions": 0,
