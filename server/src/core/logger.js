@@ -8,12 +8,11 @@ let alignColorsAndTime = winston.format.combine(
     label: "[LOGGER]",
   }),
   winston.format.printf(
-    (info) =>
-      ` ${info.label}-[${info.level}] : ${info.message}`
+    (info) => ` ${info.label}-[${info.level}] : ${info.message}`
   )
 );
 
-module.exports = winston.createLogger({
+const winstonLogger = winston.createLogger({
   level: "debug",
   transports: [
     new winston.transports.Console({
@@ -24,3 +23,10 @@ module.exports = winston.createLogger({
     }),
   ],
 });
+
+const pinoLogger = require("pino")();
+
+const logOption = process.env.logger || "winston";
+
+if (logOption === "pino") module.exports = pinoLogger;
+else module.exports = winstonLogger;
