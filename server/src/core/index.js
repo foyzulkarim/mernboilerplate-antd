@@ -1,7 +1,7 @@
 
 
 const setup = async () => {
-    const logger = require('pino')()
+    const logger = require('./logger');
     const eventEmitter = require('./event-manager').getInstance();
     const app = require('./app');
     const connectWithDb = require("./mongo");
