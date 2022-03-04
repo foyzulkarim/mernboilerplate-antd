@@ -1,11 +1,29 @@
 const dbHandler = require("../db-handler");
 const productService = require("../../../src/services/product-service");
 
-beforeAll(async () => await dbHandler.connect());
+/**
+ * Complete product example.
+ */
+const productComplete = {
+  productName: "iPhone 11",
+  sku: "iphone-11",
+  cost: 500,
+  price: 699,
+  createdAt: "2020-01-01",
+  updatedAt: "2020-04-01",
+};
 
-afterEach(async () => await dbHandler.clearDatabase());
+beforeAll(async () => {
+  await dbHandler.connect();
+});
 
-afterAll(async () => await dbHandler.closeDatabase());
+afterEach(async () => {
+  await dbHandler.clearDatabase();
+});
+
+afterAll(async () => {
+  await dbHandler.closeDatabase();
+});
 
 /**
  * Product test suite.
@@ -35,16 +53,4 @@ describe("Product", () => {
     const updatedProduct = await productService.getById(productId);
     expect(updatedProduct.productName).toBe("iPhone X");
   });
-
-  /**
-   * Complete product example.
-   */
-  const productComplete = {
-    productName: "iPhone 11",
-    sku: "iphone-11",
-    cost: 500,
-    price: 699,
-    createdAt: "2020-01-01",
-    updatedAt: "2020-04-01",
-  };
 });
