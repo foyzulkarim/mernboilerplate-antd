@@ -14,17 +14,16 @@ const TableList = () => {
   const [param, setParam] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
-  const [fetchProducts, setFetchProducts] = useState(false);
-  const { RangePicker } = DatePicker;
+  const [fetchRoles, setFetchRoles] = useState(false);
   const { confirm } = Modal;
 
-  const fetchProductData = async () => {
+  const fetchRoleData = async () => {
     const hide = message.loading('Loading...');
     try {
       const result = await search({ current: current, pageSize: 10, ...param, ...sort });
       hide();
       setData(result);
-      setFetchProducts(false);
+      setFetchRoles(false);
       return result;
     } catch (error) {
       hide();
@@ -49,7 +48,7 @@ const TableList = () => {
         const r = await remove(product._id);
         if (r.success) {
           message.success(r.message);
-          setFetchProducts(true);
+          setFetchRoles(true);
         }
       },
       onCancel() {
@@ -58,23 +57,23 @@ const TableList = () => {
     });
   };
 
-  const fetchProductCount = async () => {
+  const fetchRoleCount = async () => {
     const result = await count({ ...param });
     setTotal(result.total);
   };
 
   useEffect(() => {
-    if (fetchProducts) {
-      fetchProductData();
+    if (fetchRoles) {
+      fetchRoleData();
     }
-  }, [fetchProducts]);
+  }, [fetchRoles]);
 
 
   useEffect(() => {
     setCurrent(1);
     setSort(null);
-    setFetchProducts(true);
-    fetchProductCount();
+    setFetchRoles(true);
+    fetchRoleCount();
   }, [param]);
 
   const [form] = Form.useForm();
@@ -88,12 +87,12 @@ const TableList = () => {
       title: 'Name',
       dataIndex: 'name',
       sorter: true,
-      tip: 'Name of the product',
+      tip: 'Role name',
       render: (dom, entity) => {
         return (
           <a
             onClick={() => {
-              history.push(`/products/edit/${entity._id}`);
+              history.push(`/roles/edit/${entity._id}`);
             }}
           >
             {dom}
@@ -102,25 +101,8 @@ const TableList = () => {
       },
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      valueType: 'textarea',
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-      sorter: true,
-      renderText: (val) => `${val}`,
-    },
-    {
-      title: 'Size',
-      dataIndex: 'size',
-    },
-    {
-      title: 'Manufacturing date',
-      sorter: true,
-      dataIndex: 'manufacturingDate',
-      valueType: 'dateTime',
+      title: 'Alias',
+      dataIndex: 'alias',
     },
     {
       title: 'Actions',
@@ -154,20 +136,9 @@ const TableList = () => {
                 name={`name`}
                 label={`Name`}
               >
-                <Input placeholder="Search keyword for name" />
+                <Input placeholder="Search keyword for name or alias" />
               </Form.Item>
             </Col>
-            <Col flex={6} key={'size'}>
-              <Form.Item
-                name={`size`}
-                label={`Size`}
-              >
-                <Input placeholder="Search keyword for size" />
-              </Form.Item>
-            </Col>
-            <Form.Item name="manufacturingDateRange" label="M. date">
-              <RangePicker />
-            </Form.Item>
             <Col flex={6}>
               <Button type="primary" htmlType="submit">
                 Search
@@ -179,7 +150,7 @@ const TableList = () => {
           </Row>
         </Form>
         <ProTable
-          headerTitle="Products"
+          headerTitle="Roles"
           actionRef={actionRef}
           rowKey="_id"
           search={false}
@@ -189,7 +160,7 @@ const TableList = () => {
               type="primary"
               key="primary"
               onClick={() => {
-                history.push('/products/new');
+                history.push('/roles/new');
               }}
             >
               <PlusOutlined /> New
@@ -201,7 +172,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
-            setFetchProducts(true);
+            setFetchRoles(true);
           }}
           onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
@@ -216,7 +187,7 @@ const TableList = () => {
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
-        onChange={(page, pageSize) => { setCurrent(page); setFetchProducts(true); }}
+        onChange={(page, pageSize) => { setCurrent(page); setFetchRoles(true); }}
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
