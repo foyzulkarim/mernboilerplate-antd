@@ -12,23 +12,22 @@ import { getById, update } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
-  const [product, setProduct] = useState(null);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     const { id } = props.match.params;
-    const getProduct = async (id) => {
-      const p = await getById(id);
-      if (p.size > 3) { p.size = 4 }
-      setProduct(p);
+    const getRole = async (id) => {
+      const item = await getById(id);
+      setRole(item);
     }
-    getProduct(id);
+    getRole(id);
   }, []);
 
   const { run } = useRequest(update, {
     manual: true,
     onSuccess: (x) => {
-      message.success('Product is saved', x);
-      history.push('/products');
+      message.success('Role is saved', x);
+      history.push('/roles');
     },
     onError: (e) => {
       console.log(e);
@@ -38,11 +37,11 @@ const EditForm = (props) => {
 
   const onFinish = async (values) => {
     console.log(values);
-    run({ _id: product._id, ...values });
+    run({ _id: role._id, ...values });
   };
 
   return (
-    product && <PageContainer content="My amazing product update form">
+    role && <PageContainer content="My amazing role update form">
       <Card bordered={false}>
         <ProForm
           hideRequiredMark={false}
@@ -53,106 +52,36 @@ const EditForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={product}
+          initialValues={role}
           onFinish={onFinish}
         >
           <ProFormText
             width="md"
             label="Name"
             name="name"
-            value={product.name}
+            value={role.name}
             rules={[
               {
                 required: true,
-                message: 'Please enter product name',
+                message: 'Please enter role name',
               },
             ]}
-            placeholder="Please enter product name"
+            placeholder="Please enter role name"
           />
 
           <ProFormText
             width="md"
-            label="SKU"
-            name="sku"
-            value={product.sku}
+            label="Alias"
+            name="alias"
+            value={role.alias}
             rules={[
               {
                 required: true,
-                message: 'Please enter the SKU',
+                message: 'Please enter the Alias',
               },
             ]}
-            placeholder="Please enter product sku"
+            placeholder="Please enter role alias"
           />
-
-          <ProFormTextArea
-            label="Description"
-            width="xl"
-            name="description"
-            value={product.description}
-            rules={[
-              {
-                required: true,
-                message: 'Please enter description',
-              },
-            ]}
-            placeholder="Please enter product description"
-          />
-
-          <ProFormDigit
-            label={<span>Cost</span>}
-            name="cost"
-            value={product.cost}
-            placeholder="Please enter product cost"
-            min={0}
-            width="md"
-            fieldProps={{
-              formatter: (value) => `${value || 0}`,
-            }}
-          />
-
-          <ProFormDigit
-            label={<span>Price</span>}
-            name="price"
-            value={product.price}
-            placeholder="Please enter product price"
-            min={0}
-            width="md"
-            fieldProps={{
-              formatter: (value) => `${value || 0}`,
-            }}
-          />
-
-          <ProFormRadio.Group
-            options={[
-              {
-                value: 1,
-                label: 'Small',
-              },
-              {
-                value: 2,
-                label: 'Medium',
-              },
-              {
-                value: 3,
-                label: 'Large',
-              },
-              {
-                value: 4,
-                label: 'X-Large',
-              }
-            ]}
-            label="Size"
-            value={product.size}
-            name="size"
-          />
-          <ProFormDatePicker width="md"
-            name="manufacturingDate"
-            value={product.manufacturingDate}
-            label="Manufacturing date" />
-          <ProFormDatePicker width="md"
-            name="expiryDate"
-            value={product.expiryDate}
-            label="Expiry date" />
         </ProForm>
       </Card>
     </PageContainer>

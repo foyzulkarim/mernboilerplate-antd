@@ -1,5 +1,12 @@
 const express = require("express");
-const { save, update, deleteById, getById, search } = require("./service");
+const {
+  save,
+  update,
+  deleteById,
+  getById,
+  search,
+  count,
+} = require("./service");
 const { validate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
 const { NotFound } = require("../../common/errors");
@@ -27,7 +34,7 @@ const getHandler = async (req, res, next) => {
 const getByIdHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const item = await getById(id);
+    const item = await getById(id, ModelName);
     if (item) {
       res.status(200).send(item);
     } else {
@@ -58,6 +65,16 @@ const searchHandler = async (req, res, next) => {
   }
 };
 
+const countHandler = async (req, res, next) => {
+  try {
+    const result = await count(req.body);
+    const response = { success: true, ...result };
+    res.status(200).send(response);
+  } catch (error) {
+    return next(error, req, res);
+  }
+};
+
 const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
@@ -78,11 +95,12 @@ const deleteHandler = async (req, res, next) => {
   }
 };
 
+router.get("/", getHandler);
 router.get("/:id", getByIdHandler);
 router.post("/", handleValidation(validate), postHandler);
+router.put("/", handleValidation(validate), putHandler);
 router.post("/search", searchHandler);
-router.put("/:id", putHandler);
-router.get("/", getHandler);
+router.post("/count", countHandler);
 router.delete("/:id", deleteHandler);
 
 module.exports = router;
