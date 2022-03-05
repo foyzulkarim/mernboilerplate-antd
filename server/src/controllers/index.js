@@ -33,7 +33,7 @@ const userRegistrationHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const id = await save(body);
-    res.status(201).send(id);
+    return res.status(201).send(id);
   } catch (error) {
     return next(error, req, res);
   }

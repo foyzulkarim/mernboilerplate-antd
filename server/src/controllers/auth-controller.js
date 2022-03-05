@@ -21,7 +21,7 @@ const loginHandler = async (req, res) => {
           username: req.body.username,
           exp:
             Math.floor(Date.now() / 1000) +
-            parseInt(process.env.JWT_EXPIRES_IN),
+            parseInt(process.env.JWT_EXPIRES_IN, 10),
         },
         process.env.JWT_SECRET
       );

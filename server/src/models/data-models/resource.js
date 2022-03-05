@@ -8,7 +8,6 @@ const resourceSchema = new mongoose.Schema({
 const Resource = mongoose.model("Resource", resourceSchema);
 
 Resource.createNew = async (resource) => {
-  resource._id = new mongoose.Types.ObjectId();
   const model = new Resource(resource);
   return model;
 };

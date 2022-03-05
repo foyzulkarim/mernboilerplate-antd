@@ -36,7 +36,7 @@ const loginHandler = async (req, res) => {
           username: req.body.username,
           exp:
             Math.floor(Date.now() / 1000) +
-            parseInt(process.env.JWT_EXPIRES_IN),
+            parseInt(process.env.JWT_EXPIRES_IN, 10),
         },
         process.env.JWT_SECRET
       );
@@ -127,10 +127,9 @@ const forgotPasswordHandler = async (req, res) => {
 const checkUsernameHandler = async (req, res) => {
   const user = await searchOne({ username: req.body.username.toLowerCase() });
   if (user) {
-    res
+    return res
       .status(400)
       .send({ status: "unavailable", message: "Username is taken" });
-    return;
   }
   return res
     .status(200)

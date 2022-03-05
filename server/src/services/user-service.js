@@ -39,7 +39,7 @@ const update = async (user) => {
     return model._id;
   }
 
-  throw new NotFound(`User not found by the id: ${id}`);
+  throw new Error(`User not found by the id: ${id}`);
 };
 
 const deleteById = async (id) => {
@@ -49,7 +49,7 @@ const deleteById = async (id) => {
     return result;
   }
 
-  throw new NotFound(`User not found by the id: ${id}`);
+  throw new Error(`User not found by the id: ${id}`);
 };
 
 const getById = async (id) => {

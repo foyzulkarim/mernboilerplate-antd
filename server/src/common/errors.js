@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+// eslint-disable-next-line max-classes-per-file
 class GeneralError extends Error {
   constructor(message) {
     super();

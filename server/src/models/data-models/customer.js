@@ -14,7 +14,6 @@ const customerSchema = new mongoose.Schema({
 const Customer = mongoose.model("Customer", customerSchema);
 
 Customer.createNew = async (customer) => {
-  customer._id = new mongoose.Types.ObjectId();
   const model = new Customer(customer);
   return model;
 };

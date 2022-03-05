@@ -14,18 +14,18 @@ const schema = Joi.object().keys({
 
 const validate = (data) => {
   const result = schema.validate(data);
-
+  const temp = { ...data };
   if (!data.manufacturingDate) {
-    data.manufacturingDate = new Date();
-  } else data.manufacturingDate = new Date(data.manufacturingDate);
+    temp.manufacturingDate = new Date();
+  } else temp.manufacturingDate = new Date(data.manufacturingDate);
 
   if (!data.expiryDate) {
-    data.expiryDate = new Date(
+    temp.expiryDate = new Date(
       new Date() + data.size * 365 * 24 * 60 * 60 * 1000
     );
   }
 
-  result.value = data;
+  result.value = temp;
   return result;
 };
 

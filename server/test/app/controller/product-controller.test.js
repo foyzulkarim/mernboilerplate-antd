@@ -1,19 +1,26 @@
 const request = require("supertest");
 const dbHandler = require("../db-handler");
 
-beforeAll(async () => await dbHandler.connect());
+beforeAll(async () => {
+  await dbHandler.connect();
+});
 
-afterEach(async () => await dbHandler.clearDatabase());
+afterEach(async () => {
+  await dbHandler.clearDatabase();
+});
 
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => {
+  await dbHandler.closeDatabase();
+});
 
 const payloads = require("./payloads");
 
-describe("Check product endpoints", () => {
-  const app = require("../../../src/app");
+const appPath = "../../../src/app";
+const app = require(appPath);
 
+describe("Check product endpoints", () => {
   // should create a product and get by id successfully
-  it.only("should create a product and get by id successfully", async () => {
+  it("should create a product and get by id successfully", async () => {
     const res = await request(app).post("/api/products").send({
       productName: "Black Berry",
       sku: "black-berry",
@@ -21,7 +28,6 @@ describe("Check product endpoints", () => {
       price: 20,
     });
     expect(res.statusCode).toEqual(201);
-    console.log(res.body);
     expect(res.body).not.toBeNull();
     expect(res.body.length).toEqual(24);
     const id = res.body;
@@ -40,7 +46,6 @@ describe("Check product endpoints", () => {
       .post("/api/products/search")
       .send({ searchText: "" });
     expect(res.statusCode).toEqual(200);
-    console.log(res.body);
     expect(res.body).toEqual([]);
   });
 
@@ -50,7 +55,6 @@ describe("Check product endpoints", () => {
       .post("/api/products")
       .send(payloads.product1);
     expect(res.statusCode).toEqual(201);
-    console.log(res.body);
     expect(res.body).not.toBeNull();
     expect(res.body.length).toEqual(24);
     const id1 = res.body;
@@ -58,7 +62,6 @@ describe("Check product endpoints", () => {
       .post("/api/products")
       .send(payloads.product2);
     expect(res2.statusCode).toEqual(201);
-    console.log(res2.body);
     expect(res2.body).not.toBeNull();
     expect(res2.body.length).toEqual(24);
     const id2 = res2.body;
@@ -66,7 +69,6 @@ describe("Check product endpoints", () => {
       .post("/api/products")
       .send(payloads.product3);
     expect(res3.statusCode).toEqual(201);
-    console.log(res3.body);
     expect(res3.body).not.toBeNull();
     expect(res3.body.length).toEqual(24);
     const id3 = res3.body;
@@ -74,7 +76,6 @@ describe("Check product endpoints", () => {
       .post("/api/products/search")
       .send({ searchText: "Black" });
     expect(res4.statusCode).toEqual(200);
-    console.log(res4.body);
     expect(res4.body).not.toBeNull();
     expect(res4.body.length).toEqual(3);
     expect(res4.body[0].productName).toEqual("BlackBerry");
@@ -98,7 +99,6 @@ describe("Check product endpoints", () => {
       .post("/api/products/search")
       .send({ searchText: "Black" });
     expect(res5.statusCode).toEqual(200);
-    console.log(res5.body);
     expect(res5.body).not.toBeNull();
     expect(res5.body.length).toEqual(3);
     expect(res5.body[0].productName).toEqual("BlackBerry");

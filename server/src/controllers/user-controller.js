@@ -1,13 +1,10 @@
 const express = require("express");
 const {
   getAll,
-  save,
   update,
   deleteById,
   getById,
 } = require("../services/user-service");
-const validators = require("../models/request-models");
-const { handleValidation } = require("../middlewares");
 const { NotFound } = require("../common/errors");
 
 const router = express.Router();
@@ -15,7 +12,7 @@ const router = express.Router();
 const getHandler = async (req, res, next) => {
   try {
     const items = await getAll();
-    res.status(200).send(items);
+    return res.status(200).send(items);
   } catch (error) {
     return next(error, req, res);
   }
@@ -26,10 +23,9 @@ const getByIdHandler = async (req, res, next) => {
     const { id } = req.params;
     const item = await getById(id);
     if (item) {
-      res.status(200).send(item);
-    } else {
-      throw new NotFound(`User not found by the id: ${id}`);
+      return res.status(200).send(item);
     }
+    throw new NotFound(`User not found by the id: ${id}`);
   } catch (error) {
     return next(error, req, res);
   }
@@ -39,7 +35,7 @@ const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const id = await update(body);
-    res.status(200).send(id);
+    return res.status(200).send(id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -49,13 +45,13 @@ const deleteHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     await deleteById(id);
-    res.status(200).send("User deleted");
+    return res.status(200).send("User deleted");
   } catch (error) {
     return next(error, req, res);
   }
 };
 
-const currentUserHandler = async (req, res) => {
+const currentUserHandler = async (req, res) =>
   res.status(200).send({
     success: true,
     data: {
@@ -111,7 +107,6 @@ const currentUserHandler = async (req, res) => {
       phone: "0752-268888888",
     },
   });
-};
 
 router.get("/:id", getByIdHandler);
 router.put("/:id", putHandler);

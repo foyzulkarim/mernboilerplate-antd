@@ -16,7 +16,7 @@ const router = express.Router();
 const getHandler = async (req, res, next) => {
   try {
     const items = await getAll();
-    res.status(200).send(items);
+    return res.status(200).send(items);
   } catch (error) {
     return next(error, req, res);
   }
@@ -27,10 +27,9 @@ const getByIdHandler = async (req, res, next) => {
     const { id } = req.params;
     const item = await getById(id);
     if (item) {
-      res.status(200).send(item);
-    } else {
-      throw new NotFound(`Role not found by the id: ${id}`);
+      return res.status(200).send(item);
     }
+    throw new NotFound(`Role not found by the id: ${id}`);
   } catch (error) {
     return next(error, req, res);
   }
@@ -40,7 +39,7 @@ const postHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const id = await save(body);
-    res.status(201).send(id);
+    return res.status(201).send(id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -50,7 +49,7 @@ const searchHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const result = await search(body);
-    res.status(200).send(result);
+    return res.status(200).send(result);
   } catch (error) {
     return next(error, req, res);
   }
@@ -60,7 +59,7 @@ const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const id = await update(body);
-    res.status(200).send(id);
+    return res.status(200).send(id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -70,7 +69,7 @@ const deleteHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     await deleteById(id);
-    res.status(200).send("Role deleted");
+    return res.status(200).send("Role deleted");
   } catch (error) {
     return next(error, req, res);
   }

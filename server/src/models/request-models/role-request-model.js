@@ -8,10 +8,8 @@ const schema = Joi.object().keys({
 
 const validate = (data) => {
   const result = schema.validate(data);
-  data.createdAt = new Date();
-  data.updatedAt = new Date();
-  data.isSuperAdmin = false;
-  result.value = data;
+  const isSuperAdmin = false;
+  result.value = { ...data, isSuperAdmin };
   return result;
 };
 

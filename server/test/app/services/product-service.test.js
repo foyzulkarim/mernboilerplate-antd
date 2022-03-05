@@ -1,16 +1,34 @@
 const dbHandler = require("../db-handler");
 const productService = require("../../../src/services/product-service");
 
-beforeAll(async () => await dbHandler.connect());
+beforeAll(async () => {
+  await dbHandler.connect();
+});
 
-afterEach(async () => await dbHandler.clearDatabase());
+afterEach(async () => {
+  await dbHandler.clearDatabase();
+});
 
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => {
+  await dbHandler.closeDatabase();
+});
 
 /**
  * Product test suite.
  */
 describe("Product", () => {
+  /**
+   * Complete product example.
+   */
+  const productComplete = {
+    productName: "iPhone 11",
+    sku: "iphone-11",
+    cost: 500,
+    price: 699,
+    createdAt: "2020-01-01",
+    updatedAt: "2020-04-01",
+  };
+
   // create and search product test
   it("can be created and searched successfully", async () => {
     const productId = await productService.save(productComplete);
@@ -35,16 +53,4 @@ describe("Product", () => {
     const updatedProduct = await productService.getById(productId);
     expect(updatedProduct.productName).toBe("iPhone X");
   });
-
-  /**
-   * Complete product example.
-   */
-  const productComplete = {
-    productName: "iPhone 11",
-    sku: "iphone-11",
-    cost: 500,
-    price: 699,
-    createdAt: "2020-01-01",
-    updatedAt: "2020-04-01",
-  };
 });

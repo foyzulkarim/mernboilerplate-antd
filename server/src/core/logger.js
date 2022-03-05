@@ -1,6 +1,6 @@
 const winston = require("winston");
 
-let alignColorsAndTime = winston.format.combine(
+const alignColorsAndTime = winston.format.combine(
   winston.format.colorize({
     all: true,
   }),

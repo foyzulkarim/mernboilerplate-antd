@@ -15,7 +15,6 @@ const filterSchema = new mongoose.Schema({
 const Filter = mongoose.model("Filter", filterSchema);
 
 Filter.createNew = async (filter) => {
-  filter._id = new mongoose.Types.ObjectId();
   const model = new Filter(filter);
   return model;
 };

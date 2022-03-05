@@ -42,23 +42,25 @@ userSchema.post("save", (error, doc, next) => {
 const User = mongoose.model("User", userSchema);
 
 async function getPasswordHash(password) {
-  return await bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
+  return hash;
 }
 
 User.createNew = async (user) => {
-  user._id = new mongoose.Types.ObjectId();
   const model = new User(user);
   const hash = await getPasswordHash(user.password);
   model.passwordHash = hash;
   return model;
 };
 
-User.getHashedPassword = async (newPassword) =>
-  await getPasswordHash(newPassword);
+User.getHashedPassword = async (newPassword) => {
+  const hash = await getPasswordHash(newPassword);
+  return hash;
+};
 
 User.setPassword = async (model, newPassword) => {
-  model.passwordHash = await getPasswordHash(newPassword);
-  return model;
+  const passwordHash = await getPasswordHash(newPassword);
+  return { passwordHash, ...model };
 };
 
 module.exports = User;

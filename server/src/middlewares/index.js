@@ -1,5 +1,5 @@
-const { GeneralError, BadRequest } = require("../common/errors");
 const logger = require("pino")();
+const { GeneralError, BadRequest } = require("../common/errors");
 
 const handleError = async (err, req, res, next) => {
   if (res.headersSent) {

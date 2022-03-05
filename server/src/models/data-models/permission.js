@@ -14,7 +14,6 @@ const permissionSchema = new mongoose.Schema({
 const Permission = mongoose.model("Permission", permissionSchema);
 
 Permission.createNew = async (permission) => {
-  permission._id = new mongoose.Types.ObjectId();
   const model = new Permission(permission);
   return model;
 };

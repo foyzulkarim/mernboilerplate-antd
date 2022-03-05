@@ -1,6 +1,6 @@
+const logger = require("pino")();
 const jwt = require("jsonwebtoken");
 const { GeneralError, BadRequest } = require("./errors");
-const logger = require("pino")();
 
 const handleError = async (err, req, res, next) => {
   if (res?.headersSent) {

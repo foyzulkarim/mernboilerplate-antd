@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
-const { save, update, getById, deleteById } = require("../../core/repository");
+const { save } = require("../../core/repository");
 
 const Model = require("./model");
 
@@ -45,13 +45,13 @@ const checkUser = async (username, password) => {
 };
 
 async function getPasswordHash(password) {
-  return await bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
+  return hash;
 }
 
 const createUser = async (user) => {
-  const hash = await getPasswordHash(user.password);
-  user.passwordHash = hash;
-  const { _id } = await save(user, ModelName);
+  const passwordHash = await getPasswordHash(user.password);
+  const { _id } = await save({ passwordHash, ...user }, ModelName);
   return _id;
 };
 

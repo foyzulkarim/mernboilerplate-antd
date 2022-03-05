@@ -3,7 +3,7 @@ const roleRouter = require("../../../src/controllers/role-controller");
 
 describe("Routes", () => {
   // product routes setup ok
-  test("product routes setup ok", () => {
+  it("product routes setup ok", () => {
     const routes = productRouter.stack
       .filter((layer) => layer.route)
       .map((layer) => layer.route.path);
@@ -11,7 +11,7 @@ describe("Routes", () => {
   });
 
   // role routes setup ok
-  test("role routes setup ok", () => {
+  it("role routes setup ok", () => {
     const routes = roleRouter.stack
       .filter((layer) => layer.route)
       .map((layer) => layer.route.path);

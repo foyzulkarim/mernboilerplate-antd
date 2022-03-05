@@ -8,9 +8,7 @@ const schema = Joi.object().keys({
 
 const validate = (data) => {
   const result = schema.validate(data);
-  data.isSuperAdmin = false;
-  data.isAdmin = false;
-  result.value = data;
+  result.value = { isSuperAdmin: false, isAdmin: false, ...data };
   return result;
 };
 

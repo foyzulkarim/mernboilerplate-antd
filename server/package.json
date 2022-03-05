@@ -12,7 +12,7 @@
     "db:up": "docker-compose -f ./db.yml up",
     "db:seed:products": "node ./setup/seed-products.js",
     "db:seed:users": "node ./setup/seed-users.js",
-    "lint": "eslint ."
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
@@ -48,7 +48,8 @@
     "jest": "^27.0.6",
     "jshint": "^2.13.4",
     "mongodb-memory-server": "^7.3.1",
-    "supertest": "^6.1.4"
+    "supertest": "^6.1.4",
+    "tsconfig-paths": "^3.13.0"
   },
   "jest": {
     "testEnvironment": "node"

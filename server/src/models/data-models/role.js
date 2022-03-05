@@ -12,7 +12,6 @@ const roleSchema = new mongoose.Schema({
 const Role = mongoose.model("Role", roleSchema);
 
 Role.createNew = async (role) => {
-  role._id = new mongoose.Types.ObjectId();
   const model = new Role(role);
   return model;
 };

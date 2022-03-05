@@ -18,8 +18,7 @@ const usernameSchema = Joi.object().keys({
 
 const validateRegistration = (data) => {
   const result = registrationSchema.validate(data);
-  data.roleName = "user";
-  result.value = data;
+  result.value = { roleName: "user", ...data };
   return result;
 };
 

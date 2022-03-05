@@ -6,7 +6,8 @@ const {
 } = require("../models/data-models/common");
 const Model = require("../models/data-models/product");
 const { NotFound } = require("../common/errors");
-const eventEmitter = require("../core/event-manager").getInstance();
+
+// const eventEmitter = require("../core/event-manager").getInstance();
 
 const modelName = "Product";
 
@@ -42,7 +43,7 @@ const search = async (payload) => {
 
   // product.size (number)
   if (payload.size) {
-    queries.push({ size: parseInt(payload.size) });
+    queries.push({ size: parseInt(payload.size, 10) });
   }
 
   // payload.fromDate && payload.toDate
@@ -54,20 +55,22 @@ const search = async (payload) => {
     });
   }
 
-  const query =
-    queries.length > 1
-      ? { $and: queries }
-      : queries.length == 1
-      ? queries[0]
-      : {};
-  const take = parseInt(payload.pageSize);
-  const skip = (parseInt(payload.current) - 1) * take;
+  let query = {};
+  if (queries.length === 1) {
+    query = { ...queries[0] };
+  }
+  if (queries.length > 1) {
+    query = { $and: queries };
+  }
+
+  const take = parseInt(payload.pageSize, 10);
+  const skip = (parseInt(payload.current, 10) - 1) * take;
 
   // sort
   let sort = {};
   if (payload.sort) {
     const key = payload.sort;
-    const value = parseInt(payload.order) ?? 1;
+    const value = parseInt(payload.order, 10) ?? 1;
     sort[key] = value;
   } else {
     sort = { updatedAt: -1 };
@@ -92,7 +95,7 @@ const count = async (payload) => {
 
   // product.size (number)
   if (payload.size) {
-    queries.push({ size: parseInt(payload.size) });
+    queries.push({ size: parseInt(payload.size, 10) });
   }
 
   // payload.fromDate && payload.toDate
@@ -105,29 +108,29 @@ const count = async (payload) => {
     });
   }
 
-  const query =
-    queries.length > 1
-      ? { $and: queries }
-      : queries.length == 1
-      ? queries[0]
-      : {};
+  let query = {};
+  if (queries.length === 1) {
+    query = { ...queries[0] };
+  }
+  if (queries.length > 1) {
+    query = { $and: queries };
+  }
+
   const t = await Model.collection.find(query).count();
   const items = { total: t };
   return items;
 };
 
 const setupEventListeners = () => {
-  eventEmitter.on("ProductCreated", (product) => {
-    console.log("productCreated event received", product);
-  });
-
-  eventEmitter.on("ProductUpdated", (product) => {
-    console.log("productUpdated event received", product);
-  });
-
-  eventEmitter.on("ProductDeleted", (product) => {
-    console.log("productDeleted event received", product);
-  });
+  // eventEmitter.on("ProductCreated", (product) => {
+  //   console.log("productCreated event received", product);
+  // });
+  // eventEmitter.on("ProductUpdated", (product) => {
+  //   console.log("productUpdated event received", product);
+  // });
+  // eventEmitter.on("ProductDeleted", (product) => {
+  //   console.log("productDeleted event received", product);
+  // });
 };
 
 setupEventListeners();
