@@ -28,7 +28,7 @@ const handleRequest = async (req, res, next) => {
 
   res.set("x-correlation-id", correlationId);
 
-  logger.info(`this is my log info: ${req.method} ${req.url}`, {
+  logger.info(`old this is my log info: ${req.method} ${req.url}`, {
     correlationId,
   });
   return next();

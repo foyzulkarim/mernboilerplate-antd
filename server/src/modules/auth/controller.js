@@ -1,26 +1,32 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
 const { handleValidation } = require("../../common/middlewares");
 const { validateRegistration, validateUsername } = require("./request");
 const {
-  createUser,
   checkUser,
   searchOne,
   changePassword,
+  tryCreateUser,
 } = require("./service");
-// import { search as searchPermissions } from "../services/permission-service";
 
 const router = express.Router();
 
 const createUserHandler = async (req, res, next) => {
   try {
     const user = req.body;
-    const id = await createUser(user);
-    res
+    const id = await tryCreateUser(user);
+    if (!id) {
+      return res.status(400).send({
+        status: "error",
+        message: "User already exists by username or email or phone number.",
+      });
+    }
+    return res
       .status(201)
       .send({ status: "ok", message: "User created successfully", id });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -28,8 +34,6 @@ const loginHandler = async (req, res) => {
   if (req.body.username && req.body.password) {
     const user = await checkUser(req.body.username, req.body.password);
     if (user) {
-      // console.log("user", user);
-      // const permissions = await searchPermissions({ roleId });
       const token = jwt.sign(
         {
           id: user._id,
@@ -47,6 +51,7 @@ const loginHandler = async (req, res) => {
         type: "account",
         currentAuthority: "admin",
         user: rest,
+        sessionId: uuidv4(),
         accessToken: token,
         userInfo: {
           name: "Serati Ma",

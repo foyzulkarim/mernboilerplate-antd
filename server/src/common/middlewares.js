@@ -1,5 +1,5 @@
-const logger = require("pino")();
 const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
 const { GeneralError, BadRequest } = require("./errors");
 
 const handleError = async (err, req, res, next) => {
@@ -13,7 +13,7 @@ const handleError = async (err, req, res, next) => {
   }
 
   const correlationId = req?.headers["x-correlation-id"];
-  logger.error(err, { correlationId });
+  req.log.error(err, { correlationId });
   return (
     res &&
     res.status(code).json({
@@ -28,15 +28,13 @@ const handleError = async (err, req, res, next) => {
 const handleRequest = async (req, res, next) => {
   let correlationId = req.headers["x-correlation-id"];
   if (!correlationId) {
-    correlationId = Date.now().toString();
+    correlationId = uuidv4();
     req.headers["x-correlation-id"] = correlationId;
   }
 
   res.set("x-correlation-id", correlationId);
-
-  logger.info(`this is my log info: ${req.method} ${req.url}`, {
-    correlationId,
-  });
+  req.log = req.log.child({ correlationId });
+  req.log.info(`new request: ${req.method} ${req.url}`);
   return next();
 };
 
@@ -59,6 +57,8 @@ const authenticateRequest = async (req, res, next) => {
     auth = auth.replace("Bearer ", "");
     jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        const { stack, name, ...errorProps } = err;
+        req.log.error({ ...errorProps, name }, "jwt token invalid");
         res.status(401).send({
           success: false,
           // error: err.message || 'Invalid token',
@@ -68,6 +68,8 @@ const authenticateRequest = async (req, res, next) => {
         });
       } else {
         req.user = decoded;
+        req.log = req.log.child({ username: req.user.username });
+        req.log.info(`Authenticated user ${req.user.username}`);
         next();
       }
     });
