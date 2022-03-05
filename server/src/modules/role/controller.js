@@ -1,12 +1,5 @@
 const express = require("express");
-const {
-  save,
-  update,
-  deleteById,
-  getById,
-  search,
-  count,
-} = require("./service");
+const { save, update, deleteById, getById, search } = require("./service");
 const { validate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
 const { NotFound } = require("../../common/errors");
@@ -48,7 +41,7 @@ const getByIdHandler = async (req, res, next) => {
 const postHandler = async (req, res, next) => {
   try {
     const { body } = req;
-    const id = await save(body);
+    const id = await save(body, ModelName);
     res.status(201).send(id);
   } catch (error) {
     return next(error, req, res);
@@ -58,8 +51,8 @@ const postHandler = async (req, res, next) => {
 const searchHandler = async (req, res, next) => {
   try {
     const { body } = req;
-    const result = await search(body);
-    res.status(200).send(result);
+    const id = await search(body, ModelName);
+    res.status(200).send(id);
   } catch (error) {
     return next(error, req, res);
   }
@@ -68,7 +61,7 @@ const searchHandler = async (req, res, next) => {
 const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
-    const id = await update(body);
+    const id = await update(body, ModelName);
     res.status(200).send(id);
   } catch (error) {
     return next(error, req, res);
@@ -78,15 +71,15 @@ const putHandler = async (req, res, next) => {
 const deleteHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    await deleteById(id);
-    res.status(200).send("Role deleted");
+    await deleteById(id, ModelName);
+    res.status(200).send({ success: true, message: `${ModelName} deleted` });
   } catch (error) {
     return next(error, req, res);
   }
 };
 
 router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validators.roleSchemaValidate), postHandler);
+router.post("/", handleValidation(validate), postHandler);
 router.post("/search", searchHandler);
 router.put("/:id", putHandler);
 router.get("/", getHandler);
