@@ -64,7 +64,7 @@ export default defineConfig({
           component: '404',
         },
       ],
-    },
+    },    
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -91,6 +91,36 @@ export default defineConfig({
           icon: 'smile',
           path: '/dashboard/workplace',
           component: './dashboard/workplace',
+        },
+      ],
+    },
+    {
+      path: '/roles',
+      icon: 'form',
+      name: 'Roles',
+      routes: [
+        {
+          path: '/roles',
+          redirect: '/roles/list',
+        },
+        {
+          name: 'List',
+          icon: 'smile',
+          path: '/roles/list',
+          component: './role/role-list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/roles/new',
+          component: './role/role-entry',
+        },
+        {
+          name: 'Update',
+          hideInMenu: true,
+          icon: 'smile',
+          path: '/roles/edit/:id',
+          component: './role/role-update',
         },
       ],
     },
