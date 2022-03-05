@@ -1,0 +1,49 @@
+{
+    "extends": ["airbnb-base", "prettier"],
+    "parser": "@babel/eslint-parser",
+    "plugins": [
+      "prettier"
+    ],
+    "env": {
+        "jasmine": true,
+        "es6": true,
+        "browser": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "requireConfigFile": false,
+        "allowImportExportEverywhere": true
+    },
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
+        "import/no-unresolved": 0,
+        "import/no-absolute-path": 0,
+        "import/extensions": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/prefer-default-export": 0,
+        "import/first": 0,
+        "import/no-dynamic-require": 0,
+        // don't force function names if it won't help debugging
+        "func-names": [2, "as-needed"],
+
+        "no-mixed-spaces-and-tabs": 0,
+        "no-tabs": 0,
+        "quotes": 0,
+        "no-underscore-dangle": 0,
+
+        // i like ++
+        "no-plusplus": 0,
+
+        // enforce curly braces for multiline if, else, for, while, do
+        "curly": ["error", "multi-line"]
+
+
+    },
+    "globals": {
+    }
+}

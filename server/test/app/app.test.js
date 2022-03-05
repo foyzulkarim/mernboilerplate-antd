@@ -1,9 +1,9 @@
-const app = require('../../src/app')
+const app = require("../../src/app");
 
-test('App Environment', () => {
-  expect(app.settings.env).toEqual('test')
-})
+it("App Environment", () => {
+  expect(app.settings.env).toEqual("test");
+});
 
-test('App Base Path', () => {
-  expect(app.mountpath).toEqual('/')
-})
+it("App Base Path", () => {
+  expect(app.mountpath).toEqual("/");
+});
