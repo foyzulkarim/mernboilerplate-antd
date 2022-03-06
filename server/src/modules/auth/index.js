@@ -3,7 +3,7 @@ const userRoutes = require("./user-controller");
 
 const init = async (app) => {
   app.use("/api/auth", authRoutes);
-  app.use("/api/user", userRoutes);
+  app.use("/api/users", userRoutes);
   return app;
 };
 

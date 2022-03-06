@@ -42,6 +42,7 @@ const handleValidation = (validate) => (req, res, next) => {
   const result = validate(req.body);
   const isValid = result.error == null;
   if (isValid) {
+    req.body = result.value;
     return next();
   }
 
