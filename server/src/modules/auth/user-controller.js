@@ -1,24 +1,26 @@
+/* eslint-disable no-undef */
 const express = require("express");
 const {
-  save,
   update,
   deleteById,
   getById,
   search,
   count,
+  tryCreateUser,
+  searchOne,
 } = require("./service");
-const { validate } = require("./request");
+const { validateRegistration, validateUserCreate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
 const { NotFound } = require("../../common/errors");
 
 const router = express.Router();
-const ModelName = "Role";
+const ModelName = "User";
 
 const getHandler = async (req, res, next) => {
   try {
     const items = [
-      { id: 1, name: "Role 1" },
-      { id: 2, name: "Role 2" },
+      { id: 1, name: "User 1" },
+      { id: 2, name: "User 2" },
     ];
     const result = {
       data: items,
@@ -38,7 +40,7 @@ const getByIdHandler = async (req, res, next) => {
     if (item) {
       return res.status(200).send(item);
     }
-    throw new NotFound(`Role not found by the id: ${id}`);
+    throw new NotFound(`${ModelName} not found by the id: ${id}`);
   } catch (error) {
     return next(error, req, res);
   }
@@ -46,21 +48,33 @@ const getByIdHandler = async (req, res, next) => {
 
 const postHandler = async (req, res, next) => {
   try {
-    const { body } = req;
-    const id = await save(body, ModelName);
-    req.log.info({ id }, `${ModelName} created`);
-    return res.status(201).send(id);
+    const user = req.body;
+    const id = await tryCreateUser(user);
+    if (!id) {
+      return res.status(400).send({
+        status: "error",
+        message: "User already exists by username or email or phone number.",
+      });
+    }
+    return res
+      .status(201)
+      .send({ status: "ok", message: "User created successfully", id });
   } catch (error) {
-    return next(error, req, res);
+    return next(error);
   }
 };
 
 const searchHandler = async (req, res, next) => {
   try {
-    const { body } = req;
-    req.log.info({ body }, `search ${ModelName}`);
-    const data = await search(body, ModelName);
-    return res.status(200).send(data);
+    if (!req.body.pageSize) {
+      req.body.pageSize = 10;
+    }
+    if (!req.body.current) {
+      req.body.current = 1;
+    }
+    const result = await search(req.body);
+    const response = { success: true, ...result };
+    return res.status(200).send(response);
   } catch (error) {
     return next(error, req, res);
   }
@@ -98,12 +112,23 @@ const deleteHandler = async (req, res, next) => {
   }
 };
 
+const checkUserHandler = async (req, res) => {
+  if (req.body) {
+    const user = await searchOne(req.body);
+    if (user) {
+      return res.status(200).send({ status: "success", message: "User found" });
+    }
+  }
+  return res.status(400).send({ status: "error", message: "User not found" });
+};
+
 router.get("/", getHandler);
 router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validate), postHandler);
-router.put("/", handleValidation(validate), putHandler);
+router.post("/", handleValidation(validateUserCreate), postHandler);
+router.put("/", handleValidation(validateUserCreate), putHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
 router.delete("/:id", deleteHandler);
+router.post("/check", checkUserHandler);
 
 module.exports = router;

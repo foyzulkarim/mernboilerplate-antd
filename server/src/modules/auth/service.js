@@ -55,6 +55,52 @@ const createUser = async (user) => {
   return _id;
 };
 
+const tryCreateUser = async (user) => {
+  const { username, phoneNumber, email } = user;
+  const query = {
+    $or: [
+      { phoneNumber: { $regex: phoneNumber, $options: "i" } },
+      { email: { $regex: email, $options: "i" } },
+      { username: { $regex: username, $options: "i" } },
+    ],
+  };
+  const item = await Model.findOne(query);
+  if (item) {
+    return false;
+  }
+  const id = await createUser(user);
+  return id;
+};
+
+const prepareQuery = (payload) => {
+  let query = {};
+  if (payload.name) {
+    query = {
+      $or: [
+        { firstName: { $regex: payload.name, $options: "i" } },
+        { lastName: { $regex: payload.name, $options: "i" } },
+        { username: { $regex: payload.name, $options: "i" } },
+      ],
+    };
+  }
+
+  return query;
+};
+
+const search = async (payload) => {
+  const query = prepareQuery(payload);
+  const data = await Model.collection.find(query).skip(0).limit(20);
+  const items = { data: await data.toArray(), total: 200 };
+  return items;
+};
+
+const count = async (payload) => {
+  const query = prepareQuery(payload);
+  const t = await Model.collection.find(query).count();
+  const items = { total: t };
+  return items;
+};
+
 module.exports = {
   save,
   searchOne,
@@ -62,4 +108,7 @@ module.exports = {
   checkUser,
   createUser,
   getByUsername,
+  search,
+  count,
+  tryCreateUser,
 };

@@ -8,7 +8,7 @@
     "start:pm2": "pm2 start ./src/server.js --watch",
     "restart:pm2": "pm2 restart ./src/server.js",
     "stop:pm2": "pm2 stop ./src/server.js",
-    "start": "nodemon ./src/server.js",
+    "start": "nodemon ./src/server.js | pino-pretty -c -L",
     "db:up": "docker-compose -f ./db.yml up",
     "db:seed:products": "node ./setup/seed-products.js",
     "db:seed:users": "node ./setup/seed-users.js",
@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-pino-logger": "^7.0.0",
     "express-rate-limit": "^5.3.0",
     "faker": "^5.5.3",
     "helmet": "^4.6.0",
@@ -32,9 +33,11 @@
     "nodemon": "^2.0.12",
     "pino": "^6.0.0-rc.2",
     "pino-http": "^5.5.0",
+    "pino-http-print": "^3.1.0",
     "pm2": "^5.1.0",
     "prettier": "^2.5.1",
     "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.2",
     "winston": "^3.6.0"
   },
   "devDependencies": {

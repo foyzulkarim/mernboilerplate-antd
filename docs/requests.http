@@ -1,3 +1,6 @@
+# request home page
+GET http://localhost:8002
+
 # demo GET
 GET http://localhost:5000/api/products
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGNlZjUzNTYxMGVhNjkwYjE1Yzk2YyIsInVzZXJuYW1lIjoidHdvIiwiZXhwIjoxNjQ1MTkzOTA3LCJpYXQiOjE2NDUxOTAzMDd9.toTME4KKSuOLVOrnPGIXlbLXT7UmaOfshDHvheryDak
@@ -72,4 +75,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjdjZjlkY
 ## authenticated role search request
 POST http://localhost:8002/api/roles/search
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjdjZjlkYzg4ODNlN2RhMWJmOWYxYyIsInVzZXJuYW1lIjoic3VwZXJhZG1pbiIsImV4cCI6MTY0NjQ1MTM3OCwiaWF0IjoxNjQ2NDQ3Nzc4fQ.TNbOm1TjXzsf8DsNbPycSpTQRsX8uyXsSwmc3yG5OqU
+session-id: 2b61335a-820f-4674-a893-3691b6a3401b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjdjZjlkYzg4ODNlN2RhMWJmOWYxYyIsInVzZXJuYW1lIjoic3VwZXJhZG1pbiIsImV4cCI6MTY0NjUxOTMzNywiaWF0IjoxNjQ2NTE1NzM3fQ.YflzdMps7anD6JVqL3ovFU1mOc0p8tKCrVXCI8MSbLw
