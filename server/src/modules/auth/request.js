@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const registrationSchema = Joi.object().keys({
+const commonKeys = {
   firstName: Joi.string().min(3).max(30).required(),
   lastName: Joi.string().min(3).max(30).required(),
   username: Joi.string().min(3).max(30).required(),
@@ -9,6 +9,10 @@ const registrationSchema = Joi.object().keys({
   email: Joi.string().min(5).max(30).required(),
   password: Joi.string().required(),
   confirm: Joi.string().required().valid(Joi.ref("password")),
+};
+
+const registrationSchema = Joi.object().keys({
+  ...commonKeys,
 });
 
 const usernameSchema = Joi.object().keys({
@@ -28,4 +32,15 @@ const validateUsername = (data) => {
   return result;
 };
 
-module.exports = { validateRegistration, validateUsername };
+const userCreateSchema = Joi.object().keys({
+  ...commonKeys,
+  roleName: Joi.string().min(5).max(15).required(),
+});
+
+const validateUserCreate = (data) => {
+  const result = userCreateSchema.validate(data);
+  result.value = data;
+  return result;
+};
+
+module.exports = { validateRegistration, validateUsername, validateUserCreate };

@@ -125,6 +125,36 @@ export default defineConfig({
       ],
     },
     {
+      path: '/users',
+      icon: 'form',
+      name: 'Users',
+      routes: [
+        {
+          path: '/users',
+          redirect: '/users/list',
+        },
+        {
+          name: 'List',
+          icon: 'smile',
+          path: '/users/list',
+          component: './user/user-list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/users/new',
+          component: './user/user-entry',
+        },
+        {
+          name: 'Update',
+          hideInMenu: true,
+          icon: 'smile',
+          path: '/users/edit/:id',
+          component: './user/user-update',
+        },
+      ],
+    },
+    {
       path: '/form',
       icon: 'form',
       name: 'form',

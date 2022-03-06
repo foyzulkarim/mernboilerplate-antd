@@ -9,7 +9,7 @@ const {
   tryCreateUser,
   searchOne,
 } = require("./service");
-const { validateRegistration, validateUsername } = require("./request");
+const { validateRegistration, validateUserCreate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
 const { NotFound } = require("../../common/errors");
 
@@ -124,8 +124,8 @@ const checkUserHandler = async (req, res) => {
 
 router.get("/", getHandler);
 router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validateRegistration), postHandler);
-router.put("/", handleValidation(validateRegistration), putHandler);
+router.post("/", handleValidation(validateUserCreate), postHandler);
+router.put("/", handleValidation(validateUserCreate), putHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
 router.delete("/:id", deleteHandler);

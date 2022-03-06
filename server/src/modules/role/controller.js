@@ -48,7 +48,7 @@ const postHandler = async (req, res, next) => {
   try {
     const { body } = req;
     const id = await save(body, ModelName);
-    req.logger.info({ id }, `${ModelName} created`);
+    req.log.info({ id }, `${ModelName} created`);
     return res.status(201).send(id);
   } catch (error) {
     return next(error, req, res);
