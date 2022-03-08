@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
-const { save } = require("../../core/repository");
+const { save, getById } = require("../../core/repository");
 
 const Model = require("./model");
 
@@ -103,6 +103,7 @@ const count = async (payload) => {
 
 module.exports = {
   save,
+  getById,
   searchOne,
   changePassword,
   checkUser,

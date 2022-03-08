@@ -12,22 +12,22 @@ import { getById, update } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
-  const [role, setRole] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const { id } = props.match.params;
-    const getRole = async (id) => {
+    const getUser = async (id) => {
       const item = await getById(id);
-      setRole(item);
+      setUser(item);
     }
-    getRole(id);
+    getUser(id);
   }, []);
 
   const { run } = useRequest(update, {
     manual: true,
     onSuccess: (x) => {
-      message.success('Role is saved', x);
-      history.push('/roles');
+      message.success('User is saved', x);
+      history.push('/users');
     },
     onError: (e) => {
       console.log(e);
@@ -37,11 +37,11 @@ const EditForm = (props) => {
 
   const onFinish = async (values) => {
     console.log(values);
-    run({ _id: role._id, ...values });
+    run({ _id: user._id, ...values });
   };
 
   return (
-    role && <PageContainer content="My amazing role update form">
+    user && <PageContainer content="My amazing user update form">
       <Card bordered={false}>
         <ProForm
           hideRequiredMark={false}
@@ -52,35 +52,35 @@ const EditForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={role}
+          initialValues={user}
           onFinish={onFinish}
         >
           <ProFormText
             width="md"
-            label="Name"
-            name="name"
-            value={role.name}
+            label="First name"
+            name="firstName"
+            value={user.firstName}
             rules={[
               {
                 required: true,
-                message: 'Please enter role name',
+                message: 'Please enter user name',
               },
             ]}
-            placeholder="Please enter role name"
+            placeholder="Please enter user name"
           />
 
           <ProFormText
             width="md"
             label="Alias"
             name="alias"
-            value={role.alias}
+            value={user.alias}
             rules={[
               {
                 required: true,
                 message: 'Please enter the Alias',
               },
             ]}
-            placeholder="Please enter role alias"
+            placeholder="Please enter user alias"
           />
         </ProForm>
       </Card>

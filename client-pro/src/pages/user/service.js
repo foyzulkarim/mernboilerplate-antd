@@ -9,6 +9,7 @@ export async function count(params, options) {
 }
 
 export async function getById(id, options) {
+  console.log('getById', id, options);
   return await get(`/api/users/${id}`, {}, options);
 }
 
