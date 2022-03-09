@@ -5,14 +5,20 @@ import ProForm, {
   ProFormRadio,
   ProFormText,
   ProFormTextArea,
+  ProFormSelect,
 } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getById, update } from '../service';
+import { getById, update, validateUser } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
   const [user, setUser] = useState(null);
+  const fetchRoles = async () => {
+    const result = await getRoles();
+    const options = result.data.map(r => ({ label: r.alias, value: r.name }));
+    return options;
+  };
 
   useEffect(() => {
     const { id } = props.match.params;
@@ -63,25 +69,73 @@ const EditForm = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter user name',
+                message: 'Please enter first name',
               },
             ]}
-            placeholder="Please enter user name"
+            placeholder="Please enter first name"
+          />
+          <ProFormText
+            width="md"
+            label="Last name"
+            name="lastName"
+            value={user.lastName}
+            rules={[
+              {
+                required: true,
+                message: 'Please enter last name',
+              },
+            ]}
+            placeholder="Please enter last name"
           />
 
           <ProFormText
             width="md"
-            label="Alias"
-            name="alias"
-            value={user.alias}
+            label="Username"
+            name="username"
+            fullField="Username"
+            disabled
+          />
+          <ProFormText
+            width="md"
+            label="Phone number"
+            name="phoneNumber"
             rules={[
               {
-                required: true,
-                message: 'Please enter the Alias',
+                pattern: /^01[0-9]{9}$/,
+                message: 'Malformed phone number!',
+              },
+              {
+                validator: validateUser,
               },
             ]}
-            placeholder="Please enter user alias"
+            placeholder="eg. 01XXXXXXXXX"
           />
+
+          <ProFormText
+            width="md"
+            label="Email"
+            name="email"
+            rules={[
+              {
+                type: 'email',
+                message: 'Email address format error!',
+              },
+              {
+                validator: validateUser,
+              },
+            ]}
+            placeholder="Please enter email"
+          />
+
+          <ProFormSelect
+            width="md"
+            name="roleName"
+            label="Role"
+            request={fetchRoles}
+            placeholder="Please select a role"
+            rules={[{ required: true, message: 'Please select role' }]}
+          />
+
         </ProForm>
       </Card>
     </PageContainer>

@@ -43,4 +43,23 @@ const validateUserCreate = (data) => {
   return result;
 };
 
-module.exports = { validateRegistration, validateUsername, validateUserCreate };
+const userUpdateSchema = Joi.object().keys({
+  firstName: Joi.string().min(3).max(30).required(),
+  lastName: Joi.string().min(3).max(30).required(),
+  address: Joi.string().min(3).max(30).optional(),
+  phoneNumber: Joi.string().min(5).max(15).required(),
+  email: Joi.string().min(5).max(30).required(),
+});
+
+const validateUserUpdate = (data) => {
+  const result = userUpdateSchema.validate(data);
+  result.value = data;
+  return result;
+};
+
+module.exports = {
+  validateRegistration,
+  validateUsername,
+  validateUserCreate,
+  validateUserUpdate,
+};

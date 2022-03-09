@@ -11,7 +11,7 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { save, getRoles, check as checkUser } from '../service';
+import { save, getRoles, check as checkUser, validateUser } from '../service';
 
 const EntryForm = (props) => {
 
@@ -21,7 +21,6 @@ const EntryForm = (props) => {
   const fetchRoles = async () => {
     const result = await getRoles();
     const options = result.data.map(r => ({ label: r.alias, value: r.name }));
-    // setRoles(options);
     return options;
   };
 
@@ -42,27 +41,7 @@ const EntryForm = (props) => {
     run(values);
   };
 
-  const validateUser = async (_, value) => {
-    const { field, fullField } = _;
-    const promise = Promise;
-    if (!value) {
-      // setVisible(!!value);
-      return promise.reject(`${fullField} is required`);
-    }
-    // stop calling http api if length is less than 5
-    if (value.length < 5) {
-      return promise.reject(`${fullField} must be at least 5 characters`);
-    }
-    console.log(`${fullField} is valid`);
-    let query = {};
-    query[field] = value;
-    const res = await checkUser(query);
-    if (res.status === "success") {
-      return promise.reject(res.message);
-    } else {
-      return promise.resolve();
-    }
-  }
+
 
   const checkConfirm = (_, value) => {
     const promise = Promise;

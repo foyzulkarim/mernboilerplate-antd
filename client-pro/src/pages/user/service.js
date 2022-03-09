@@ -32,3 +32,25 @@ export async function remove(id, options) {
 export async function getRoles(options) {
   return await post('/api/roles/search');
 }
+
+export const validateUser = async (_, value) => {
+  const { field, fullField } = _;
+  const promise = Promise;
+  if (!value) {
+    // setVisible(!!value);
+    return promise.reject(`${fullField} is required`);
+  }
+  // stop calling http api if length is less than 5
+  if (value.length < 5) {
+    return promise.reject(`${fullField} must be at least 5 characters`);
+  }
+  console.log(`${fullField} is valid`);
+  let query = {};
+  query[field] = value;
+  const res = await check(query);
+  if (res.status === "success") {
+    return promise.reject(res.message);
+  } else {
+    return promise.resolve();
+  }
+}

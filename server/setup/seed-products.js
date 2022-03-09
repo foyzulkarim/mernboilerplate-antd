@@ -4,7 +4,9 @@ require("dotenv").config();
 
 const { save } = require("../src/modules/product/service");
 
-const isMongoDbUrl = process.env.IS_MONGODB_CLOUD_URL;
+const isMongoDbUrl = JSON.parse(
+  process.env.IS_MONGODB_CLOUD_URL ? process.env.IS_MONGODB_CLOUD_URL : "false"
+);
 const uri = isMongoDbUrl
   ? process.env.MONGODB_CLOUD_URL
   : `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
