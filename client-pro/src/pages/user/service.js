@@ -33,7 +33,7 @@ export async function getRoles(options) {
   return await post('/api/roles/search');
 }
 
-export const validateUser = async (_, value) => {
+export const validateUser = async (_, value, user) => {
   const { field, fullField } = _;
   const promise = Promise;
   if (!value) {
@@ -47,6 +47,10 @@ export const validateUser = async (_, value) => {
   console.log(`${fullField} is valid`);
   let query = {};
   query[field] = value;
+  if (user._id) {
+    query._id = { $ne: user._id };
+  }
+
   const res = await check(query);
   if (res.status === "success") {
     return promise.reject(res.message);

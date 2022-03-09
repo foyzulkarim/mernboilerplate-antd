@@ -44,11 +44,13 @@ const validateUserCreate = (data) => {
 };
 
 const userUpdateSchema = Joi.object().keys({
+  _id: Joi.string().required(),
   firstName: Joi.string().min(3).max(30).required(),
   lastName: Joi.string().min(3).max(30).required(),
   address: Joi.string().min(3).max(30).optional(),
   phoneNumber: Joi.string().min(5).max(15).required(),
   email: Joi.string().min(5).max(30).required(),
+  roleName: Joi.string().min(5).max(15).required(),
 });
 
 const validateUserUpdate = (data) => {

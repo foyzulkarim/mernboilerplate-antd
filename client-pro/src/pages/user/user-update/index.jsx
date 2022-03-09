@@ -43,7 +43,8 @@ const EditForm = (props) => {
 
   const onFinish = async (values) => {
     console.log(values);
-    run({ _id: user._id, ...values });
+    const { username, ...others } = values;
+    run({ _id: user._id, ...others });
   };
 
   return (
@@ -105,7 +106,9 @@ const EditForm = (props) => {
                 message: 'Malformed phone number!',
               },
               {
-                validator: validateUser,
+                validator: async (_, e) => {
+                  return await validateUser(_, e, user);
+                },
               },
             ]}
             placeholder="eg. 01XXXXXXXXX"
@@ -121,7 +124,10 @@ const EditForm = (props) => {
                 message: 'Email address format error!',
               },
               {
-                validator: validateUser,
+                validator: async (_, e) => {
+                  return await validateUser(_, e, user);
+                },
+                // validator: validateUser,
               },
             ]}
             placeholder="Please enter email"
