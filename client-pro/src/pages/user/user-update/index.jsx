@@ -1,15 +1,11 @@
 import { Card, message } from 'antd';
 import ProForm, {
-  ProFormDatePicker,
-  ProFormDigit,
-  ProFormRadio,
   ProFormText,
-  ProFormTextArea,
   ProFormSelect,
 } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getById, update, validateUser } from '../service';
+import { getById, update, validateUser, getRoles } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
