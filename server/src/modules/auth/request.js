@@ -34,7 +34,8 @@ const validateUsername = (data) => {
 
 const userCreateSchema = Joi.object().keys({
   ...commonKeys,
-  roleName: Joi.string().min(5).max(15).required(),
+  roleId: Joi.string().required(),
+  roleAlias: Joi.string().min(4).max(15).required(),
 });
 
 const validateUserCreate = (data) => {

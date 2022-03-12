@@ -119,7 +119,7 @@ const checkUserHandler = async (req, res) => {
       return res.status(200).send({ status: "success", message: "User found" });
     }
   }
-  return res.status(400).send({ status: "error", message: "User not found" });
+  return res.status(200).send({ status: "error", message: "User not found" });
 };
 
 router.get("/", getHandler);

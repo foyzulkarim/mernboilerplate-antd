@@ -52,6 +52,7 @@ export const validateUser = async (_, value, user) => {
   }
 
   const res = await check(query);
+  console.log('res', res);
   if (res.status === "success") {
     return promise.reject(res.message);
   } else {

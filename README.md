@@ -131,6 +131,7 @@ npm start
 
 ```sh
 cd client-pro
+nvm use --lts
 yarn
 yarn start
 ```
