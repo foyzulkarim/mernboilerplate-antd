@@ -114,12 +114,12 @@ const deleteHandler = async (req, res, next) => {
 
 const checkUserHandler = async (req, res) => {
   if (req.body) {
-    const user = await searchOne(req.body);
+    const user = await searchOne(req.body, ModelName);
     if (user) {
       return res.status(200).send({ status: "success", message: "User found" });
     }
   }
-  return res.status(400).send({ status: "error", message: "User not found" });
+  return res.status(200).send({ status: "error", message: "User not found" });
 };
 
 router.get("/", getHandler);
