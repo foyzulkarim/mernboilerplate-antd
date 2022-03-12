@@ -4,9 +4,10 @@
         "lastName": "Admin",
         "username": "superadmin",
         "address": "Wakanda",
-        "phoneNumber": "00000000001",
+        "phoneNumber": "01000000001",
         "email": "superadmin@mernboilerplate.com",
-        "roleName": "superadmin",
+        "roleId": "",
+        "roleAlias": "Super Admin",
         "password": "mern-boilerplate"
     },
     {
@@ -14,9 +15,10 @@
         "lastName": "Admin",
         "username": "admin",
         "address": "Wakanda",
-        "phoneNumber": "00000000002",
+        "phoneNumber": "01000000002",
         "email": "admin@mernboilerplate.com",
-        "roleName": "admin",
+        "roleId": "",
+        "roleAlias": "Admin",
         "password": "mern-boilerplate"
     },
     {
@@ -24,9 +26,10 @@
         "lastName": "User",
         "username": "user",
         "address": "Wakanda",
-        "phoneNumber": "00000000003",
+        "phoneNumber": "01000000003",
         "email": "user@mernboilerplate.com",
-        "roleName": "user",
+        "roleId": "",
+        "roleAlias": "User",
         "password": "mern-boilerplate"
     }
 ]

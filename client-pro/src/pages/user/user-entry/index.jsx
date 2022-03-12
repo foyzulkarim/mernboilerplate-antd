@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Card, message } from 'antd';
 import ProForm, {
   ProFormDatePicker,
@@ -16,29 +16,30 @@ import { save, getRoles, check as checkUser, validateUser } from '../service';
 const EntryForm = (props) => {
 
   const [form] = Form.useForm();
+  const [role, setRole] = useState(null);
 
   // get roles 
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.alias, value: r.name }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
     return options;
   };
 
-  const { run } = useRequest(save, {
-    manual: true,
-    onSuccess: (x) => {
-      message.success('User is saved', x);
-      form.resetFields();
-    },
-    onError: (e) => {
-      console.log(e);
-      message.error('Error happened ', e);
-    },
-  });
-
   const onFinish = async (values) => {
     console.log(values, form);
-    run(values);
+    // const { username, ...others } = values;
+    // run({ ...others, roleAlias: role.roleAlias });
+    const result = await save({ ...values, roleAlias: role.roleAlias });
+    console.log(result);
+
+    if (result instanceof Error) {
+      message.error(result.message);
+    }
+    else {
+      message.success(result.message);
+      form.resetFields();
+      setRole(null);
+    }
   };
 
 
@@ -113,8 +114,8 @@ const EntryForm = (props) => {
             name="phoneNumber"
             rules={[
               {
-                pattern: /^01[0-9]{9}$/,
-                message: 'Malformed phone number!',
+                pattern: /^[0-9]*$/,
+                message: 'Invalid phone number',
               },
               {
                 validator: validateUser,
@@ -141,11 +142,12 @@ const EntryForm = (props) => {
 
           <ProFormSelect
             width="md"
-            name="roleName"
+            name="roleId"
             label="Role"
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select role' }]}
+            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
           />
 
           <ProFormText.Password

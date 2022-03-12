@@ -101,7 +101,7 @@ const TableList = () => {
     },
     {
       title: 'Role',
-      dataIndex: 'roleName',
+      dataIndex: 'roleAlias',
     },
     {
       title: 'Username',

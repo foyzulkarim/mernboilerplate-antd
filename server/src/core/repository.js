@@ -35,4 +35,9 @@ const getById = async (id, modelName) => {
   return model;
 };
 
-module.exports = { save, update, deleteById, getById };
+const searchOne = async (query, modelName) => {
+  const data = await mongoose.models[modelName].findOne(query).lean().exec();
+  return data;
+};
+
+module.exports = { save, update, deleteById, getById, searchOne };

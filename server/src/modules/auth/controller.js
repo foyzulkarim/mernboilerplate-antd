@@ -11,6 +11,7 @@ const {
 } = require("./service");
 
 const router = express.Router();
+const modelName = "User";
 
 const createUserHandler = async (req, res, next) => {
   try {
@@ -117,7 +118,7 @@ const loginHandler = async (req, res) => {
 
 const forgotPasswordHandler = async (req, res) => {
   if (req.body.email) {
-    const user = await searchOne({ email: req.body.email });
+    const user = await searchOne({ email: req.body.email }, modelName);
     if (user) {
       const newPassword = "a123"; // we will replace this and set from random string when we have the email service
       await changePassword(user, newPassword);
@@ -130,7 +131,10 @@ const forgotPasswordHandler = async (req, res) => {
 };
 
 const checkUsernameHandler = async (req, res) => {
-  const user = await searchOne({ username: req.body.username.toLowerCase() });
+  const user = await searchOne(
+    { username: req.body.username.toLowerCase() },
+    modelName
+  );
   if (user) {
     return res
       .status(400)

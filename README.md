@@ -79,12 +79,11 @@ The client and server both are up and running and we should see the following sc
 
 
 - seed data
- Go inside of the docker container and execute below commands. These will seed the database with users and products data.
+ Go inside of the docker container and execute below commands. These will seed the database with `roles`, `users` and `products` data.
 
   ```sh
   docker exec -it appserver bash
-  npm run db:seed:users
-  npm run db:seed:products
+  npm run db:seed
   ```
 
   You should see the following output:
@@ -132,6 +131,7 @@ npm start
 
 ```sh
 cd client-pro
+nvm use --lts
 yarn
 yarn start
 ```
@@ -143,8 +143,7 @@ I assume we are running appserver in the docker container.
 
 ```sh
 docker exec -it appserver bash
-npm run db:seed:users
-npm run db:seed:products
+npm run db:seed
 ```
 
 You should be able to see the username and password in the `/server/setup/users.json` file.

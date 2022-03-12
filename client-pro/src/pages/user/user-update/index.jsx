@@ -10,9 +10,10 @@ import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.alias, value: r.name }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
     return options;
   };
 
@@ -21,6 +22,7 @@ const EditForm = (props) => {
     const getUser = async (id) => {
       const item = await getById(id);
       setUser(item);
+      setRole({ value: item.roleId, label: item.roleAlias });
     }
     getUser(id);
   }, []);
@@ -40,7 +42,7 @@ const EditForm = (props) => {
   const onFinish = async (values) => {
     console.log(values);
     const { username, ...others } = values;
-    run({ _id: user._id, ...others });
+    run({ _id: user._id, ...others, roleAlias: role.roleAlias });
   };
 
   return (
@@ -57,6 +59,7 @@ const EditForm = (props) => {
           layout="vertical"
           initialValues={user}
           onFinish={onFinish}
+        // onValuesChange={(changeValues, old) => console.log(changeValues, old)}
         >
           <ProFormText
             width="md"
@@ -131,11 +134,12 @@ const EditForm = (props) => {
 
           <ProFormSelect
             width="md"
-            name="roleName"
+            name="roleId"
             label="Role"
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select role' }]}
+            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
           />
 
         </ProForm>

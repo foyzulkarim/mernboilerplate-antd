@@ -30,7 +30,7 @@ export async function remove(id, options) {
 }
 
 export async function getRoles(options) {
-  return await post('/api/roles/search');
+  return await post('/api/roles/search', { pageSize: -1 });
 }
 
 export const validateUser = async (_, value, user) => {
@@ -52,6 +52,7 @@ export const validateUser = async (_, value, user) => {
   }
 
   const res = await check(query);
+  console.log('res', res);
   if (res.status === "success") {
     return promise.reject(res.message);
   } else {

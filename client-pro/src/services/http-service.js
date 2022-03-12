@@ -36,6 +36,7 @@ request.interceptors.response.use(async (response, options) => {
         const errorObj = new Error(data.message);
         errorObj.error = data.error;
         return errorObj;
+        // throw errorObj;
     }
     return response;
 });

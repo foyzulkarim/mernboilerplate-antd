@@ -1,4 +1,10 @@
-const { save, update, getById, deleteById } = require("../../core/repository");
+const {
+  save,
+  update,
+  getById,
+  deleteById,
+  searchOne,
+} = require("../../core/repository");
 const Model = require("./model");
 
 const search = async (payload) => {
@@ -33,4 +39,12 @@ const count = async (payload) => {
   return items;
 };
 
-module.exports = { save, update, deleteById, getById, search, count };
+module.exports = {
+  save,
+  update,
+  deleteById,
+  getById,
+  search,
+  count,
+  searchOne,
+};

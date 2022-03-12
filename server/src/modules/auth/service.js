@@ -1,15 +1,10 @@
 const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
-const { save, getById, update } = require("../../core/repository");
+const { save, getById, update, searchOne } = require("../../core/repository");
 
 const Model = require("./model");
 
 const ModelName = "User";
-
-const searchOne = async (searchRequest) => {
-  const item = await Model.findOne(searchRequest);
-  return item;
-};
 
 const changePassword = async (user, newPassword) => {
   const id = user._id;
