@@ -1,14 +1,18 @@
-// seed users using mongoose db connection
 const data = require("./users.json");
-const { createUser, getByUsername } = require("../src/modules/auth/service");
+
+const { createUser, searchOne } = require("../src/modules/auth/service");
 
 const seed = async (logger) => {
   await Promise.all(
     data.map(async (user) => {
       logger.info(`Checking if user ${user.username} exists`);
-      const userExists = await getByUsername(user.username);
+      const userExists = await searchOne({ username: user.username }, "User");
       if (!userExists) {
-        const savedUser = await createUser(user);
+        const role = await searchOne({ alias: user.roleAlias }, "Role");
+        const savedUser = await createUser({
+          ...user,
+          roleId: role._id,
+        });
         logger.info(`Saved user id: ${savedUser._id}`);
       } else {
         logger.info(`User ${user.username} already exists`);

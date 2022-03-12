@@ -26,17 +26,16 @@ const seed = async () => {
     logger.info("Connected to MongoDB");
 
     // promise all
-    await Promise.all([
-      seedRoles(logger),
-      seedUsers(logger),
-      // seedProducts(logger),
-    ]);
+    await seedRoles(logger);
+    await seedUsers(logger);
+    await seedProducts(logger);
 
     logger.info(`Seed finished`);
     // exit process
     process.exit(0);
   } catch (error) {
-    logger.info(error);
+    logger.error(JSON.stringify(error));
+    process.exit(0);
   }
 };
 

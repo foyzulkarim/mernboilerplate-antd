@@ -20,7 +20,7 @@ const EntryForm = (props) => {
   // get roles 
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.alias, value: r.name }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
     return options;
   };
 

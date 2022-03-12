@@ -36,7 +36,7 @@ const getById = async (id, modelName) => {
 };
 
 const searchOne = async (query, modelName) => {
-  const data = await mongoose.models[modelName].findOne(query).exec();
+  const data = await mongoose.models[modelName].findOne(query).lean().exec();
   return data;
 };
 

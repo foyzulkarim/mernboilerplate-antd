@@ -1,14 +1,14 @@
 [
     {
         "name": "superadmin",
-        "alias": "superadmin"
+        "alias": "Super Admin"
     },
     {
         "name": "admin",
-        "alias": "admin"
+        "alias": "Admin"
     },
     {
         "name": "user",
-        "alias": "user"
+        "alias": "User"
     }
 ]
