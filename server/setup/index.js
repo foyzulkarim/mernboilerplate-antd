@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 const logger = require("../src/core/logger");
-const { createUser, getByUsername } = require("../src/modules/auth/service");
-const data = require("./users.json");
 
 logger.info("Seed starting");
+
+// seed roles
+const { seed: seedRoles } = require("./roles");
+// seed users
+const { seed: seedUsers } = require("./users");
+// seed products
+const { seed: seedProducts } = require("./products");
 
 const isMongoDbUrl = JSON.parse(
   process.env.IS_MONGODB_CLOUD_URL ? process.env.IS_MONGODB_CLOUD_URL : "false"
@@ -12,26 +17,21 @@ const isMongoDbUrl = JSON.parse(
 const uri = isMongoDbUrl
   ? process.env.MONGODB_CLOUD_URL
   : `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
-
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
-const connectWithDb = async () => {
+
+const seed = async () => {
   try {
     logger.info("Connecting to database");
     await mongoose.connect(uri, options);
     logger.info("Connected to MongoDB");
-    await Promise.all(
-      data.map(async (user) => {
-        // check if user exists by username
-        logger.info(`Checking if user ${user.username} exists`);
-        const userExists = await getByUsername(user.username);
-        if (!userExists) {
-          const savedUser = await createUser(user);
-          logger.info(`Saved user id: ${savedUser._id}`);
-        } else {
-          logger.info(`User ${user.username} already exists`);
-        }
-      })
-    );
+
+    // promise all
+    await Promise.all([
+      seedRoles(logger),
+      seedUsers(logger),
+      // seedProducts(logger),
+    ]);
+
     logger.info(`Seed finished`);
     // exit process
     process.exit(0);
@@ -40,5 +40,5 @@ const connectWithDb = async () => {
   }
 };
 
-connectWithDb();
+seed();
 logger.info(`Seed finished`);
