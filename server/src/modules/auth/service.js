@@ -1,6 +1,12 @@
 const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
-const { save, getById, update, searchOne } = require("../../core/repository");
+const {
+  save,
+  getById,
+  update,
+  searchOne,
+  dynamicSearch,
+} = require("../../core/repository");
 
 const Model = require("./model");
 
@@ -96,6 +102,17 @@ const count = async (payload) => {
   return items;
 };
 
+const searchPermissions = async (roleId) => {
+  const permissions = await dynamicSearch(
+    {
+      roleId,
+      isAllowed: true,
+    },
+    "Permission"
+  );
+  return permissions;
+};
+
 module.exports = {
   save,
   update,
@@ -108,4 +125,5 @@ module.exports = {
   search,
   count,
   tryCreateUser,
+  searchPermissions,
 };

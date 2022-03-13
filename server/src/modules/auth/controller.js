@@ -8,6 +8,7 @@ const {
   searchOne,
   changePassword,
   tryCreateUser,
+  searchPermissions,
 } = require("./service");
 
 const router = express.Router();
@@ -35,6 +36,7 @@ const loginHandler = async (req, res) => {
   if (req.body.username && req.body.password) {
     const user = await checkUser(req.body.username, req.body.password);
     if (user) {
+      const permissions = await searchPermissions(user.roleId);
       const token = jwt.sign(
         {
           id: user._id,
@@ -52,6 +54,7 @@ const loginHandler = async (req, res) => {
         type: "account",
         currentAuthority: "admin",
         user: rest,
+        permissions,
         sessionId: uuidv4(),
         accessToken: token,
         userInfo: {

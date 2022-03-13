@@ -6,10 +6,18 @@ logger.info("Seed starting");
 
 // seed roles
 const { seed: seedRoles } = require("./roles");
+
 // seed users
 const { seed: seedUsers } = require("./users");
+
 // seed products
 const { seed: seedProducts } = require("./products");
+
+// seed resources
+const { seed: seedResources } = require("./resources");
+
+// seed permissions
+const { seed: seedPermissions } = require("./permissions");
 
 const isMongoDbUrl = JSON.parse(
   process.env.IS_MONGODB_CLOUD_URL ? process.env.IS_MONGODB_CLOUD_URL : "false"
@@ -25,10 +33,11 @@ const seed = async () => {
     await mongoose.connect(uri, options);
     logger.info("Connected to MongoDB");
 
-    // promise all
+    await seedResources(logger);
     await seedRoles(logger);
     await seedUsers(logger);
-    await seedProducts(logger);
+    await seedPermissions(logger);
+    // await seedProducts(logger);
 
     logger.info(`Seed finished`);
     // exit process

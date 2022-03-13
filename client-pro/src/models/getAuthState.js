@@ -18,7 +18,7 @@ export default function useAuthModel() {
 
   const setAuthentication = (data) => {
     console.log('2.setAuthentication called with', data);
-    const auth = { userInfo: data.userInfo, isAuthenticated: data.isAuthenticated, token: data.token };
+    const auth = { userInfo: data.userInfo, permissions: data.permissions, isAuthenticated: data.isAuthenticated, token: data.token };
     localStorage.setItem('auth', JSON.stringify(auth));
     setAuth(auth);
   }

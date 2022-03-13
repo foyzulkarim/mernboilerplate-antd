@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 const permissionSchema = new mongoose.Schema({
   roleId: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-  roleAlias: { type: String, required: true },
+  roleName: { type: String, required: true },
   resourceId: { type: mongoose.Schema.Types.ObjectId, ref: "Resource" },
-  resourceAlias: { type: String, required: true },
+  resourceName: { type: String, required: true },
   isAllowed: { type: Boolean, required: true },
   isDisabled: { type: Boolean, required: true },
 });

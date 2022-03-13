@@ -64,7 +64,7 @@ export default defineConfig({
           component: '404',
         },
       ],
-    },    
+    },
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -95,6 +95,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/roles',
       icon: 'form',
       name: 'Roles',
@@ -125,6 +126,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/resources',
       icon: 'form',
       name: 'Resources',
@@ -155,6 +157,38 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
+      path: '/permissions',
+      icon: 'form',
+      name: 'Permissions',
+      routes: [
+        {
+          path: '/permissions',
+          redirect: '/permissions/list',
+        },
+        {
+          name: 'List',
+          icon: 'smile',
+          path: '/permissions/list',
+          component: './permission/list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/permissions/new',
+          component: './permission/entry',
+        },
+        {
+          name: 'Update',
+          hideInMenu: true,
+          icon: 'smile',
+          path: '/permissions/edit/:id',
+          component: './permission/update',
+        },
+      ],
+    },
+    {
+      access: 'canAccess',
       path: '/users',
       icon: 'form',
       name: 'Users',
@@ -272,6 +306,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/products',
       icon: 'form',
       name: 'Products',

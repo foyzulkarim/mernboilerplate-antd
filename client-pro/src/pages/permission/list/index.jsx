@@ -3,70 +3,27 @@ import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal }
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { history, useAccess } from 'umi';
+import { history } from 'umi';
 import { count, search, remove } from '../service';
-import access from '@/access';
 
-const DeleteButton = (props) => {
-
-  const { confirm } = Modal;
-
-  const showDeleteConfirm = (product) => {
-    confirm({
-      title: `Do you Want to delete ${product.name}?`,
-      icon: <ExclamationCircleOutlined />,
-      content: `${product.name} will be deleted permanently.`,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        console.log('OK');
-        const r = await remove(product._id);
-        if (r.success) {
-          message.success(r.message);
-          setFetchRoles(true);
-        }
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  };
-
-  const access = useAccess();
-  const isVisible = access.canShow('user-list-delete-btn');
-  if (isVisible) {
-    const isDisabled = access.isDisabled('user-list-delete-btn');
-    return isDisabled ? <span>Delete</span> : <a
-      key="config"
-      onClick={() => {
-        showDeleteConfirm(props.record);
-      }}
-    >
-      Delete
-    </a>;
-  }
-  return null;
-}
 
 const TableList = () => {
   const actionRef = useRef();
-  const access = useAccess();
   const [data, setData] = useState({ data: [] });
   const [current, setCurrent] = useState(1);
   const [param, setParam] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
-  const [fetchRoles, setFetchRoles] = useState(false);
+  const [fetchResources, setFetchResources] = useState(false);
+  const { confirm } = Modal;
 
-
-  const fetchRoleData = async () => {
+  const fetchResourceData = async () => {
     const hide = message.loading('Loading...');
     try {
       const result = await search({ current: current, pageSize: 10, ...param, ...sort });
       hide();
       setData(result);
-      setFetchRoles(false);
+      setFetchResources(false);
       return result;
     } catch (error) {
       hide();
@@ -78,31 +35,46 @@ const TableList = () => {
     }
   };
 
-  const fetchRoleCount = async () => {
+  const showDeleteConfirm = (item) => {
+    confirm({
+      title: `Do you Want to delete ${item.name}?`,
+      icon: <ExclamationCircleOutlined />,
+      content: `${item.name} will be deleted permanently.`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        console.log('OK');
+        const r = await remove(item._id);
+        if (r.success) {
+          message.success(r.message);
+          setFetchResources(true);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  const fetchResourceCount = async () => {
     const result = await count({ ...param });
     setTotal(result.total);
   };
 
   useEffect(() => {
-    if (fetchRoles) {
-      fetchRoleData();
+    if (fetchResources) {
+      fetchResourceData();
     }
-  }, [fetchRoles]);
+  }, [fetchResources]);
 
 
   useEffect(() => {
     setCurrent(1);
     setSort(null);
-    setFetchRoles(true);
-    fetchRoleCount();
+    setFetchResources(true);
+    fetchResourceCount();
   }, [param]);
-
-  useEffect(() => {
-    console.log('checking ', 'user-list-delete-btn');
-    if (access.canShow('user-list-delete-btn')) {
-      console.log('show delete button');
-    }
-  }, []);
 
   const [form] = Form.useForm();
 
@@ -112,43 +84,55 @@ const TableList = () => {
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Resource',
+      dataIndex: 'resourceName',
       sorter: true,
-      tip: 'Name',
+      tip: 'Resource name',
       render: (dom, entity) => {
         return (
           <a
             onClick={() => {
-              history.push(`/users/edit/${entity._id}`);
+              history.push(`/permissions/edit/${entity._id}`);
             }}
           >
-            {`${entity.firstName} ${entity.lastName}`}
+            {dom}
           </a>
         );
       },
     },
     {
       title: 'Role',
-      dataIndex: 'roleAlias',
+      dataIndex: 'roleName',
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
+      title: 'Allowed',
+      dataIndex: 'isAllowed',
+      valueType: 'text',
+      renderText: (val) => {
+        return val ? 'Yes' : 'No';
+      }
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
+      title: 'Disabled',
+      dataIndex: 'isDisabled',
+      valueType: 'text',
+      renderText: (val) => {
+        return val ? 'Yes' : 'No';
+      }
     },
     {
       title: 'Actions',
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <DeleteButton key="delete" record={record} />,
+        <a
+          key="config"
+          onClick={() => {
+            showDeleteConfirm(record);
+          }}
+        >
+          Delete
+        </a>,
       ],
     },
   ];
@@ -162,8 +146,8 @@ const TableList = () => {
           onFinish={onFinish}
           style={{ display: 'flex', 'align-items': 'left', background: 'white', padding: '10px' }}
         >
-          <Row gutter={16}>
-            <Col flex={6} key={'name'}>
+          <Row gutter={4} style={{ width: '50%' }}>
+            <Col flex={16} key={'name'}>
               <Form.Item
                 name={`name`}
                 label={`Name`}
@@ -171,7 +155,7 @@ const TableList = () => {
                 <Input placeholder="Search keyword for name or alias" />
               </Form.Item>
             </Col>
-            <Col flex={6}>
+            <Col flex={8}>
               <Button type="primary" htmlType="submit">
                 Search
               </Button>
@@ -182,7 +166,7 @@ const TableList = () => {
           </Row>
         </Form>
         <ProTable
-          headerTitle="Users"
+          headerTitle="Resources"
           actionRef={actionRef}
           rowKey="_id"
           search={false}
@@ -192,7 +176,7 @@ const TableList = () => {
               type="primary"
               key="primary"
               onClick={() => {
-                history.push('/users/new');
+                history.push('/permissions/new');
               }}
             >
               <PlusOutlined /> New
@@ -204,7 +188,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
-            setFetchRoles(true);
+            setFetchResources(true);
           }}
           onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
@@ -219,7 +203,7 @@ const TableList = () => {
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
-        onChange={(page, pageSize) => { setCurrent(page); setFetchRoles(true); }}
+        onChange={(page, pageSize) => { setCurrent(page); setFetchResources(true); }}
         // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
