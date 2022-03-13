@@ -8,6 +8,31 @@ import { count, search, remove } from '../service';
 import access from '@/access';
 
 const DeleteButton = (props) => {
+
+  const { confirm } = Modal;
+
+  const showDeleteConfirm = (product) => {
+    confirm({
+      title: `Do you Want to delete ${product.name}?`,
+      icon: <ExclamationCircleOutlined />,
+      content: `${product.name} will be deleted permanently.`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        console.log('OK');
+        const r = await remove(product._id);
+        if (r.success) {
+          message.success(r.message);
+          setFetchRoles(true);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   const access = useAccess();
   const isVisible = access.canShow('user-list-delete-btn');
   if (isVisible) {
@@ -33,7 +58,7 @@ const TableList = () => {
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
   const [fetchRoles, setFetchRoles] = useState(false);
-  const { confirm } = Modal;
+
 
   const fetchRoleData = async () => {
     const hide = message.loading('Loading...');
@@ -51,28 +76,6 @@ const TableList = () => {
       message.error(ex.data.errorMessage);
       return false;
     }
-  };
-
-  const showDeleteConfirm = (product) => {
-    confirm({
-      title: `Do you Want to delete ${product.name}?`,
-      icon: <ExclamationCircleOutlined />,
-      content: `${product.name} will be deleted permanently.`,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        console.log('OK');
-        const r = await remove(product._id);
-        if (r.success) {
-          message.success(r.message);
-          setFetchRoles(true);
-        }
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
   };
 
   const fetchRoleCount = async () => {
