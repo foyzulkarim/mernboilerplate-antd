@@ -3,12 +3,30 @@ import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal }
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { history } from 'umi';
+import { history, useAccess } from 'umi';
 import { count, search, remove } from '../service';
+import access from '@/access';
 
+const DeleteButton = (props) => {
+  const access = useAccess();
+  const isVisible = access.canShow('user-list-delete-btn');
+  if (isVisible) {
+    const isDisabled = access.isDisabled('user-list-delete-btn');
+    return isDisabled ? <span>Delete</span> : <a
+      key="config"
+      onClick={() => {
+        showDeleteConfirm(props.record);
+      }}
+    >
+      Delete
+    </a>;
+  }
+  return null;
+}
 
 const TableList = () => {
   const actionRef = useRef();
+  const access = useAccess();
   const [data, setData] = useState({ data: [] });
   const [current, setCurrent] = useState(1);
   const [param, setParam] = useState({});
@@ -76,6 +94,13 @@ const TableList = () => {
     fetchRoleCount();
   }, [param]);
 
+  useEffect(() => {
+    console.log('checking ', 'user-list-delete-btn');
+    if (access.canShow('user-list-delete-btn')) {
+      console.log('show delete button');
+    }
+  }, []);
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -120,14 +145,7 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            showDeleteConfirm(record);
-          }}
-        >
-          Delete
-        </a>,
+        <DeleteButton key="delete" record={record} />,
       ],
     },
   ];

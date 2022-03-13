@@ -24,6 +24,7 @@ export async function getInitialState() {
     return {
       initialize,
       currentUser: auth?.userInfo,
+      permissions: auth?.permissions,
       settings: {
         title: 'my amazing title',
         now: new Date().toLocaleString(),

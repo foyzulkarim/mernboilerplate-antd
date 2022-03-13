@@ -40,4 +40,16 @@ const searchOne = async (query, modelName) => {
   return data;
 };
 
-module.exports = { save, update, deleteById, getById, searchOne };
+const dynamicSearch = async (query, modelName) => {
+  const data = await mongoose.models[modelName].find(query).lean().exec();
+  return data;
+};
+
+module.exports = {
+  save,
+  update,
+  deleteById,
+  getById,
+  searchOne,
+  dynamicSearch,
+};

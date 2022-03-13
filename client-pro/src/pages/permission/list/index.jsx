@@ -84,8 +84,8 @@ const TableList = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'resourceAlias',
+      title: 'Resource',
+      dataIndex: 'resourceName',
       sorter: true,
       tip: 'Resource name',
       render: (dom, entity) => {
@@ -102,7 +102,7 @@ const TableList = () => {
     },
     {
       title: 'Role',
-      dataIndex: 'roleAlias',
+      dataIndex: 'roleName',
     },
     {
       title: 'Allowed',

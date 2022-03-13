@@ -16,7 +16,7 @@ const EntryForm = (props) => {
   // get roles 
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
+    const options = result.data.map(r => ({ label: r.name, value: r._id }));
     return options;
   };
 
@@ -38,7 +38,7 @@ const EntryForm = (props) => {
       values.isAllowed = false;
     }
 
-    const result = await save({ ...values, roleAlias: role.roleAlias, resourceAlias: resource.resourceAlias });
+    const result = await save({ ...values, roleName: role.roleName, resourceName: resource.resourceName });
     console.log('resource', result);
     if (result instanceof Error) {
       message.error(result.message);
@@ -72,7 +72,7 @@ const EntryForm = (props) => {
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select a role' }]}
-            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
+            onChange={(value, e) => setRole({ roleId: value, roleName: e.label })}
           />
           <ProFormSelect
             width="md"
@@ -81,7 +81,7 @@ const EntryForm = (props) => {
             request={fetchResources}
             placeholder="Please select resource"
             rules={[{ required: true, message: 'Please select a resource' }]}
-            onChange={(value, e) => setResource({ resourceId: value, resourceAlias: e.label })}
+            onChange={(value, e) => setResource({ resourceId: value, resourceName: e.label })}
           />
           <ProFormCheckbox name="isAllowed">
             Is allowed

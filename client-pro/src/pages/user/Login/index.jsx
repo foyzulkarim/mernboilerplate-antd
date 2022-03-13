@@ -37,14 +37,15 @@ const Login = () => {
   const setUserInfo = async (msg) => {
     // const userInfo = await initialState?.fetchUserInfo?.();
 
-    if (msg.userInfo) {
+    if (msg.userInfo && msg.permissions) {
       await setInitialState((oldInitialState) => {
-        const data = { userInfo: msg.userInfo, token: msg.accessToken, isAuthenticated: true };
+        const data = { userInfo: msg.userInfo, permissions: msg.permissions, token: msg.accessToken, isAuthenticated: true };
         setAuthentication(data);
         initialState?.initialize?.(data);
         return {
           ...oldInitialState,
           currentUser: msg.userInfo,
+          permissions: msg.permissions,
           data: { value: new Date().toDateString(), key: 'X' },
         };
       });

@@ -95,6 +95,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/roles',
       icon: 'form',
       name: 'Roles',
@@ -125,6 +126,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/resources',
       icon: 'form',
       name: 'Resources',
@@ -155,6 +157,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/permissions',
       icon: 'form',
       name: 'Permissions',
@@ -185,6 +188,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/users',
       icon: 'form',
       name: 'Users',
@@ -302,6 +306,7 @@ export default defineConfig({
       ],
     },
     {
+      access: 'canAccess',
       path: '/products',
       icon: 'form',
       name: 'Products',
