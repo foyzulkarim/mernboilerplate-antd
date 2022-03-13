@@ -12,6 +12,24 @@
         "isDisabled": false
     },
     {
+        "resourceName": "/roles",
+        "roleName": "superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/resources",
+        "roleName": "superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/permissions",
+        "roleName": "superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
         "resourceName": "/users",
         "roleName": "admin",
         "isAllowed": true,
