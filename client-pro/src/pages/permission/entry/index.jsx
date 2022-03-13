@@ -1,25 +1,44 @@
 import React from 'react';
 import { Form, Card, message } from 'antd';
 import ProForm, {
-  ProFormDatePicker,
-  ProFormDigit,
-  ProFormRadio,
-  ProFormText,
-  ProFormTextArea,
   ProFormCheckbox,
   ProFormSelect,
 } from '@ant-design/pro-form';
-import { useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { save } from '../service';
+import { save, getResources, getRoles } from '../service';
 
 const EntryForm = (props) => {
 
   const [form] = Form.useForm();
+  const [role, setRole] = React.useState(null);
+  const [resource, setResource] = React.useState(null);
+
+  // get roles 
+  const fetchRoles = async () => {
+    const result = await getRoles();
+    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
+    return options;
+  };
+
+  // get resources
+  const fetchResources = async () => {
+    const result = await getResources();
+    const options = result.data.map(r => ({ label: r.name, value: r._id }));
+    return options;
+  };
 
   const onFinish = async (values) => {
-    console.log(values, form);
-    const result = await save(values);
+    console.log('values', values);
+
+    if (!values.hasOwnProperty('isDisabled')) {
+      values.isDisabled = false;
+    }
+
+    if (!values.hasOwnProperty('isAllowed')) {
+      values.isAllowed = false;
+    }
+
+    const result = await save({ ...values, roleAlias: role.roleAlias, resourceAlias: resource.resourceAlias });
     console.log('resource', result);
     if (result instanceof Error) {
       message.error(result.message);
@@ -46,52 +65,32 @@ const EntryForm = (props) => {
           onFinish={(v) => onFinish(v)}
           form={form}
         >
-          <ProFormText
-            width="md"
-            label="Name"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter resource name',
-              },
-            ]}
-            placeholder="Please enter resource name"
-          />
-
-          <ProFormText
-            width="md"
-            label="Alias"
-            name="alias"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the Alias',
-              },
-            ]}
-            placeholder="Please enter resource alias"
-          />
-
           <ProFormSelect
             width="md"
-            name="type"
-            label="Resource type"
-            options={[
-              {
-                value: "api",
-                label: "Api",
-              },
-              {
-                value: "client",
-                label: "Client",
-              },
-            ]}
-            placeholder="Please select a type"
-            rules={[{ required: true, message: 'Please select a type' }]}
-          // onChange={(value, e) => setRole({ resourceId: value, resourceAlias: e.label })}
+            name="roleId"
+            label="Roles"
+            request={fetchRoles}
+            placeholder="Please select a role"
+            rules={[{ required: true, message: 'Please select a role' }]}
+            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
           />
-
+          <ProFormSelect
+            width="md"
+            name="resourceId"
+            label="Resources"
+            request={fetchResources}
+            placeholder="Please select resource"
+            rules={[{ required: true, message: 'Please select a resource' }]}
+            onChange={(value, e) => setResource({ resourceId: value, resourceAlias: e.label })}
+          />
+          <ProFormCheckbox name="isAllowed">
+            Is allowed
+          </ProFormCheckbox>
+          <ProFormCheckbox name="isDisabled">
+            Is disabled
+          </ProFormCheckbox>
         </ProForm>
+
       </Card>
     </PageContainer>
   );

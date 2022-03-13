@@ -85,14 +85,14 @@ const TableList = () => {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'resourceAlias',
       sorter: true,
       tip: 'Resource name',
       render: (dom, entity) => {
         return (
           <a
             onClick={() => {
-              history.push(`/resources/edit/${entity._id}`);
+              history.push(`/permissions/edit/${entity._id}`);
             }}
           >
             {dom}
@@ -101,12 +101,24 @@ const TableList = () => {
       },
     },
     {
-      title: 'Alias',
-      dataIndex: 'alias',
+      title: 'Role',
+      dataIndex: 'roleAlias',
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
+      title: 'Allowed',
+      dataIndex: 'isAllowed',
+      valueType: 'text',
+      renderText: (val) => {
+        return val ? 'Yes' : 'No';
+      }
+    },
+    {
+      title: 'Disabled',
+      dataIndex: 'isDisabled',
+      valueType: 'text',
+      renderText: (val) => {
+        return val ? 'Yes' : 'No';
+      }
     },
     {
       title: 'Actions',
@@ -164,7 +176,7 @@ const TableList = () => {
               type="primary"
               key="primary"
               onClick={() => {
-                history.push('/resources/new');
+                history.push('/permissions/new');
               }}
             >
               <PlusOutlined /> New

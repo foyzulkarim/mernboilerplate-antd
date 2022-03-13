@@ -16,4 +16,4 @@ const validate = (data) => {
   return result;
 };
 
-module.exports = validate;
+module.exports = { validate };
