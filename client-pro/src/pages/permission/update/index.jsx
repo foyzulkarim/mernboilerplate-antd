@@ -4,41 +4,73 @@ import ProForm, {
   ProFormDigit,
   ProFormRadio,
   ProFormText,
-  ProFormTextArea,
+  ProFormCheckbox,
   ProFormSelect,
 } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
-import { getById, update } from '../service';
+import { getById, update, getRoles, getResources } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
-  const [resource, setResource] = useState(null);
+  const [permission, setPermission] = useState(null);
+  const [role, setRole] = React.useState(null);
+  const [resource, setResource] = React.useState(null);
 
   useEffect(() => {
     const { id } = props.match.params;
-    const getResource = async (id) => {
+    const getPermission = async (id) => {
       const item = await getById(id);
-      setResource(item);
+      setPermission(item);
+      setRole({ roleAlias: item.roleAlias, roleId: item.roleId });
+      setResource({ resourceAlias: item.resourceAlias, resourceId: item.resourceId });
     }
-    getResource(id);
+    getPermission(id);
   }, []);
+
+  // get roles 
+  const fetchRoles = async () => {
+    const result = await getRoles();
+    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
+    return options;
+  };
+
+  // get resources
+  const fetchResources = async () => {
+    const result = await getResources();
+    const options = result.data.map(r => ({ label: r.name, value: r._id }));
+    return options;
+  };
+
 
   const onFinish = async (values) => {
     console.log(values);
-    const result = await update({ _id: resource._id, ...values });
+    if (!values.hasOwnProperty('isDisabled')) {
+      values.isDisabled = false;
+    }
+
+    if (!values.hasOwnProperty('isAllowed')) {
+      values.isAllowed = false;
+    }
+    const payload = {
+      _id: permission._id,
+      ...values,
+      roleAlias: role.roleAlias,
+      resourceAlias: resource.resourceAlias
+    };
+    const result = await update(payload);
     console.log('resource', result);
     if (result instanceof Error) {
       message.error(result.message);
     }
     else {
       message.success(result.message);
-      history.push('/resources');
+      history.push('/permissions');
     }
   };
 
   return (
-    resource && <PageContainer content="My amazing role update form">
+    permission && <PageContainer content="My amazing role update form">
       <Card bordered={false}>
         <ProForm
           hideRequiredMark={false}
@@ -49,56 +81,33 @@ const EditForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={resource}
+          initialValues={permission}
           onFinish={onFinish}
         >
-          <ProFormText
-            width="md"
-            label="Name"
-            name="name"
-            value={resource.name}
-            rules={[
-              {
-                required: true,
-                message: 'Please enter role name',
-              },
-            ]}
-            placeholder="Please enter role name"
-          />
-
-          <ProFormText
-            width="md"
-            label="Alias"
-            name="alias"
-            value={resource.alias}
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the Alias',
-              },
-            ]}
-            placeholder="Please enter role alias"
-          />
-
           <ProFormSelect
             width="md"
-            name="type"
-            label="Resource type"
-            options={[
-              {
-                value: "api",
-                label: "Api",
-              },
-              {
-                value: "client",
-                label: "Client",
-              },
-            ]}
-            placeholder="Please select a type"
-            rules={[{ required: true, message: 'Please select a type' }]}
-          // onChange={(value, e) => setRole({ resourceId: value, resourceAlias: e.label })}
+            name="roleId"
+            label="Roles"
+            request={fetchRoles}
+            placeholder="Please select a role"
+            rules={[{ required: true, message: 'Please select a role' }]}
+            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
           />
-
+          <ProFormSelect
+            width="md"
+            name="resourceId"
+            label="Resources"
+            request={fetchResources}
+            placeholder="Please select resource"
+            rules={[{ required: true, message: 'Please select a resource' }]}
+            onChange={(value, e) => setResource({ resourceId: value, resourceAlias: e.label })}
+          />
+          <ProFormCheckbox name="isAllowed">
+            Is allowed
+          </ProFormCheckbox>
+          <ProFormCheckbox name="isDisabled">
+            Is disabled
+          </ProFormCheckbox>
         </ProForm>
       </Card>
     </PageContainer>

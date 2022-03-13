@@ -64,7 +64,7 @@ export default defineConfig({
           component: '404',
         },
       ],
-    },    
+    },
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -161,7 +161,7 @@ export default defineConfig({
       routes: [
         {
           path: '/permissions',
-          redirect: '/permission/list',
+          redirect: '/permissions/list',
         },
         {
           name: 'List',
