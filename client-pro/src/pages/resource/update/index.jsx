@@ -5,6 +5,7 @@ import ProForm, {
   ProFormRadio,
   ProFormText,
   ProFormTextArea,
+  ProFormSelect,
 } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -12,36 +13,32 @@ import { getById, update } from '../service';
 import React, { useEffect, useState } from 'react';
 
 const EditForm = (props) => {
-  const [role, setRole] = useState(null);
+  const [resource, setResource] = useState(null);
 
   useEffect(() => {
     const { id } = props.match.params;
-    const getRole = async (id) => {
+    const getResource = async (id) => {
       const item = await getById(id);
-      setRole(item);
+      setResource(item);
     }
-    getRole(id);
+    getResource(id);
   }, []);
-
-  const { run } = useRequest(update, {
-    manual: true,
-    onSuccess: (x) => {
-      message.success('Role is saved', x);
-      history.push('/roles');
-    },
-    onError: (e) => {
-      console.log(e);
-      message.error('Error happened ', e);
-    },
-  });
 
   const onFinish = async (values) => {
     console.log(values);
-    run({ _id: role._id, ...values });
+    const result = await update({ _id: resource._id, ...values });
+    console.log('resource', result);
+    if (result instanceof Error) {
+      message.error(result.message);
+    }
+    else {
+      message.success(result.message);
+      history.push('/resources');
+    }
   };
 
   return (
-    role && <PageContainer content="My amazing role update form">
+    resource && <PageContainer content="My amazing role update form">
       <Card bordered={false}>
         <ProForm
           hideRequiredMark={false}
@@ -52,14 +49,14 @@ const EditForm = (props) => {
           }}
           name="basic"
           layout="vertical"
-          initialValues={role}
+          initialValues={resource}
           onFinish={onFinish}
         >
           <ProFormText
             width="md"
             label="Name"
             name="name"
-            value={role.name}
+            value={resource.name}
             rules={[
               {
                 required: true,
@@ -73,7 +70,7 @@ const EditForm = (props) => {
             width="md"
             label="Alias"
             name="alias"
-            value={role.alias}
+            value={resource.alias}
             rules={[
               {
                 required: true,
@@ -82,6 +79,26 @@ const EditForm = (props) => {
             ]}
             placeholder="Please enter role alias"
           />
+
+          <ProFormSelect
+            width="md"
+            name="type"
+            label="Resource type"
+            options={[
+              {
+                value: "api",
+                label: "Api",
+              },
+              {
+                value: "client",
+                label: "Client",
+              },
+            ]}
+            placeholder="Please select a type"
+            rules={[{ required: true, message: 'Please select a type' }]}
+          // onChange={(value, e) => setRole({ resourceId: value, resourceAlias: e.label })}
+          />
+
         </ProForm>
       </Card>
     </PageContainer>

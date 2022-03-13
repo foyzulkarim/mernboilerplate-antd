@@ -134,8 +134,8 @@ const TableList = () => {
           onFinish={onFinish}
           style={{ display: 'flex', 'align-items': 'left', background: 'white', padding: '10px' }}
         >
-          <Row gutter={16}>
-            <Col flex={6} key={'name'}>
+          <Row gutter={4} style={{ width: '50%' }}>
+            <Col flex={16} key={'name'}>
               <Form.Item
                 name={`name`}
                 label={`Name`}
@@ -143,7 +143,7 @@ const TableList = () => {
                 <Input placeholder="Search keyword for name or alias" />
               </Form.Item>
             </Col>
-            <Col flex={6}>
+            <Col flex={8}>
               <Button type="primary" htmlType="submit">
                 Search
               </Button>
