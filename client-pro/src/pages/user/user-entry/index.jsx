@@ -42,8 +42,6 @@ const EntryForm = (props) => {
     }
   };
 
-
-
   const checkConfirm = (_, value) => {
     const promise = Promise;
 

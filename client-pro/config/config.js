@@ -125,6 +125,36 @@ export default defineConfig({
       ],
     },
     {
+      path: '/resources',
+      icon: 'form',
+      name: 'Resources',
+      routes: [
+        {
+          path: '/resources',
+          redirect: '/resources/list',
+        },
+        {
+          name: 'List',
+          icon: 'smile',
+          path: '/resources/list',
+          component: './resource/list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/resources/new',
+          component: './resource/entry',
+        },
+        {
+          name: 'Update',
+          hideInMenu: true,
+          icon: 'smile',
+          path: '/resources/edit/:id',
+          component: './resource/update',
+        },
+      ],
+    },
+    {
       path: '/users',
       icon: 'form',
       name: 'Users',
