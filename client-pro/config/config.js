@@ -155,6 +155,36 @@ export default defineConfig({
       ],
     },
     {
+      path: '/permissions',
+      icon: 'form',
+      name: 'Permissions',
+      routes: [
+        {
+          path: '/permissions',
+          redirect: '/permission/list',
+        },
+        {
+          name: 'List',
+          icon: 'smile',
+          path: '/permissions/list',
+          component: './permission/list',
+        },
+        {
+          name: 'New',
+          icon: 'smile',
+          path: '/permissions/new',
+          component: './permission/entry',
+        },
+        {
+          name: 'Update',
+          hideInMenu: true,
+          icon: 'smile',
+          path: '/permissions/edit/:id',
+          component: './permission/update',
+        },
+      ],
+    },
+    {
       path: '/users',
       icon: 'form',
       name: 'Users',
