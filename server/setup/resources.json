@@ -1,5 +1,15 @@
 [
     {
+        "name": "/api/users/search",
+        "alias": "Users search",
+        "type": "api"
+    },
+    {
+        "name": "/api/users/count",
+        "alias": "Users count",
+        "type": "api"
+    },
+    {
         "name": "/products",
         "alias": "Products menu",
         "type": "client"

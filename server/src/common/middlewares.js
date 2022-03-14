@@ -1,6 +1,8 @@
+const ObjectId = require('mongoose').Types.ObjectId;
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const { GeneralError, BadRequest } = require("./errors");
+const { GeneralError } = require("./errors");
+const { searchOne } = require("../core/repository");
 
 const handleError = async (err, req, res, next) => {
   if (res?.headersSent) {
@@ -63,9 +65,6 @@ const authenticateRequest = async (req, res, next) => {
         req.log.error({ ...errorProps, name }, "jwt token invalid");
         res.status(401).send({
           success: false,
-          // error: err.message || 'Invalid token',
-          // data: '401 Unauthorized',
-          // message: 'Invalid token',
           errorMessage: err.message || "Invalid token",
         });
       } else {
@@ -80,9 +79,36 @@ const authenticateRequest = async (req, res, next) => {
   }
 };
 
+// authorize request
+const authorizeRequest = async (req, res, next) => {
+  const { user } = req;
+  if (user) {
+    const { username, roleId } = user;
+    const r = ObjectId(roleId);
+    const permission = await searchOne(
+      {
+        roleId: r,
+        resourceName: req.originalUrl,
+        isAllowed: true,
+      },
+      "Permission"
+    );
+    if (permission) {
+      req.log.info(`Authorized user ${username}`);
+      return next();
+    }
+  }
+  res.status(403).send({
+    error: "Unauthorized request",
+    message: "Unauthorized",
+    status: "error",
+  });
+};
+
 module.exports = {
   handleError,
   handleRequest,
   handleValidation,
   authenticateRequest,
+  authorizeRequest,
 };

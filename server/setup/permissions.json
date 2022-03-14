@@ -1,5 +1,29 @@
 [
     {
+        "resourceName": "/api/users/search",
+        "roleName": "user",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/count",
+        "roleName": "user",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/search",
+        "roleName": "superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/count",
+        "roleName": "superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
         "resourceName": "/products",
         "roleName": "user",
         "isAllowed": true,
