@@ -5,7 +5,6 @@ import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { history, useAccess } from 'umi';
 import { count, search, remove } from '../service';
-import access from '@/access';
 
 const DeleteButton = (props) => {
 
