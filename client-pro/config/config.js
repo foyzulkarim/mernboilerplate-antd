@@ -384,6 +384,7 @@ export default defineConfig({
       ],
     },
     {
+      hideInMenu: true,
       name: 'exception',
       icon: 'warning',
       path: '/exception',
@@ -397,6 +398,7 @@ export default defineConfig({
           icon: 'smile',
           path: '/exception/403',
           component: './exception/403',
+          hideInMenu: true,
         },
         {
           name: '404',

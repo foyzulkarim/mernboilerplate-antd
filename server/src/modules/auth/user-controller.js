@@ -35,7 +35,7 @@ const getHandler = async (req, res, next) => {
 
 const getByIdHandler = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     const item = await getById(id, ModelName);
     if (item) {
       return res.status(200).send(item);
@@ -123,12 +123,12 @@ const checkUserHandler = async (req, res) => {
 };
 
 router.get("/", getHandler);
-router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validateUserCreate), postHandler);
-router.put("/", handleValidation(validateUserUpdate), putHandler);
+router.get("/detail", getByIdHandler);
+router.post("/create", handleValidation(validateUserCreate), postHandler);
+router.put("/update", handleValidation(validateUserUpdate), putHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
-router.delete("/:id", deleteHandler);
+router.delete("/delete/:id", deleteHandler);
 router.post("/check", checkUserHandler);
 
 module.exports = router;

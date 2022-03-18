@@ -22,8 +22,8 @@ const EditForm = (props) => {
     const getPermission = async (id) => {
       const item = await getById(id);
       setPermission(item);
-      setRole({ roleAlias: item.roleAlias, roleId: item.roleId });
-      setResource({ resourceAlias: item.resourceAlias, resourceId: item.resourceId });
+      setRole({ roleName: item.roleName, roleAlias: item.roleAlias, roleId: item.roleId });
+      setResource({ resourceName: item.resourceName, resourceAlias: item.resourceAlias, resourceId: item.resourceId });
     }
     getPermission(id);
   }, []);
@@ -31,20 +31,20 @@ const EditForm = (props) => {
   // get roles 
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.alias, value: r._id }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id, role: r }));
     return options;
   };
 
   // get resources
   const fetchResources = async () => {
     const result = await getResources();
-    const options = result.data.map(r => ({ label: r.name, value: r._id }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id, resource: r }));
     return options;
   };
 
 
   const onFinish = async (values) => {
-    console.log(values);
+    console.log('onFinish', values, role, resource);
     if (!values.hasOwnProperty('isDisabled')) {
       values.isDisabled = false;
     }
@@ -55,8 +55,8 @@ const EditForm = (props) => {
     const payload = {
       _id: permission._id,
       ...values,
-      roleAlias: role.roleAlias,
-      resourceAlias: resource.resourceAlias
+      ...role,
+      ...resource,
     };
     const result = await update(payload);
     console.log('resource', result);
@@ -91,7 +91,7 @@ const EditForm = (props) => {
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select a role' }]}
-            onChange={(value, e) => setRole({ roleId: value, roleAlias: e.label })}
+            onChange={(value, e) => setRole({ roleId: value, roleName: e.role.name, roleAlias: e.role.alias })}
           />
           <ProFormSelect
             width="md"
@@ -100,7 +100,7 @@ const EditForm = (props) => {
             request={fetchResources}
             placeholder="Please select resource"
             rules={[{ required: true, message: 'Please select a resource' }]}
-            onChange={(value, e) => setResource({ resourceId: value, resourceAlias: e.label })}
+            onChange={(value, e) => setResource({ resourceId: value, resourceName: e.resource.name, resourceAlias: e.resource.alias })}
           />
           <ProFormCheckbox name="isAllowed">
             Is allowed

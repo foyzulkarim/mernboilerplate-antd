@@ -1,6 +1,10 @@
 const data = require("./permissions.json");
 
-const { save, searchOne, update } = require("../src/modules/permission/service");
+const {
+  save,
+  searchOne,
+  update,
+} = require("../src/modules/permission/service");
 
 const seed = async (logger) => {
   await Promise.all(

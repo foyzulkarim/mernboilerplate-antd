@@ -30,6 +30,14 @@ request.interceptors.response.use(async (response, options) => {
         });
         return { name: response.name };
     }
+    // handle 403
+    if (response.status === 403) {
+        history.replace({
+            pathname: '/exception/403',
+        });
+        return { name: response.name };
+    }
+
     if (response.status === 400) {
         const data = await response.clone().json();
         console.log('data', data);

@@ -1,10 +1,11 @@
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { PlusOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import { ProFormSelect, } from '@ant-design/pro-form';
 import { history } from 'umi';
-import { count, search, remove } from '../service';
+import { count, search, remove, getRoles } from '../service';
 
 
 const TableList = () => {
@@ -16,6 +17,13 @@ const TableList = () => {
   const [total, setTotal] = useState(0);
   const [fetchResources, setFetchResources] = useState(false);
   const { confirm } = Modal;
+
+  // get roles 
+  const fetchRoles = async () => {
+    const result = await getRoles();
+    const options = result.data.map(r => ({ label: r.alias, value: r._id, role: r }));
+    return options;
+  };
 
   const fetchResourceData = async () => {
     const hide = message.loading('Loading...');
@@ -85,24 +93,28 @@ const TableList = () => {
   const columns = [
     {
       title: 'Resource',
-      dataIndex: 'resourceName',
+      dataIndex: 'resourceAlias',
       sorter: true,
       tip: 'Resource name',
       render: (dom, entity) => {
         return (
-          <a
-            onClick={() => {
-              history.push(`/permissions/edit/${entity._id}`);
-            }}
-          >
-            {dom}
-          </a>
+          <>
+            <a
+              onClick={() => {
+                history.push(`/permissions/edit/${entity._id}`);
+              }}
+            >
+              <EditOutlined />{' '}
+            </a>
+            {`${entity.resourceAlias} (${entity.resourceName})`}
+          </>
         );
       },
     },
     {
       title: 'Role',
       dataIndex: 'roleName',
+      renderText: (val, entity) => (`${entity.roleAlias} (${val})`),
     },
     {
       title: 'Allowed',
@@ -154,6 +166,15 @@ const TableList = () => {
               >
                 <Input placeholder="Search keyword for name or alias" />
               </Form.Item>
+            </Col>
+            <Col flex={8} key={'role'}>
+              <ProFormSelect
+                width="md"
+                name="roleId"
+                label="Roles"
+                request={fetchRoles}
+                placeholder="Please select a role"
+              />
             </Col>
             <Col flex={8}>
               <Button type="primary" htmlType="submit">

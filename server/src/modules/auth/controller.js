@@ -41,6 +41,7 @@ const loginHandler = async (req, res) => {
         {
           id: user._id,
           username: req.body.username,
+          roleId: user.roleId,
           exp:
             Math.floor(Date.now() / 1000) +
             parseInt(process.env.JWT_EXPIRES_IN, 10),
