@@ -9,16 +9,15 @@ export async function count(params, options) {
 }
 
 export async function getById(id, options) {
-  console.log('getById', id, options);
-  return await get(`/api/users/${id}`, {}, options);
+  return await get(`/api/users/detail?id=${id}`, {}, options);
 }
 
 export async function update(params) {
-  return await put('/api/users', params);
+  return await put('/api/users/update', params);
 }
 
 export async function save(params) {
-  return await post('/api/users', params);
+  return await post('/api/users/create', params);
 }
 
 export async function check(params) {
@@ -26,7 +25,7 @@ export async function check(params) {
 }
 
 export async function remove(id, options) {
-  return await del(`/api/users/${id}`, {}, options);
+  return await del(`/api/users/delete/${id}`, {}, options);
 }
 
 export async function getRoles(options) {

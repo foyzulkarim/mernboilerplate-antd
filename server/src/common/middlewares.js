@@ -88,7 +88,7 @@ const authorizeRequest = async (req, res, next) => {
       {
         // roleId: r,
         roleId: ObjectId(roleId),
-        resourceName: req.originalUrl,
+        resourceName: req._parsedUrl.pathname,
         isAllowed: true,
       },
       "Permission"
