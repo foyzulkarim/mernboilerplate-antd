@@ -16,6 +16,14 @@
         "isDisabled": false
     },
     {
+        "resourceName": "/api/users/detail",
+        "resourceAlias": "Users detail API",
+        "roleName": "user",
+        "roleAlias": "User",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
         "resourceName": "/api/users/search",
         "resourceAlias": "Users search API",
         "roleName": "superadmin",
@@ -26,6 +34,14 @@
     {
         "resourceName": "/api/users/count",
         "resourceAlias": "Users count API",
+        "roleName": "superadmin",
+        "roleAlias": "Superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/detail",
+        "resourceAlias": "Users detail API",
         "roleName": "superadmin",
         "roleAlias": "Superadmin",
         "isAllowed": true,
