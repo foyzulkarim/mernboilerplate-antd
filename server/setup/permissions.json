@@ -1,73 +1,97 @@
 [
     {
         "resourceName": "/api/users/search",
+        "resourceAlias": "Users search API",
         "roleName": "user",
+        "roleAlias": "User",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/count",
+        "resourceAlias": "Users count API",
         "roleName": "user",
+        "roleAlias": "User",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/search",
+        "resourceAlias": "Users search API",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/count",
+        "resourceAlias": "Users count API",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/products",
+        "resourceAlias": "Products menu",
         "roleName": "user",
+        "roleAlias": "User",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/users",
+        "resourceAlias": "Users menu",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/roles",
+        "resourceAlias": "Roles menu",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/resources",
+        "resourceAlias": "Resources menu",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/permissions",
+        "resourceAlias": "Permissions menu",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/users",
+        "resourceAlias": "Users menu",
         "roleName": "admin",
+        "roleAlias": "Admin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "user-list-delete-btn",
+        "resourceAlias": "Delete user button",
         "roleName": "admin",
+        "roleAlias": "Admin",
         "isAllowed": true,
         "isDisabled": true
     },
     {
         "resourceName": "user-list-delete-btn",
+        "resourceAlias": "Delete user button",
         "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     }

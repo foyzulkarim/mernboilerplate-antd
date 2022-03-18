@@ -16,14 +16,14 @@ const EntryForm = (props) => {
   // get roles 
   const fetchRoles = async () => {
     const result = await getRoles();
-    const options = result.data.map(r => ({ label: r.name, value: r._id }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id, role: r }));
     return options;
   };
 
   // get resources
   const fetchResources = async () => {
     const result = await getResources();
-    const options = result.data.map(r => ({ label: r.name, value: r._id }));
+    const options = result.data.map(r => ({ label: r.alias, value: r._id, resource: r }));
     return options;
   };
 
@@ -38,7 +38,7 @@ const EntryForm = (props) => {
       values.isAllowed = false;
     }
 
-    const result = await save({ ...values, roleName: role.roleName, resourceName: resource.resourceName });
+    const result = await save({ ...values, ...role, ...resource });
     console.log('resource', result);
     if (result instanceof Error) {
       message.error(result.message);
@@ -72,7 +72,7 @@ const EntryForm = (props) => {
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select a role' }]}
-            onChange={(value, e) => setRole({ roleId: value, roleName: e.label })}
+            onChange={(value, e) => setRole({ roleId: value, roleName: e.role.name, roleAlias: e.role.alias })}
           />
           <ProFormSelect
             width="md"
@@ -81,7 +81,7 @@ const EntryForm = (props) => {
             request={fetchResources}
             placeholder="Please select resource"
             rules={[{ required: true, message: 'Please select a resource' }]}
-            onChange={(value, e) => setResource({ resourceId: value, resourceName: e.label })}
+            onChange={(value, e) => setResource({ resourceId: value, resourceName: e.resource.name, resourceAlias: e.resource.alias })}
           />
           <ProFormCheckbox name="isAllowed">
             Is allowed

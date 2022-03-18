@@ -1,4 +1,4 @@
-const ObjectId = require('mongoose').Types.ObjectId;
+const { ObjectId } = require("mongoose").Types;
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const { GeneralError } = require("./errors");
@@ -84,10 +84,10 @@ const authorizeRequest = async (req, res, next) => {
   const { user } = req;
   if (user) {
     const { username, roleId } = user;
-    const r = ObjectId(roleId);
     const permission = await searchOne(
       {
-        roleId: r,
+        // roleId: r,
+        roleId: ObjectId(roleId),
         resourceName: req.originalUrl,
         isAllowed: true,
       },
@@ -97,8 +97,11 @@ const authorizeRequest = async (req, res, next) => {
       req.log.info(`Authorized user ${username}`);
       return next();
     }
+    req.log.error(
+      `Unauthorized user ${username} for the resource ${req.originalUrl} with role ${roleId}`
+    );
   }
-  res.status(403).send({
+  return res.status(403).send({
     error: "Unauthorized request",
     message: "Unauthorized",
     status: "error",

@@ -47,9 +47,11 @@ const getByIdHandler = async (req, res, next) => {
 const postHandler = async (req, res, next) => {
   try {
     const { body } = req;
-    const id = await save(body, ModelName);
-    req.log.info({ id }, `${ModelName} created`);
-    return res.status(201).send(id);
+    const { _id } = await save(body, ModelName);
+    req.log.info({ _id }, `${ModelName} created`);
+    return res
+      .status(201)
+      .send({ status: "ok", message: "Permission added successfully", _id });
   } catch (error) {
     return next(error, req, res);
   }

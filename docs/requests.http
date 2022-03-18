@@ -55,8 +55,8 @@ POST http://localhost:8002/api/auth/login
 content-type: application/json
 
 {
-    "username": "superadmin",
-    "password": "superadmin"
+    "username": "admin",
+    "password": "mern-boilerplate"
 }
 
 # role requests
@@ -77,3 +77,10 @@ POST http://localhost:8002/api/roles/search
 content-type: application/json
 session-id: 2b61335a-820f-4674-a893-3691b6a3401b
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjdjZjlkYzg4ODNlN2RhMWJmOWYxYyIsInVzZXJuYW1lIjoic3VwZXJhZG1pbiIsImV4cCI6MTY0NjUxOTMzNywiaWF0IjoxNjQ2NTE1NzM3fQ.YflzdMps7anD6JVqL3ovFU1mOc0p8tKCrVXCI8MSbLw
+
+
+## authenticated user search request
+POST http://localhost:8002/api/users/search
+content-type: application/json
+session-id: 2b61335a-820f-4674-a893-3691b6a3401b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMmU5ODEwOTc1MmI3MjVkMTlkZGMxMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlSWQiOiI2MjJlOTgwZjk3NTJiNzI1ZDE5ZGRjMDEiLCJleHAiOjE2NDc1ODAxNzYsImlhdCI6MTY0NzU3NjU3Nn0.-KNwqq4Ody0EBiHatap-nf_m-q-8tAN4tMM3VFC-Mec

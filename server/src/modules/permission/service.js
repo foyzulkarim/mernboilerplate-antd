@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose").Types;
 const {
   save,
   update,
@@ -9,13 +10,29 @@ const Model = require("./model");
 
 const search = async (payload) => {
   let query = {};
+  let roleQuery = {};
+  if (payload.roleId) {
+    roleQuery = { roleId: ObjectId(payload.roleId) };
+  }
+
+  let nameQuery = [];
   if (payload.name) {
-    query = {
+    nameQuery = {
       $or: [
         { roleAlias: { $regex: payload.name, $options: "i" } },
         { resourceAlias: { $regex: payload.name, $options: "i" } },
       ],
     };
+  }
+
+  if (payload.name && payload.roleId) {
+    query = {
+      $and: [roleQuery, nameQuery],
+    };
+  } else if (payload.name) {
+    query = nameQuery;
+  } else if (payload.roleId) {
+    query = roleQuery;
   }
 
   const data = await Model.collection.find(query).skip(0).limit(20);

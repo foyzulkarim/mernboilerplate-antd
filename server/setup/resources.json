@@ -1,12 +1,12 @@
 [
     {
         "name": "/api/users/search",
-        "alias": "Users search",
+        "alias": "Users search API",
         "type": "api"
     },
     {
         "name": "/api/users/count",
-        "alias": "Users count",
+        "alias": "Users count API",
         "type": "api"
     },
     {
