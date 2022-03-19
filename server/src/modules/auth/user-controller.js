@@ -36,7 +36,7 @@ const getHandler = async (req, res, next) => {
 const getByIdHandler = async (req, res, next) => {
   try {
     const { id } = req.query;
-    const item = await getById(id, ModelName);
+    const item = await getById(id, req.user.id);
     if (item) {
       return res.status(200).send(item);
     }
@@ -72,7 +72,7 @@ const searchHandler = async (req, res, next) => {
     if (!req.body.current) {
       req.body.current = 1;
     }
-    const query = { ...req.body, createdBy: req.user.id };
+    const query = { ...req.body, userId: req.user.id };
     const result = await search(query);
     const response = { success: true, ...result };
     return res.status(200).send(response);
@@ -83,7 +83,8 @@ const searchHandler = async (req, res, next) => {
 
 const countHandler = async (req, res, next) => {
   try {
-    const result = await count(req.body);
+    const query = { ...req.body, userId: req.user.id };
+    const result = await count(query);
     const response = { success: true, ...result };
     return res.status(200).send(response);
   } catch (error) {

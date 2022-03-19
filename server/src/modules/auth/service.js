@@ -76,13 +76,18 @@ const tryCreateUser = async (user) => {
 };
 
 const prepareQuery = (payload) => {
-  let query = { createdBy: ObjectId(payload.createdBy) };
+  const createdBySubQuery = {
+    $or: [
+      { createdBy: ObjectId(payload.userId) },
+      { _id: ObjectId(payload.userId) },
+    ],
+  };
+
+  let query = {};
   if (payload.name) {
     query = {
       $and: [
-        {
-          createdBy: ObjectId(payload.createdBy),
-        },
+        createdBySubQuery,
         {
           $or: [
             { firstName: { $regex: payload.name, $options: "i" } },
@@ -92,7 +97,7 @@ const prepareQuery = (payload) => {
         },
       ],
     };
-  }
+  } else query = createdBySubQuery;
 
   return query;
 };
@@ -122,10 +127,23 @@ const searchPermissions = async (roleId) => {
   return permissions;
 };
 
+const getPermittedUserById = async (id, userId) => {
+  const user = await getById(id, ModelName);
+  if (user) {
+    if (
+      user._id.toString() === userId ||
+      user.createdBy.toString() === userId
+    ) {
+      return user;
+    }
+  }
+  throw new NotFound(`User not found by the id: ${id}`);
+};
+
 module.exports = {
   save,
   update,
-  getById,
+  getById: getPermittedUserById,
   searchOne,
   changePassword,
   checkUser,

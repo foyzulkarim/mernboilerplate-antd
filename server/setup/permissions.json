@@ -2,48 +2,64 @@
     {
         "resourceName": "/api/users/search",
         "resourceAlias": "Users search API",
-        "roleName": "user",
-        "roleAlias": "User",
+        "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/count",
         "resourceAlias": "Users count API",
-        "roleName": "user",
-        "roleAlias": "User",
+        "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/detail",
         "resourceAlias": "Users detail API",
-        "roleName": "user",
-        "roleAlias": "User",
+        "roleName": "superadmin",
+        "roleAlias": "Superadmin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/check",
+        "resourceAlias": "Users check API",
+        "roleName": "superadmin",
+        "roleAlias": "Superadmin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/search",
         "resourceAlias": "Users search API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
+        "roleName": "admin",
+        "roleAlias": "Admin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/count",
         "resourceAlias": "Users count API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
+        "roleName": "admin",
+        "roleAlias": "Admin",
         "isAllowed": true,
         "isDisabled": false
     },
     {
         "resourceName": "/api/users/detail",
         "resourceAlias": "Users detail API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
+        "roleName": "admin",
+        "roleAlias": "Admin",
+        "isAllowed": true,
+        "isDisabled": false
+    },
+    {
+        "resourceName": "/api/users/check",
+        "resourceAlias": "Users check API",
+        "roleName": "admin",
+        "roleAlias": "Admin",
         "isAllowed": true,
         "isDisabled": false
     },
