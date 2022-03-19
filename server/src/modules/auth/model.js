@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema(
     roleAlias: { type: String, required: true },
     passwordHash: { type: String, required: true },
     address: { type: String, required: false },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
   },
   { timestamps: true }
 );

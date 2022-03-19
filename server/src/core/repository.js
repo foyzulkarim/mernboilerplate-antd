@@ -17,6 +17,12 @@ const update = async (item, modelName) => {
   return doc;
 };
 
+const updateAll = async (query, updateModel, modelName) => {
+  const doc = await mongoose.models[modelName].updateMany(query, updateModel);
+  eventEmitter.emit(`${modelName}Updated`, doc);
+  return doc;
+};
+
 const deleteById = async (id, modelName) => {
   const model = await mongoose.models[modelName].findById(id);
   if (model) {
@@ -52,4 +58,5 @@ module.exports = {
   getById,
   searchOne,
   dynamicSearch,
+  updateAll,
 };

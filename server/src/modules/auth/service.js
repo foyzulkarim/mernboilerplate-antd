@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose").Types;
 const bcrypt = require("bcrypt");
 const { NotFound } = require("../../common/errors");
 const {
@@ -6,6 +7,7 @@ const {
   update,
   searchOne,
   dynamicSearch,
+  updateAll,
 } = require("../../core/repository");
 
 const Model = require("./model");
@@ -74,13 +76,20 @@ const tryCreateUser = async (user) => {
 };
 
 const prepareQuery = (payload) => {
-  let query = {};
+  let query = { createdBy: ObjectId(payload.createdBy) };
   if (payload.name) {
     query = {
-      $or: [
-        { firstName: { $regex: payload.name, $options: "i" } },
-        { lastName: { $regex: payload.name, $options: "i" } },
-        { username: { $regex: payload.name, $options: "i" } },
+      $and: [
+        {
+          createdBy: ObjectId(payload.createdBy),
+        },
+        {
+          $or: [
+            { firstName: { $regex: payload.name, $options: "i" } },
+            { lastName: { $regex: payload.name, $options: "i" } },
+            { username: { $regex: payload.name, $options: "i" } },
+          ],
+        },
       ],
     };
   }
@@ -126,4 +135,5 @@ module.exports = {
   count,
   tryCreateUser,
   searchPermissions,
+  updateAll,
 };
