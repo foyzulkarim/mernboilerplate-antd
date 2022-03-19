@@ -84,6 +84,7 @@ The client and server both are up and running and we should see the following sc
   ```sh
   docker exec -it appserver bash
   npm run db:seed
+  npm run db:migrate
   ```
 
   You should see the following output:
@@ -144,6 +145,7 @@ I assume we are running appserver in the docker container.
 ```sh
 docker exec -it appserver bash
 npm run db:seed
+npm run db:migrate
 ```
 
 You should be able to see the username and password in the `/server/setup/users.json` file.
@@ -176,7 +178,6 @@ To test the APIs, we can reuse the postman collection. Open `docs/rbac-mern-boil
 |root|`docker exec -it appserver  /bin/sh` then `npm run db:seed`|Executes seed products inside container|
 | server  | `npm i`           | Install server side dependencies                     |
 | server  | `npm run db:up`   | Start the database in a docker container             |
-| server  | `npm run db:seed:products` | Seed products data into database                     |
 | server  | `npm run test`    | Execute tests using `jest`                           |
 | client  | `npm i`           | Install client side dependencies                     |
 | client  | `npm run start`   | Start the react app                                  |
