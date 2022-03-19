@@ -38,6 +38,14 @@ request.interceptors.response.use(async (response, options) => {
         return { name: response.name };
     }
 
+    // handle 404
+    if (response.status === 404) {
+        history.replace({
+            pathname: '/exception/404',
+        });
+        return { name: response.name };
+    }
+
     if (response.status === 400) {
         const data = await response.clone().json();
         console.log('data', data);
