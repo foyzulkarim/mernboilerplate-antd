@@ -7,6 +7,7 @@ const schema = new mongoose.Schema(
     isSuperAdmin: { type: Boolean },
     isAdmin: { type: Boolean },
     alias: { type: String, unique: true, required: true },
+    permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Permission" }],
   },
   { timestamps: true }
 );

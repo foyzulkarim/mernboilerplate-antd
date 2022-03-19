@@ -1,6 +1,10 @@
 const data = require("./users.json");
 
-const { createUser, searchOne } = require("../src/modules/auth/service");
+const {
+  createUser,
+  searchOne,
+  updateAll,
+} = require("../src/modules/auth/service");
 
 const seed = async (logger) => {
   await Promise.all(
@@ -22,4 +26,19 @@ const seed = async (logger) => {
   logger.info(`Seeding users finished`);
 };
 
-module.exports = { seed };
+const migrate = async (logger) => {
+  logger.info("User starting");
+  const superadmin = await searchOne({ username: "superadmin" }, "User");
+  if (!superadmin) {
+    throw new Error("Superadmin user not found");
+  }
+
+  const response = await updateAll(
+    {},
+    { createdBy: superadmin._id, updatedBy: superadmin._id },
+    "User"
+  );
+  return response;
+};
+
+module.exports = { seed, migrate };

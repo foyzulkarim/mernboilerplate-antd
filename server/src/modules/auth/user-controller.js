@@ -72,7 +72,8 @@ const searchHandler = async (req, res, next) => {
     if (!req.body.current) {
       req.body.current = 1;
     }
-    const result = await search(req.body);
+    const query = { ...req.body, createdBy: req.user.id };
+    const result = await search(query);
     const response = { success: true, ...result };
     return res.status(200).send(response);
   } catch (error) {
