@@ -1,8 +1,13 @@
-const data = require("./resources.json");
+const fs = require("fs");
+const parser = require("jsonc-parser");
+
+// const data = require("./resources.jsonc");
+const dataStr = fs.readFileSync("./setup/resources.jsonc", "utf8");
 const { save, searchOne } = require("../src/modules/resource/service");
 
 const model = "Resource";
 const seed = async (logger) => {
+  const data = parser.parse(dataStr);
   await Promise.all(
     data.map(async (item) => {
       logger.info(`Checking if ${model} ${item.name} exists`);

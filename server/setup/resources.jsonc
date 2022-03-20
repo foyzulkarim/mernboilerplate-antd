@@ -1,4 +1,7 @@
 [
+    // API
+
+    // Users API
     {
         "name": "/api/users/search",
         "alias": "Users search API",
@@ -19,6 +22,31 @@
         "alias": "Users check API",
         "type": "api"
     },
+    // Products API
+    {
+        "name": "/api/products/search",
+        "alias": "Products search API",
+        "type": "api"
+    },
+    {
+        "name": "/api/products/count",
+        "alias": "Products count API",
+        "type": "api"
+    },
+    {
+        "name": "/api/products/detail",
+        "alias": "Products detail API",
+        "type": "api"
+    },
+    {
+        "name": "/api/products/save",
+        "alias": "Products save API",
+        "type": "api"
+    },
+
+    // Client
+
+    // Products
     {
         "name": "/products",
         "alias": "Products menu",
@@ -34,6 +62,7 @@
         "alias": "Products new",
         "type": "client"
     },
+    // Users
     {
         "name": "/users",
         "alias": "Users menu",
@@ -49,6 +78,7 @@
         "alias": "Users new",
         "type": "client"
     },
+    // Resources
     {
         "name": "/resources",
         "alias": "Resources menu",
@@ -64,6 +94,7 @@
         "alias": "Resources new",
         "type": "client"
     },
+    // Roles
     {
         "name": "/roles",
         "alias": "Roles menu",
@@ -79,6 +110,7 @@
         "alias": "Roles new",
         "type": "client"
     },
+    // Permissions
     {
         "name": "/permissions",
         "alias": "Permissions menu",
@@ -94,6 +126,8 @@
         "alias": "Permissions new",
         "type": "client"
     },
+
+    // Components
     {
         "name": "user-list-delete-btn",
         "alias": "User list delete button",

@@ -1,8 +1,11 @@
 const routes = require("./controller");
-const { authenticateRequest } = require("../../common/middlewares");
+const {
+  authenticateRequest,
+  authorizeRequest,
+} = require("../../common/middlewares");
 
 const init = async (app) => {
-  app.use("/api/roles", authenticateRequest, routes);
+  app.use("/api/roles", authenticateRequest, authorizeRequest, routes);
   return app;
 };
 
