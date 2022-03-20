@@ -1,136 +1,349 @@
 [
-    // API
+  // API
 
-    // Users API
-    {
-        "name": "/api/users/search",
-        "alias": "Users search API",
-        "type": "api"
-    },
-    {
-        "name": "/api/users/count",
-        "alias": "Users count API",
-        "type": "api"
-    },
-    {
-        "name": "/api/users/detail",
-        "alias": "Users detail API",
-        "type": "api"
-    },
-    {
-        "name": "/api/users/check",
-        "alias": "Users check API",
-        "type": "api"
-    },
-    // Products API
-    {
-        "name": "/api/products/search",
-        "alias": "Products search API",
-        "type": "api"
-    },
-    {
-        "name": "/api/products/count",
-        "alias": "Products count API",
-        "type": "api"
-    },
-    {
-        "name": "/api/products/detail",
-        "alias": "Products detail API",
-        "type": "api"
-    },
-    {
-        "name": "/api/products/save",
-        "alias": "Products save API",
-        "type": "api"
-    },
+  // Users API
 
-    // Client
+  // default
+  {
+    "name": "/api/users",
+    "alias": "Users detail API",
+    "type": "api"
+  },
 
-    // Products
-    {
-        "name": "/products",
-        "alias": "Products menu",
-        "type": "client"
-    },
-    {
-        "name": "/products/list",
-        "alias": "Products list",
-        "type": "client"
-    },
-    {
-        "name": "/products-new",
-        "alias": "Products new",
-        "type": "client"
-    },
-    // Users
-    {
-        "name": "/users",
-        "alias": "Users menu",
-        "type": "client"
-    },
-    {
-        "name": "/users/list",
-        "alias": "Users list",
-        "type": "client"
-    },
-    {
-        "name": "/users-new",
-        "alias": "Users new",
-        "type": "client"
-    },
-    // Resources
-    {
-        "name": "/resources",
-        "alias": "Resources menu",
-        "type": "client"
-    },
-    {
-        "name": "/resources/list",
-        "alias": "Resources list",
-        "type": "client"
-    },
-    {
-        "name": "/resources-new",
-        "alias": "Resources new",
-        "type": "client"
-    },
-    // Roles
-    {
-        "name": "/roles",
-        "alias": "Roles menu",
-        "type": "client"
-    },
-    {
-        "name": "/roles/list",
-        "alias": "Roles list",
-        "type": "client"
-    },
-    {
-        "name": "/roles-new",
-        "alias": "Roles new",
-        "type": "client"
-    },
-    // Permissions
-    {
-        "name": "/permissions",
-        "alias": "Permissions menu",
-        "type": "client"
-    },
-    {
-        "name": "/permissions/list",
-        "alias": "Permissions list",
-        "type": "client"
-    },
-    {
-        "name": "/permissions-new",
-        "alias": "Permissions new",
-        "type": "client"
-    },
+  // detail
+  {
+    "name": "/api/users/detail",
+    "alias": "Users detail API",
+    "type": "api"
+  },
+  // create
+  {
+    "name": "/api/users/create",
+    "alias": "Users create API",
+    "type": "api"
+  },
+  // update
+  {
+    "name": "/api/users/update",
+    "alias": "Users update API",
+    "type": "api"
+  },
+  // search
+  {
+    "name": "/api/users/search",
+    "alias": "Users search API",
+    "type": "api"
+  },
+  // count
+  {
+    "name": "/api/users/count",
+    "alias": "Users count API",
+    "type": "api"
+  },
+  // delete
+  {
+    "name": "/api/users/delete",
+    "alias": "Users delete API",
+    "type": "api"
+  },
+  // check
+  {
+    "name": "/api/users/check",
+    "alias": "Users check API",
+    "type": "api"
+  },
 
-    // Components
-    {
-        "name": "user-list-delete-btn",
-        "alias": "User list delete button",
-        "type": "client"
-    }
+  // Roles API
+
+  // default
+  {
+    "name": "/api/roles",
+    "alias": "Roles detail API",
+    "type": "api"
+  },
+
+  // detail
+  {
+    "name": "/api/roles/detail",
+    "alias": "Roles detail API",
+    "type": "api"
+  },
+
+  // create
+  {
+    "name": "/api/roles/create",
+    "alias": "Roles create API",
+    "type": "api"
+  },
+
+  // update
+  {
+    "name": "/api/roles/update",
+    "alias": "Roles update API",
+    "type": "api"
+  },
+
+  // search
+  {
+    "name": "/api/roles/search",
+    "alias": "Roles search API",
+    "type": "api"
+  },
+
+  // count
+  {
+    "name": "/api/roles/count",
+    "alias": "Roles count API",
+    "type": "api"
+  },
+
+  // delete
+  {
+    "name": "/api/roles/delete",
+    "alias": "Roles delete API",
+    "type": "api"
+  },
+
+  // Resources API
+
+  // default
+  {
+    "name": "/api/resources",
+    "alias": "Resources detail API",
+    "type": "api"
+  },
+
+  // detail
+  {
+    "name": "/api/resources/detail",
+    "alias": "Resources detail API",
+    "type": "api"
+  },
+
+  // create
+  {
+    "name": "/api/resources/create",
+    "alias": "Resources create API",
+    "type": "api"
+  },
+
+  // update
+  {
+    "name": "/api/resources/update",
+    "alias": "Resources update API",
+    "type": "api"
+  },
+
+  // search
+  {
+    "name": "/api/resources/search",
+    "alias": "Resources search API",
+    "type": "api"
+  },
+
+  // count
+  {
+    "name": "/api/resources/count",
+    "alias": "Resources count API",
+    "type": "api"
+  },
+
+  // delete
+  {
+    "name": "/api/resources/delete",
+    "alias": "Resources delete API",
+    "type": "api"
+  },
+
+  // Permissions API
+
+  // default
+  {
+    "name": "/api/permissions",
+    "alias": "Permissions detail API",
+    "type": "api"
+  },
+
+  // detail
+  {
+    "name": "/api/permissions/detail",
+    "alias": "Permissions detail API",
+    "type": "api"
+  },
+
+  // create
+  {
+    "name": "/api/permissions/create",
+    "alias": "Permissions create API",
+    "type": "api"
+  },
+
+  // update
+  {
+    "name": "/api/permissions/update",
+    "alias": "Permissions update API",
+    "type": "api"
+  },
+
+  // search
+  {
+    "name": "/api/permissions/search",
+    "alias": "Permissions search API",
+    "type": "api"
+  },
+
+  // count
+  {
+    "name": "/api/permissions/count",
+    "alias": "Permissions count API",
+    "type": "api"
+  },
+
+  // delete
+  {
+    "name": "/api/permissions/delete",
+    "alias": "Permissions delete API",
+    "type": "api"
+  },
+
+  // Products API
+
+  // default
+  {
+    "name": "/api/products",
+    "alias": "Products detail API",
+    "type": "api"
+  },
+
+  // detail
+  {
+    "name": "/api/products/detail",
+    "alias": "Products detail API",
+    "type": "api"
+  },
+
+  // create
+  {
+    "name": "/api/products/create",
+    "alias": "Products create API",
+    "type": "api"
+  },
+
+  // update
+  {
+    "name": "/api/products/update",
+    "alias": "Products update API",
+    "type": "api"
+  },
+
+  // search
+  {
+    "name": "/api/products/search",
+    "alias": "Products search API",
+    "type": "api"
+  },
+
+  // count
+  {
+    "name": "/api/products/count",
+    "alias": "Products count API",
+    "type": "api"
+  },
+
+  // delete
+  {
+    "name": "/api/products/delete",
+    "alias": "Products delete API",
+    "type": "api"
+  },
+
+  // Client
+
+  // Products
+  {
+    "name": "/products",
+    "alias": "Products menu",
+    "type": "client"
+  },
+  {
+    "name": "/products/list",
+    "alias": "Products list",
+    "type": "client"
+  },
+  {
+    "name": "/products-new",
+    "alias": "Products new",
+    "type": "client"
+  },
+  // Users
+  {
+    "name": "/users",
+    "alias": "Users menu",
+    "type": "client"
+  },
+  {
+    "name": "/users/list",
+    "alias": "Users list",
+    "type": "client"
+  },
+  {
+    "name": "/users-new",
+    "alias": "Users new",
+    "type": "client"
+  },
+  // Resources
+  {
+    "name": "/resources",
+    "alias": "Resources menu",
+    "type": "client"
+  },
+  {
+    "name": "/resources/list",
+    "alias": "Resources list",
+    "type": "client"
+  },
+  {
+    "name": "/resources-new",
+    "alias": "Resources new",
+    "type": "client"
+  },
+  // Roles
+  {
+    "name": "/roles",
+    "alias": "Roles menu",
+    "type": "client"
+  },
+  {
+    "name": "/roles/list",
+    "alias": "Roles list",
+    "type": "client"
+  },
+  {
+    "name": "/roles-new",
+    "alias": "Roles new",
+    "type": "client"
+  },
+  // Permissions
+  {
+    "name": "/permissions",
+    "alias": "Permissions menu",
+    "type": "client"
+  },
+  {
+    "name": "/permissions/list",
+    "alias": "Permissions list",
+    "type": "client"
+  },
+  {
+    "name": "/permissions-new",
+    "alias": "Permissions new",
+    "type": "client"
+  },
+
+  // Components
+  {
+    "name": "user-list-delete-btn",
+    "alias": "User list delete button",
+    "type": "client"
+  }
 ]
