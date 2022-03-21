@@ -104,7 +104,7 @@ const putHandler = async (req, res, next) => {
 
 const deleteHandler = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     await deleteById(id, ModelName);
     return res
       .status(200)
@@ -130,7 +130,7 @@ router.post("/create", handleValidation(validateUserCreate), postHandler);
 router.put("/update", handleValidation(validateUserUpdate), putHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
-router.delete("/delete/:id", deleteHandler);
+router.delete("/delete", deleteHandler);
 router.post("/check", checkUserHandler);
 
 module.exports = router;

@@ -34,7 +34,7 @@ const getHandler = async (req, res, next) => {
 
 const getByIdHandler = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     const item = await getById(id, ModelName);
     if (item) {
       return res.status(200).send(item);
@@ -95,7 +95,7 @@ const putHandler = async (req, res, next) => {
 
 const deleteHandler = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     await deleteById(id, ModelName);
     return res
       .status(200)
@@ -106,11 +106,11 @@ const deleteHandler = async (req, res, next) => {
 };
 
 router.get("/", getHandler);
-router.get("/:id", getByIdHandler);
-router.post("/", handleValidation(validate), postHandler);
-router.put("/", handleValidation(validate), putHandler);
+router.get("/detail", getByIdHandler);
+router.post("/create", handleValidation(validate), postHandler);
+router.put("/update", handleValidation(validate), putHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
-router.delete("/:id", deleteHandler);
+router.delete("/delete", deleteHandler);
 
 module.exports = router;

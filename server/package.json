@@ -31,6 +31,7 @@
     "faker": "^5.5.3",
     "helmet": "^4.6.0",
     "joi": "^17.4.1",
+    "jsonc-parser": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
     "nodemon": "^2.0.12",

@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose").Types;
 const Joi = require("joi");
 
 const commonKeys = {
@@ -38,9 +39,13 @@ const userCreateSchema = Joi.object().keys({
   roleAlias: Joi.string().min(4).max(15).required(),
 });
 
-const validateUserCreate = (data) => {
+const validateUserCreate = (data, requestor) => {
   const result = userCreateSchema.validate(data);
-  result.value = data;
+  result.value = {
+    ...data,
+    createdBy: ObjectId(requestor.id),
+    updatedBy: ObjectId(requestor.id),
+  };
   return result;
 };
 

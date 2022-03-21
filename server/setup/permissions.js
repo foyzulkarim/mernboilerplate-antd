@@ -1,4 +1,7 @@
-const data = require("./permissions.json");
+const fs = require("fs");
+const parser = require("jsonc-parser");
+
+const dataStr = fs.readFileSync("./setup/permissions.jsonc", "utf8");
 
 const {
   save,
@@ -7,6 +10,7 @@ const {
 } = require("../src/modules/permission/service");
 
 const seed = async (logger) => {
+  const data = parser.parse(dataStr);
   await Promise.all(
     data.map(async (item) => {
       logger.info(
@@ -22,15 +26,19 @@ const seed = async (logger) => {
           { name: item.resourceName },
           "Resource"
         );
-        const savedItem = await save(
-          {
-            ...item,
-            roleId: role._id,
-            resourceId: resource._id,
-          },
-          "Permission"
-        );
-        logger.info(`Saved permission id: ${savedItem._id}`);
+        try {
+          const savedItem = await save(
+            {
+              ...item,
+              roleId: role._id,
+              resourceId: resource._id,
+            },
+            "Permission"
+          );
+          logger.info(`Saved permission id: ${savedItem._id}`);
+        } catch (error) {
+          logger.error(JSON.stringify(error));
+        }
       } else {
         const updatedItem = await update(
           { _id: itemExists._id, ...item },
