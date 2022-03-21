@@ -1,381 +1,569 @@
 [
-    // Superadmin users api permissions
+  // Superadmin users api permissions
 
-    // /api/users/detail for superadmin
-    {
-        "resourceName": "/api/users/detail",
-        "resourceAlias": "Users detail API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/create for superadmin
-    {
-        "resourceName": "/api/users/create",
-        "resourceAlias": "Users create API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/update for superadmin
-    {
-        "resourceName": "/api/users/update",
-        "resourceAlias": "Users update API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/search for superadmin
-    {
-        "resourceName": "/api/users/search",
-        "resourceAlias": "Users search API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/count for superadmin
-    {
-        "resourceName": "/api/users/count",
-        "resourceAlias": "Users count API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },    
-    // /api/users/delete for superadmin
-    {
-        "resourceName": "/api/users/delete",
-        "resourceAlias": "Users delete API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/check for superadmin
-    {
-        "resourceName": "/api/users/check",
-        "resourceAlias": "Users check API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
+  // /api/users/detail for superadmin
+  {
+    "resourceName": "/api/users/detail",
+    "resourceAlias": "Users detail API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/create for superadmin
+  {
+    "resourceName": "/api/users/create",
+    "resourceAlias": "Users create API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/update for superadmin
+  {
+    "resourceName": "/api/users/update",
+    "resourceAlias": "Users update API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/search for superadmin
+  {
+    "resourceName": "/api/users/search",
+    "resourceAlias": "Users search API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/count for superadmin
+  {
+    "resourceName": "/api/users/count",
+    "resourceAlias": "Users count API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/delete for superadmin
+  {
+    "resourceName": "/api/users/delete",
+    "resourceAlias": "Users delete API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/check for superadmin
+  {
+    "resourceName": "/api/users/check",
+    "resourceAlias": "Users check API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
 
-    // Superadmin roles api permissions
+  // Superadmin roles api permissions
 
-    // /api/roles/detail for superadmin
-    {
-        "resourceName": "/api/roles/detail",
-        "resourceAlias": "Roles detail API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/roles/create for superadmin
-    {
-        "resourceName": "/api/roles/create",
-        "resourceAlias": "Roles create API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/roles/update for superadmin
-    {
-        "resourceName": "/api/roles/update",
-        "resourceAlias": "Roles update API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/roles/search for superadmin
-    {
-        "resourceName": "/api/roles/search",
-        "resourceAlias": "Roles search API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/roles/count for superadmin
-    {
-        "resourceName": "/api/roles/count",
-        "resourceAlias": "Roles count API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/roles/delete for superadmin
-    {
-        "resourceName": "/api/roles/delete",
-        "resourceAlias": "Roles delete API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
+  // /api/roles/detail for superadmin
+  {
+    "resourceName": "/api/roles/detail",
+    "resourceAlias": "Roles detail API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/create for superadmin
+  {
+    "resourceName": "/api/roles/create",
+    "resourceAlias": "Roles create API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/update for superadmin
+  {
+    "resourceName": "/api/roles/update",
+    "resourceAlias": "Roles update API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/search for superadmin
+  {
+    "resourceName": "/api/roles/search",
+    "resourceAlias": "Roles search API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/count for superadmin
+  {
+    "resourceName": "/api/roles/count",
+    "resourceAlias": "Roles count API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/delete for superadmin
+  {
+    "resourceName": "/api/roles/delete",
+    "resourceAlias": "Roles delete API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
 
+  // Superadmin resources api permissions
 
-    // Superadmin resources api permissions
+  // /api/resources/detail for superadmin
+  {
+    "resourceName": "/api/resources/detail",
+    "resourceAlias": "Resources detail API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/resources/create for superadmin
+  {
+    "resourceName": "/api/resources/create",
+    "resourceAlias": "Resources create API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/resources/update for superadmin
+  {
+    "resourceName": "/api/resources/update",
+    "resourceAlias": "Resources update API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/resources/search for superadmin
+  {
+    "resourceName": "/api/resources/search",
+    "resourceAlias": "Resources search API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/resources/count for superadmin
+  {
+    "resourceName": "/api/resources/count",
+    "resourceAlias": "Resources count API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/resources/delete for superadmin
+  {
+    "resourceName": "/api/resources/delete",
+    "resourceAlias": "Resources delete API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
 
-    // /api/resources/detail for superadmin
-    {
-        "resourceName": "/api/resources/detail",
-        "resourceAlias": "Resources detail API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/resources/create for superadmin
-    {
-        "resourceName": "/api/resources/create",
-        "resourceAlias": "Resources create API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/resources/update for superadmin
-    {
-        "resourceName": "/api/resources/update",
-        "resourceAlias": "Resources update API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/resources/search for superadmin
-    {
-        "resourceName": "/api/resources/search",
-        "resourceAlias": "Resources search API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/resources/count for superadmin
-    {
-        "resourceName": "/api/resources/count",
-        "resourceAlias": "Resources count API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/resources/delete for superadmin
-    {
-        "resourceName": "/api/resources/delete",
-        "resourceAlias": "Resources delete API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
+  // Superadmin permissions api permissions
 
-    // Superadmin permissions api permissions
+  // /api/permissions/detail for superadmin
+  {
+    "resourceName": "/api/permissions/detail",
+    "resourceAlias": "Permissions detail API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/create for superadmin
+  {
+    "resourceName": "/api/permissions/create",
+    "resourceAlias": "Permissions create API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/update for superadmin
+  {
+    "resourceName": "/api/permissions/update",
+    "resourceAlias": "Permissions update API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/search for superadmin
+  {
+    "resourceName": "/api/permissions/search",
+    "resourceAlias": "Permissions search API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/count for superadmin
+  {
+    "resourceName": "/api/permissions/count",
+    "resourceAlias": "Permissions count API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/delete for superadmin
+  {
+    "resourceName": "/api/permissions/delete",
+    "resourceAlias": "Permissions delete API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
 
-    // /api/permissions/detail for superadmin
-    {
-        "resourceName": "/api/permissions/detail",
-        "resourceAlias": "Permissions detail API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/permissions/create for superadmin
-    {
-        "resourceName": "/api/permissions/create",
-        "resourceAlias": "Permissions create API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/permissions/update for superadmin
-    {
-        "resourceName": "/api/permissions/update",
-        "resourceAlias": "Permissions update API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/permissions/search for superadmin
-    {
-        "resourceName": "/api/permissions/search",
-        "resourceAlias": "Permissions search API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/permissions/count for superadmin
-    {
-        "resourceName": "/api/permissions/count",
-        "resourceAlias": "Permissions count API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/permissions/delete for superadmin
-    {
-        "resourceName": "/api/permissions/delete",
-        "resourceAlias": "Permissions delete API",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
+  // Admin users api permissions
 
-    // Admin users api permissions
+  // /api/users/detail for admin
+  {
+    "resourceName": "/api/users/detail",
+    "resourceAlias": "Users detail API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/create for admin
+  {
+    "resourceName": "/api/users/create",
+    "resourceAlias": "Users create API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/update for admin
+  {
+    "resourceName": "/api/users/update",
+    "resourceAlias": "Users update API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/search for admin
+  {
+    "resourceName": "/api/users/search",
+    "resourceAlias": "Users search API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/count for admin
+  {
+    "resourceName": "/api/users/count",
+    "resourceAlias": "Users count API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/users/delete for admin
+  {
+    "resourceName": "/api/users/delete",
+    "resourceAlias": "Users delete API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": false,
+    "isDisabled": false
+  },
+  // /api/users/check for admin
+  {
+    "resourceName": "/api/users/check",
+    "resourceAlias": "Users check API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/search for superadmin
+  {
+    "resourceName": "/api/roles/search",
+    "resourceAlias": "Roles search API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
 
-    // /api/users/detail for admin
-    {
-        "resourceName": "/api/users/detail",
-        "resourceAlias": "Users detail API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/create for admin
-    {
-        "resourceName": "/api/users/create",
-        "resourceAlias": "Users create API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/update for admin
-    {
-        "resourceName": "/api/users/update",
-        "resourceAlias": "Users update API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/search for admin
-    {
-        "resourceName": "/api/users/search",
-        "resourceAlias": "Users search API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/count for admin
-    {
-        "resourceName": "/api/users/count",
-        "resourceAlias": "Users count API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/users/delete for admin
-    {
-        "resourceName": "/api/users/delete",
-        "resourceAlias": "Users delete API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": false,
-        "isDisabled": false
-    },
-    // /api/users/check for admin
-    {
-        "resourceName": "/api/users/check",
-        "resourceAlias": "Users check API",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": false
-    },
+  // User role product permissions
 
-    // User role product permissions
+  // /api/products/detail for user
+  {
+    "resourceName": "/api/products/detail",
+    "resourceAlias": "Products detail API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/products/create for user
+  {
+    "resourceName": "/api/products/create",
+    "resourceAlias": "Products create API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/products/update for user
+  {
+    "resourceName": "/api/products/update",
+    "resourceAlias": "Products update API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/products/search for user
+  {
+    "resourceName": "/api/products/search",
+    "resourceAlias": "Products search API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/products/count for user
+  {
+    "resourceName": "/api/products/count",
+    "resourceAlias": "Products count API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/products/delete for user
+  {
+    "resourceName": "/api/products/delete",
+    "resourceAlias": "Products delete API",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": false,
+    "isDisabled": false
+  },
 
-    // /api/products/detail for user
-    {
-        "resourceName": "/api/products/detail",
-        "resourceAlias": "Products detail API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/products/create for user
-    {
-        "resourceName": "/api/products/create",
-        "resourceAlias": "Products create API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/products/update for user
-    {
-        "resourceName": "/api/products/update",
-        "resourceAlias": "Products update API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/products/search for user
-    {
-        "resourceName": "/api/products/search",
-        "resourceAlias": "Products search API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/products/count for user
-    {
-        "resourceName": "/api/products/count",
-        "resourceAlias": "Products count API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": true,
-        "isDisabled": false
-    },
-    // /api/products/delete for user
-    {
-        "resourceName": "/api/products/delete",
-        "resourceAlias": "Products delete API",
-        "roleName": "user",
-        "roleAlias": "User",
-        "isAllowed": false,
-        "isDisabled": false
-    },
+  // Components permissions
 
-    // Components permissions
-     
-    {
-        "resourceName": "user-list-delete-btn",
-        "resourceAlias": "Delete user button",
-        "roleName": "admin",
-        "roleAlias": "Admin",
-        "isAllowed": true,
-        "isDisabled": true
-    },
-    {
-        "resourceName": "user-list-delete-btn",
-        "resourceAlias": "Delete user button",
-        "roleName": "superadmin",
-        "roleAlias": "Superadmin",
-        "isAllowed": true,
-        "isDisabled": false
-    }
+  // superadmin permissions for users pages
+
+  // /users permissions for superadmin
+  {
+    "resourceName": "/users",
+    "resourceAlias": "Users menu",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /users/list permissions for superadmin
+  {
+    "resourceName": "/users/list",
+    "resourceAlias": "Users list",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /users-new permission for superadmin
+  {
+    "resourceName": "/users/new",
+    "resourceAlias": "Users new",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // admin permissions for users pages
+
+  // /users permissions for admin
+  {
+    "resourceName": "/users",
+    "resourceAlias": "Users menu",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /users/list permissions for admin
+  {
+    "resourceName": "/users/list",
+    "resourceAlias": "Users list",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /users-new permission for admin
+  {
+    "resourceName": "/users/new",
+    "resourceAlias": "Users new",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // superadmin permissions for roles pages
+
+  // /roles permissions for superadmin
+  {
+    "resourceName": "/roles",
+    "resourceAlias": "Roles menu",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /roles/list permissions for superadmin
+  {
+    "resourceName": "/roles/list",
+    "resourceAlias": "Roles list",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /roles-new permission for superadmin
+  {
+    "resourceName": "/roles-new",
+    "resourceAlias": "Roles new",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // superadmin permissions for resources pages
+
+  // /resources permissions for superadmin
+  {
+    "resourceName": "/resources",
+    "resourceAlias": "Resources menu",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /resources/list permissions for superadmin
+  {
+    "resourceName": "/resources/list",
+    "resourceAlias": "Resources list",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /resources-new permission for superadmin
+  {
+    "resourceName": "/resources-new",
+    "resourceAlias": "Resources new",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // superadmin permissions for permissions pages
+
+  // /permissions permissions for superadmin
+  {
+    "resourceName": "/permissions",
+    "resourceAlias": "Permissions menu",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /permissions/list permissions for superadmin
+  {
+    "resourceName": "/permissions/list",
+    "resourceAlias": "Permissions list",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /permissions-new permission for superadmin
+  {
+    "resourceName": "/permissions-new",
+    "resourceAlias": "Permissions new",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // user permissions for products pages
+
+  // /products permissions for user
+  {
+    "resourceName": "/products",
+    "resourceAlias": "Products menu",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /products/list permissions for user
+  {
+    "resourceName": "/products/list",
+    "resourceAlias": "Products list",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /products-new permission for user
+  {
+    "resourceName": "/products-new",
+    "resourceAlias": "Products new",
+    "roleName": "user",
+    "roleAlias": "User",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  {
+    "resourceName": "user-list-delete-btn",
+    "resourceAlias": "Delete user button",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": true
+  },
+  {
+    "resourceName": "user-list-delete-btn",
+    "resourceAlias": "Delete user button",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  }
 ]

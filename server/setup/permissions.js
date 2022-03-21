@@ -26,15 +26,19 @@ const seed = async (logger) => {
           { name: item.resourceName },
           "Resource"
         );
-        const savedItem = await save(
-          {
-            ...item,
-            roleId: role._id,
-            resourceId: resource._id,
-          },
-          "Permission"
-        );
-        logger.info(`Saved permission id: ${savedItem._id}`);
+        try {
+          const savedItem = await save(
+            {
+              ...item,
+              roleId: role._id,
+              resourceId: resource._id,
+            },
+            "Permission"
+          );
+          logger.info(`Saved permission id: ${savedItem._id}`);
+        } catch (error) {
+          logger.error(JSON.stringify(error));
+        }
       } else {
         const updatedItem = await update(
           { _id: itemExists._id, ...item },

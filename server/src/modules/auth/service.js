@@ -119,13 +119,25 @@ const count = async (payload) => {
 const searchPermissions = async (roleId) => {
   const permissions = await dynamicSearch(
     {
-      roleId,
+      roleId: ObjectId(roleId),
       isAllowed: true,
     },
     "Permission"
   );
   return permissions;
 };
+
+// const searchClientPermissions = async (roleId) => {
+//   const clientResources = await dynamicSearch({ type: "client" }, "Resource");
+//   const permissions = await dynamicSearch(
+//     {
+//       roleId: ObjectId(roleId),
+//       isAllowed: true,
+//     },
+//     "Permission"
+//   );
+//   return permissions;
+// };
 
 const getPermittedUserById = async (id, userId) => {
   const user = await getById(id, ModelName);

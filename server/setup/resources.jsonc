@@ -271,7 +271,7 @@
     "type": "client"
   },
   {
-    "name": "/products-new",
+    "name": "/products/new",
     "alias": "Products new",
     "type": "client"
   },
@@ -287,7 +287,7 @@
     "type": "client"
   },
   {
-    "name": "/users-new",
+    "name": "/users/new",
     "alias": "Users new",
     "type": "client"
   },
@@ -303,7 +303,7 @@
     "type": "client"
   },
   {
-    "name": "/resources-new",
+    "name": "/resources/new",
     "alias": "Resources new",
     "type": "client"
   },
@@ -319,7 +319,7 @@
     "type": "client"
   },
   {
-    "name": "/roles-new",
+    "name": "/roles/new",
     "alias": "Roles new",
     "type": "client"
   },
@@ -335,7 +335,7 @@
     "type": "client"
   },
   {
-    "name": "/permissions-new",
+    "name": "/permissions/new",
     "alias": "Permissions new",
     "type": "client"
   },
