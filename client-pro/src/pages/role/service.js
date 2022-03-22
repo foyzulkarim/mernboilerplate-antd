@@ -9,17 +9,17 @@ export async function count(params, options) {
 }
 
 export async function getById(id, options) {
-  return await get(`/api/roles/${id}`, {}, options);
+  return await get(`/api/roles/detail?id=${id}`, {}, options);
 }
 
 export async function update(params) {
-  return await put('/api/roles', params);
+  return await put('/api/roles/update', params);
 }
 
 export async function save(params) {
-  return await post('/api/roles', params);
+  return await post('/api/roles/save', params);
 }
 
 export async function remove(id, options) {
-  return await del(`/api/roles/${id}`, {}, options);
+  return await del(`/api/roles/delete?id=${id}`, {}, options);
 }
