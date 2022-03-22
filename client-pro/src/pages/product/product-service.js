@@ -9,17 +9,17 @@ export async function count(params, options) {
 }
 
 export async function getById(id, options) {
-  return await get(`/api/products/${id}`, {}, options);
+  return await get(`/api/products/detail?id=${id}`, {}, options);
 }
 
 export async function update(params) {
-  return await put('/api/products', params);
+  return await put('/api/products/update', params);
 }
 
 export async function save(params) {
-  return await post('/api/products', params);
+  return await post('/api/products/create', params);
 }
 
 export async function remove(id, options) {
-  return await del(`/api/products/${id}`, {}, options);
+  return await del(`/api/products/delete?id=${id}`, {}, options);
 }

@@ -38,7 +38,7 @@ const getByIdHandler = async (req, res, next) => {
     if (item) {
       return res.status(200).send(item);
     }
-    throw new NotFound(`Role not found by the id: ${id}`);
+    throw new NotFound(`${ModelName} not found by the id: ${id}`);
   } catch (error) {
     return next(error, req, res);
   }
