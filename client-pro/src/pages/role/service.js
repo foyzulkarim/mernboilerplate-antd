@@ -17,7 +17,7 @@ export async function update(params) {
 }
 
 export async function save(params) {
-  return await post('/api/roles/save', params);
+  return await post('/api/roles/create', params);
 }
 
 export async function remove(id, options) {

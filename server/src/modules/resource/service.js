@@ -18,7 +18,7 @@ const search = async (payload) => {
     };
   }
 
-  const data = await Model.collection.find(query).skip(0).limit(20);
+  const data = await Model.collection.find(query).skip(0).limit(100);
   const items = { data: await data.toArray(), total: 200 };
   return items;
 };

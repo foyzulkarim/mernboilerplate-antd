@@ -25,7 +25,7 @@ export async function check(params) {
 }
 
 export async function remove(id, options) {
-  return await del(`/api/users/delete/${id}`, {}, options);
+  return await del(`/api/users/delete?id=${id}`, {}, options);
 }
 
 export async function getRoles(options) {

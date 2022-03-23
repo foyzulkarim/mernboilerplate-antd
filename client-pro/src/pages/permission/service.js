@@ -9,19 +9,19 @@ export async function count(params, options) {
 }
 
 export async function getById(id, options) {
-  return await get(`/api/permissions/${id}`, {}, options);
+  return await get(`/api/permissions/detail?id=${id}`, {}, options);
 }
 
 export async function update(params) {
-  return await put('/api/permissions', params);
+  return await put('/api/permissions/update', params);
 }
 
 export async function save(params) {
-  return await post('/api/permissions', params);
+  return await post('/api/permissions/create', params);
 }
 
 export async function remove(id, options) {
-  return await del(`/api/permissions/${id}`, {}, options);
+  return await del(`/api/permissions/delete?id=${id}`, {}, options);
 }
 
 export async function getResources(options) {
