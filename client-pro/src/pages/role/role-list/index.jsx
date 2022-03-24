@@ -73,13 +73,22 @@ const TableList = () => {
     setFetchRoles(true);
   }, [current, sort]);
 
+  useEffect(() => {
+    fetchRoleCount();
+    setFetchRoles(true);
+  }, []);
+
+  useEffect(() => {
+    fetchRoleCount();
+    setFetchRoles(true);
+  }, [searchObject]);
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    console.log('Received values of form: ', values);
     setCurrent(1);
     setSearchObject(values);
-    setFetchRoles(true);
-    fetchRoleCount();
   };
 
   const columns = [
