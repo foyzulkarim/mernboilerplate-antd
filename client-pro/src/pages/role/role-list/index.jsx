@@ -11,16 +11,17 @@ const TableList = () => {
   const actionRef = useRef();
   const [data, setData] = useState({ data: [] });
   const [current, setCurrent] = useState(1);
-  const [param, setParam] = useState({});
+  const [searchObject, setSearchObject] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
   const [fetchRoles, setFetchRoles] = useState(false);
   const { confirm } = Modal;
 
   const fetchRoleData = async () => {
+    console.log('REACT_APP_DEFAULT_PAGE_SIZE', DEFAULT_PAGE_SIZE);
     const hide = message.loading('Loading...');
     try {
-      const result = await search({ current: current, pageSize: 10, ...param, ...sort });
+      const result = await search({ current: current, pageSize: 10, ...sort, ...searchObject });
       hide();
       setData(result);
       setFetchRoles(false);
@@ -58,7 +59,7 @@ const TableList = () => {
   };
 
   const fetchRoleCount = async () => {
-    const result = await count({ ...param });
+    const result = await count({ ...searchObject });
     setTotal(result.total);
   };
 
@@ -68,18 +69,17 @@ const TableList = () => {
     }
   }, [fetchRoles]);
 
-
   useEffect(() => {
-    setCurrent(1);
-    setSort(null);
     setFetchRoles(true);
-    fetchRoleCount();
-  }, [param]);
+  }, [current, sort]);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    setParam(values);
+    setCurrent(1);
+    setSearchObject(values);
+    setFetchRoles(true);
+    fetchRoleCount();
   };
 
   const columns = [
@@ -103,6 +103,13 @@ const TableList = () => {
     {
       title: 'Alias',
       dataIndex: 'alias',
+      sorter: true,
+    },
+    {
+      title: 'Updated At',
+      dataIndex: 'updatedAt',
+      valueType: 'dateTime',
+      sorter: true,
     },
     {
       title: 'Actions',
@@ -143,7 +150,7 @@ const TableList = () => {
               <Button type="primary" htmlType="submit">
                 Search
               </Button>
-              <Button style={{ margin: '0 8px', }} onClick={() => { form.resetFields(); }}>
+              <Button style={{ margin: '0 8px', }} onClick={() => { form.resetFields(); onFinish({}); }}>
                 Clear
               </Button>
             </Col>
@@ -154,7 +161,7 @@ const TableList = () => {
           actionRef={actionRef}
           rowKey="_id"
           search={false}
-          options={{ reload: false }}
+          options={{ reload: true }}
           toolBarRender={() => [
             <Button
               type="primary"
@@ -172,9 +179,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
-            setFetchRoles(true);
           }}
-          onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
           columns={columns}
           rowSelection={false}
@@ -183,12 +188,13 @@ const TableList = () => {
       </PageContainer>
       <Pagination
         total={total}
+        defaultPageSize={DEFAULT_PAGE_SIZE}
+        current={current}
         showSizeChanger={false}
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
         onChange={(page, pageSize) => { setCurrent(page); setFetchRoles(true); }}
-        // style={{ background: 'white', padding: '10px' }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
     </>

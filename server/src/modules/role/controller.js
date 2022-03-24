@@ -59,7 +59,7 @@ const searchHandler = async (req, res, next) => {
   try {
     const { body } = req;
     req.log.info({ body }, `search ${ModelName}`);
-    const data = await search(body, ModelName);
+    const data = await search(body);
     return res.status(200).send(data);
   } catch (error) {
     return next(error, req, res);

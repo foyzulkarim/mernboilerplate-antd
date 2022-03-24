@@ -51,6 +51,18 @@ const dynamicSearch = async (query, modelName) => {
   return data;
 };
 
+const getSortClause = (payload) => {
+  let sort = {};
+  if (payload.sort) {
+    const key = payload.sort;
+    const value = parseInt(payload.order, 10) ?? 1;
+    sort[key] = value;
+  } else {
+    sort = { updatedAt: -1 };
+  }
+  return sort;
+};
+
 module.exports = {
   save,
   update,
@@ -59,4 +71,5 @@ module.exports = {
   searchOne,
   dynamicSearch,
   updateAll,
+  getSortClause,
 };
