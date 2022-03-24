@@ -61,15 +61,11 @@ content-type: application/json
 
 # role requests
 ## authenticated role post request
-POST http://localhost:8002/api/roles
+POST http://localhost:8002/api/roles/create
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjdjZjlkYzg4ODNlN2RhMWJmOWYxYyIsInVzZXJuYW1lIjoic3VwZXJhZG1pbiIsImV4cCI6MTY0NjQ1MTM3OCwiaWF0IjoxNjQ2NDQ3Nzc4fQ.TNbOm1TjXzsf8DsNbPycSpTQRsX8uyXsSwmc3yG5OqU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzg2MzcwZjEzNWU3NmIzYzhlNWNkMSIsInVzZXJuYW1lIjoic3VwZXJhZG1pbiIsInJvbGVJZCI6IjYyMzg2MzcwZjEzNWU3NmIzYzhlNWNiZiIsImV4cCI6MTY0ODEyMDUxMywiaWF0IjoxNjQ4MTE2OTEzfQ.eeA1lb4gCVFYU7yZneikm3Pqv7gnpxK_C71J6YAZ_Lw
 
-{
-    "name": "admin",
-    "isAdmin": true,
-    "alias": "admin"
-}
+{"name":"testrole6","alias":"Test 6"}
 
 
 ## authenticated role search request

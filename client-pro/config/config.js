@@ -4,8 +4,8 @@ import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 
-const { REACT_APP_ENV, REACT_APP_API_URL } = process.env;
-console.log('REACT_APP_ENV', REACT_APP_ENV, 'REACT_APP_API_URL', REACT_APP_API_URL);
+const { REACT_APP_ENV, REACT_APP_API_URL, REACT_APP_DEFAULT_PAGE_SIZE } = process.env;
+console.log('REACT_APP_ENV', REACT_APP_ENV, 'REACT_APP_API_URL', REACT_APP_API_URL, 'REACT_APP_DEFAULT_PAGE_SIZE', REACT_APP_DEFAULT_PAGE_SIZE);
 export default defineConfig({
   hash: true,
   antd: {},
@@ -511,5 +511,6 @@ export default defineConfig({
   exportStatic: {},
   define: {
     API_URL: REACT_APP_API_URL || 'http://localhost:5005',
+    DEFAULT_PAGE_SIZE: REACT_APP_DEFAULT_PAGE_SIZE || 10,
   },
 });

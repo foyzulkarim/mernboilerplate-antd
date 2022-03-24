@@ -4,10 +4,11 @@ const {
   getById,
   deleteById,
   searchOne,
+  getSortClause,
 } = require("../../core/repository");
 const Model = require("./model");
 
-const search = async (payload) => {
+const prepareQuery = (payload) => {
   let query = {};
   if (payload.name) {
     query = {
@@ -17,24 +18,27 @@ const search = async (payload) => {
       ],
     };
   }
+  return query;
+};
 
-  const data = await Model.collection.find(query).skip(0).limit(20);
-  const items = { data: await data.toArray(), total: 200 };
+const search = async (payload) => {
+  const query = prepareQuery(payload);
+  const sort = getSortClause(payload);
+  const take = parseInt(process.env.DEFAULT_PAGE_SIZE, 10);
+  const skip = (parseInt(payload.current, 10) - 1) * take;
+
+  const data = await Model.collection
+    .find(query)
+    .sort(sort)
+    .skip(skip)
+    .limit(take);
+
+  const items = { data: await data.toArray(), total: 0 };
   return items;
 };
 
 const count = async (payload) => {
-  let query = {};
-  if (payload.name) {
-    query = {
-      $or: [
-        { name: { $regex: payload.name, $options: "i" } },
-        { alias: { $regex: payload.name, $options: "i" } },
-      ],
-    };
-  }
-
-  const t = await Model.collection.find(query).count();
+  const t = await Model.collection.find(prepareQuery(payload)).count();
   const items = { total: t };
   return items;
 };
