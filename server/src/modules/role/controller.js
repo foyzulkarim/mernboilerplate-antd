@@ -79,9 +79,7 @@ const deleteHandler = async (req, res, next) => {
 };
 
 router.get("/", getHandler);
-router.get("/detail", (req, res, next) => {
-  getByIdHandler(ModelName, req, res, next);
-});
+router.get("/detail", getByIdHandler);
 router.post("/create", handleValidation(validate), postHandler);
 router.put("/update", handleValidation(validate), putHandler);
 router.post("/search", searchHandler);

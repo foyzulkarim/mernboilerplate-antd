@@ -1,8 +1,9 @@
 const { getById } = require("./service");
 const { NotFound } = require("../../common/errors");
 
-const getByIdHandler = async (ModelName, req, res, next) => {
+const getByIdHandler = async (req, res, next) => {
   try {
+    const ModelName = req.modelName;
     const { id } = req.query;
     const item = await getById(id, ModelName);
     if (item) {
