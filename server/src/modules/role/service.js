@@ -4,9 +4,10 @@ const {
   getById,
   deleteById,
   searchOne,
-  getSortClause,
+  count: getCount,
+  search: getSearchResult,
 } = require("../../core/repository");
-const Model = require("./model");
+const { name: modelName } = require("./model");
 
 const prepareQuery = (payload) => {
   let query = {};
@@ -23,24 +24,14 @@ const prepareQuery = (payload) => {
 
 const search = async (payload) => {
   const query = prepareQuery(payload);
-  const sort = getSortClause(payload);
-  const take = parseInt(process.env.DEFAULT_PAGE_SIZE, 10);
-  const skip = (parseInt(payload.current, 10) - 1) * take;
-
-  const data = await Model.collection
-    .find(query)
-    .sort(sort)
-    .skip(skip)
-    .limit(take);
-
-  const items = { data: await data.toArray(), total: 0 };
-  return items;
+  const data = await getSearchResult(payload, query, modelName);
+  return { data, total: 0 };
 };
 
 const count = async (payload) => {
-  const t = await Model.collection.find(prepareQuery(payload)).count();
-  const items = { total: t };
-  return items;
+  const query = prepareQuery(payload);
+  const t = await getCount(query, modelName);
+  return { total: t };
 };
 
 module.exports = {

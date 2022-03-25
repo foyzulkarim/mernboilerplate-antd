@@ -1,15 +1,8 @@
 const express = require("express");
-const {
-  save,
-  update,
-  deleteById,
-  getById,
-  search,
-  count,
-} = require("./service");
+const { save, update, deleteById, search, count } = require("./service");
+const { getByIdHandler } = require("./base-controller");
 const { validate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
-const { NotFound } = require("../../common/errors");
 
 const router = express.Router();
 const ModelName = "Role";
@@ -26,19 +19,6 @@ const getHandler = async (req, res, next) => {
       success: true,
     };
     return res.status(200).send(result);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const getByIdHandler = async (req, res, next) => {
-  try {
-    const { id } = req.query;
-    const item = await getById(id, ModelName);
-    if (item) {
-      return res.status(200).send(item);
-    }
-    throw new NotFound(`${ModelName} not found by the id: ${id}`);
   } catch (error) {
     return next(error, req, res);
   }
@@ -99,7 +79,9 @@ const deleteHandler = async (req, res, next) => {
 };
 
 router.get("/", getHandler);
-router.get("/detail", getByIdHandler);
+router.get("/detail", (req, res, next) => {
+  getByIdHandler(ModelName, req, res, next);
+});
 router.post("/create", handleValidation(validate), postHandler);
 router.put("/update", handleValidation(validate), putHandler);
 router.post("/search", searchHandler);
