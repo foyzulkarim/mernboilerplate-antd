@@ -86,7 +86,6 @@ const TableList = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
     setCurrent(1);
     setSearchObject(values);
   };
@@ -203,7 +202,7 @@ const TableList = () => {
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
-        onChange={(page, pageSize) => { setCurrent(page); setFetchRoles(true); }}
+        onChange={(page) => { setCurrent(page); setFetchRoles(true); }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
     </>

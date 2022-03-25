@@ -11,7 +11,7 @@ const TableList = () => {
   const actionRef = useRef();
   const [data, setData] = useState({ data: [] });
   const [current, setCurrent] = useState(1);
-  const [param, setParam] = useState({});
+  const [searchObject, setSearchObject] = useState({});
   const [sort, setSort] = useState({});
   const [total, setTotal] = useState(0);
   const [fetchResources, setFetchResources] = useState(false);
@@ -20,7 +20,7 @@ const TableList = () => {
   const fetchResourceData = async () => {
     const hide = message.loading('Loading...');
     try {
-      const result = await search({ current: current, pageSize: 10, ...param, ...sort });
+      const result = await search({ current: current, pageSize: 10, ...searchObject, ...sort });
       hide();
       setData(result);
       setFetchResources(false);
@@ -58,7 +58,7 @@ const TableList = () => {
   };
 
   const fetchResourceCount = async () => {
-    const result = await count({ ...param });
+    const result = await count({ ...searchObject });
     setTotal(result.total);
   };
 
@@ -68,18 +68,25 @@ const TableList = () => {
     }
   }, [fetchResources]);
 
+  useEffect(() => {
+    setFetchResources(true);
+  }, [current, sort]);
 
   useEffect(() => {
-    setCurrent(1);
-    setSort(null);
-    setFetchResources(true);
     fetchResourceCount();
-  }, [param]);
+    setFetchResources(true);
+  }, []);
+
+  useEffect(() => {
+    fetchResourceCount();
+    setFetchResources(true);
+  }, [searchObject]);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    setParam(values);
+    setCurrent(1);
+    setSearchObject(values);
   };
 
   const columns = [
@@ -107,6 +114,12 @@ const TableList = () => {
     {
       title: 'Type',
       dataIndex: 'type',
+    },
+    {
+      title: 'Updated At',
+      dataIndex: 'updatedAt',
+      valueType: 'dateTime',
+      sorter: true,
     },
     {
       title: 'Actions',
@@ -147,7 +160,8 @@ const TableList = () => {
               <Button type="primary" htmlType="submit">
                 Search
               </Button>
-              <Button style={{ margin: '0 8px', }} onClick={() => { form.resetFields(); }}>
+              <Button style={{ margin: '0 8px', }} onClick={() => { form.resetFields(); 
+              onFinish({}); }}>
                 Clear
               </Button>
             </Col>
@@ -176,9 +190,7 @@ const TableList = () => {
             sort['sort'] = _sorter.field;
             sort['order'] = _sorter.order === 'ascend' ? 1 : -1;
             setSort(sort);
-            setFetchResources(true);
           }}
-          onSubmit={(params) => { console.log(params); setParam(params); }}
           dataSource={data.data}
           columns={columns}
           rowSelection={false}
@@ -187,12 +199,13 @@ const TableList = () => {
       </PageContainer>
       <Pagination
         total={total}
+        defaultPageSize={DEFAULT_PAGE_SIZE}
+        current={current}
         showSizeChanger={false}
         showQuickJumper={false}
         showTotal={total => `Total ${total} items`}
         defaultCurrent={current}
-        onChange={(page, pageSize) => { setCurrent(page); setFetchResources(true); }}
-        // style={{ background: 'white', padding: '10px' }}
+        onChange={(page) => { setCurrent(page); setFetchResources(true); }}
         style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center', background: 'white', padding: '10px' }}
       />
     </>
