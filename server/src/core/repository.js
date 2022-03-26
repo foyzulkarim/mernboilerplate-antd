@@ -36,7 +36,7 @@ const deleteById = async (id, modelName) => {
 const getById = async (id, modelName) => {
   const model = await mongoose.models[modelName].findById(id);
   if (model == null) {
-    throw new Error(`Product not found by the id: ${id}`);
+    throw new Error(`${modelName} not found by the id: ${id}`);
   }
   return model;
 };
