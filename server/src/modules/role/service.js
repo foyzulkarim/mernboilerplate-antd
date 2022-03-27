@@ -9,7 +9,7 @@ const {
 } = require("../../core/repository");
 const { name: modelName } = require("./model");
 
-const prepareQuery = (payload) => {
+const getQuery = (payload) => {
   let query = {};
   if (payload.name) {
     query = {
@@ -23,13 +23,13 @@ const prepareQuery = (payload) => {
 };
 
 const search = async (payload) => {
-  const query = prepareQuery(payload);
+  const query = getQuery(payload);
   const data = await getSearchResult(payload, query, modelName);
   return { data, total: 0 };
 };
 
 const count = async (payload) => {
-  const query = prepareQuery(payload);
+  const query = getQuery(payload);
   const t = await getCount(query, modelName);
   return { total: t };
 };
@@ -42,4 +42,5 @@ module.exports = {
   search,
   count,
   searchOne,
+  getQuery,
 };

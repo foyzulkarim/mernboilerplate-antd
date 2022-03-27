@@ -1,11 +1,15 @@
 const express = require("express");
-const { save, update, deleteById, search, count } = require("./service");
-const { getByIdHandler } = require("./base-controller");
+const { save, update, deleteById, getQuery } = require("./service");
+const {
+  getByIdHandler,
+  searchHandler: baseSearchHandler,
+  countHandler: baseCountHandler,
+} = require("../../core/controller");
 const { validate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
+const { name: ModelName } = require("./model");
 
 const router = express.Router();
-const ModelName = "Role";
 
 const getHandler = async (req, res, next) => {
   try {
@@ -35,27 +39,6 @@ const postHandler = async (req, res, next) => {
   }
 };
 
-const searchHandler = async (req, res, next) => {
-  try {
-    const { body } = req;
-    req.log.info({ body }, `search ${ModelName}`);
-    const data = await search(body);
-    return res.status(200).send(data);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const countHandler = async (req, res, next) => {
-  try {
-    const result = await count(req.body);
-    const response = { success: true, ...result };
-    return res.status(200).send(response);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
 const putHandler = async (req, res, next) => {
   try {
     const { body } = req;
@@ -64,6 +47,16 @@ const putHandler = async (req, res, next) => {
   } catch (error) {
     return next(error, req, res);
   }
+};
+
+const searchHandler = async (req, res, next) => {
+  req.searchQuery = getQuery(req.body);
+  return baseSearchHandler(req, res, next);
+};
+
+const countHandler = async (req, res, next) => {
+  req.searchQuery = getQuery(req.body);
+  return baseCountHandler(req, res, next);
 };
 
 const deleteHandler = async (req, res, next) => {
