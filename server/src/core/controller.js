@@ -1,5 +1,12 @@
 const { NotFound } = require("../common/errors");
-const { getById, search, count } = require("./repository");
+const {
+  getById,
+  search,
+  count,
+  save,
+  update,
+  deleteById,
+} = require("./repository");
 
 const getByIdHandler = async (req, res, next) => {
   try {
@@ -40,5 +47,48 @@ const countHandler = async (req, res, next) => {
   }
 };
 
+const saveHandler = async (req, res, next) => {
+  try {
+    const ModelName = req.modelName;
+    const { body } = req;
+    const id = await save(body, ModelName);
+    req.log.info({ id }, `${ModelName} created`);
+    return res.status(201).send(id);
+  } catch (error) {
+    return next(error, req, res);
+  }
+};
+
+const updateHandler = async (req, res, next) => {
+  try {
+    const ModelName = req.modelName;
+    const { body } = req;
+    const id = await update(body, ModelName);
+    return res.status(200).send(id);
+  } catch (error) {
+    return next(error, req, res);
+  }
+};
+
+const deleteHandler = async (req, res, next) => {
+  try {
+    const ModelName = req.modelName;
+    const { id } = req.query;
+    await deleteById(id, ModelName);
+    return res
+      .status(200)
+      .send({ success: true, message: `${ModelName} deleted` });
+  } catch (error) {
+    return next(error, req, res);
+  }
+};
+
 // export
-module.exports = { getByIdHandler, searchHandler, countHandler };
+module.exports = {
+  getByIdHandler,
+  searchHandler,
+  countHandler,
+  saveHandler,
+  updateHandler,
+  deleteHandler,
+};
