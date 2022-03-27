@@ -1,0 +1,162 @@
+{
+  // Place your rbac-antd-mern-boilerplate workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  "My Print to console": {
+    "scope": "javascript,typescript",
+    "prefix": "log",
+    "body": ["console.log('$1');", "$2"],
+    "description": "My Log output to console"
+  },
+
+  "Add controller": {
+    "scope": "javascript,typescript",
+    "prefix": "mbcontroller",
+    "body": [
+      "const express = require(\"express\");",
+      "const { getQuery } = require(\"./service\");",
+      "const {",
+      "  getByIdHandler,",
+      "  saveHandler,",
+      "  updateHandler,",
+      "  searchHandler: baseSearchHandler,",
+      "  countHandler: baseCountHandler,",
+      "  deleteHandler,",
+      "} = require(\"../../core/controller\");",
+      "const { validate } = require(\"./request\");",
+      "const { handleValidation } = require(\"../../common/middlewares\");",
+      "\n",
+      "const router = express.Router();",
+      "const searchHandler = async (req, res, next) => {",
+      " req.searchQuery = getQuery(req.body);",
+      " return baseSearchHandler(req, res, next);",
+      "};",
+      "const countHandler = async (req, res, next) => {",
+      "\treq.searchQuery = getQuery(req.body);",
+      "\treturn baseCountHandler(req, res, next);",
+      "};",
+      "router.get(\"/detail\", getByIdHandler);",
+      "router.post(\"/create\", handleValidation(validate), saveHandler);",
+      "router.put(\"/update\", handleValidation(validate), updateHandler);",
+      "router.post(\"/search\", searchHandler);",
+      "router.post(\"/count\", countHandler);",
+      "router.delete(\"/delete\", deleteHandler);",
+      "module.exports = router;",
+      "\n"
+    ],
+    "description": "Mern boilerplate controller"
+  },
+  "Add index": {
+    "scope": "javascript,typescript",
+    "prefix": "mbindex",
+    "body": [
+      "const routes = require(\"./controller\");",
+      "const {",
+      "  authenticateRequest,",
+      "  authorizeRequest,",
+      "} = require(\"../../common/middlewares\");",
+      "",
+      "const { name: ModelName } = require(\"./model\");",
+      "",
+      "const processRequest = async (req, res, next) => {",
+      "  req.modelName = ModelName;",
+      "  return next();",
+      "};",
+      "",
+      "const init = async (app) => {",
+      "  app.use(",
+      "    \"/api/${1:apisuffix}\",",
+      "    authenticateRequest,",
+      "    authorizeRequest,",
+      "    processRequest,",
+      "    routes",
+      "  );",
+      "  return app;",
+      "};",
+      "",
+      "module.exports = { init };",
+      ""
+    ],
+    "description": "Mern boilerplate index"
+  },
+  "Add model": {
+    "scope": "javascript,typescript",
+    "prefix": "mbmodel",
+    "body": [
+      "const mongoose = require(\"mongoose\");",
+      "",
+      "// schema",
+      "const schema = new mongoose.Schema(",
+      "  {",
+      "    // add properties here. below is a sample property",
+      "    // name: { type: String, unique: true, required: true },",
+      "  },",
+      "  { timestamps: true }",
+      ");",
+      "",
+      "// indices",
+      "// text index for name",
+      "schema.index({ name: \"text\" });",
+      "",
+      "// index for createdAt and updatedAt",
+      "schema.index({ createdAt: 1 });",
+      "schema.index({ updatedAt: 1 });",
+      "",
+      "module.exports = mongoose.model(\"${1:modelName}\", schema);",
+      ""
+    ],
+    "description": "Mern boilerplate model"
+  },
+  "Add request": {
+    "scope": "javascript,typescript",
+    "prefix": "mbrequest",
+    "body": [
+      "const Joi = require(\"joi\");",
+      "",
+      "const schema = Joi.object().keys({",
+      "  _id: Joi.string().optional(),",
+      "  // sample joi validation below",
+      "  // name: Joi.string().min(2).max(30).required(),",
+      "});",
+      "",
+      "const validate = (data) => {",
+      "  const result = schema.validate(data);",
+      "  result.value = data;",
+      "  return result;",
+      "};",
+      "",
+      "module.exports = { validate };",
+      ""
+    ],
+    "description": "Mern boilerplate request"
+  },
+  "Add service": {
+    "scope": "javascript,typescript",
+    "prefix": "mbservice",
+    "description": "Mern boilerplate service",
+    "body": [
+      "const getQuery = (payload) => {",
+      "  let query = {};",
+      "  // example query generation of name and alias. change it according to the need",
+      "  // if (payload.name) {",
+      "  //   query = {",
+      "  //     $or: [",
+      "  //       { name: { $regex: payload.name, $options: \"i\" } },",
+      "  //       { alias: { $regex: payload.name, $options:\"i\" } },",
+      "  //     ],",
+      "  //   };",
+      "  // }",
+      "  return query;",
+      "};",
+      "",
+      "module.exports = {",
+      "  getQuery,",
+      "};",
+      ""
+    ]
+  }
+}
