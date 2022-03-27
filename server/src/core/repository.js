@@ -36,7 +36,7 @@ const deleteById = async (id, modelName) => {
 const getById = async (id, modelName) => {
   const model = await mongoose.models[modelName].findById(id);
   if (model == null) {
-    throw new Error(`Product not found by the id: ${id}`);
+    throw new Error(`${modelName} not found by the id: ${id}`);
   }
   return model;
 };
@@ -63,6 +63,25 @@ const getSortClause = (payload) => {
   return sort;
 };
 
+const count = async (query, modelName) => {
+  const data = await mongoose.models[modelName].find(query).count();
+  return data;
+};
+
+const search = async (payload, query, modelName) => {
+  const sort = getSortClause(payload);
+  const take = parseInt(process.env.DEFAULT_PAGE_SIZE, 10);
+  const skip = (parseInt(payload.current, 10) - 1) * take;
+
+  const data = await mongoose.models[modelName]
+    .find(query)
+    .sort(sort)
+    .skip(skip)
+    .limit(take);
+
+  return data;
+};
+
 module.exports = {
   save,
   update,
@@ -72,4 +91,6 @@ module.exports = {
   dynamicSearch,
   updateAll,
   getSortClause,
+  count,
+  search,
 };

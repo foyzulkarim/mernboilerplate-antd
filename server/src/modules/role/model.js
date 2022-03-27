@@ -24,7 +24,8 @@ schema.index({ updatedAt: 1 });
 schema.index({ isSuperAdmin: 1 });
 schema.index({ isAdmin: 1 });
 
+const ModelName = "Role";
 // reference model
 // const Role = mongoose.model("Role", schema);
 
-module.exports = mongoose.model("Role", schema);
+module.exports = { Model: mongoose.model(ModelName, schema), name: ModelName };
