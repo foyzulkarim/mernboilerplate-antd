@@ -1,3 +1,5 @@
+const { name } = require("./model");
+
 const getQuery = (payload) => {
   let query = {};
   if (payload.name) {
@@ -13,4 +15,5 @@ const getQuery = (payload) => {
 
 module.exports = {
   getQuery,
+  modelName: name,
 };

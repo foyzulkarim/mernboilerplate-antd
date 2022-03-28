@@ -6,7 +6,7 @@
   // default
   {
     "name": "/api/users",
-    "alias": "Users detail API",
+    "alias": "Users API",
     "type": "api"
   },
 
@@ -58,7 +58,7 @@
   // default
   {
     "name": "/api/roles",
-    "alias": "Roles detail API",
+    "alias": "Roles API",
     "type": "api"
   },
 
@@ -109,7 +109,7 @@
   // default
   {
     "name": "/api/resources",
-    "alias": "Resources detail API",
+    "alias": "Resources API",
     "type": "api"
   },
 
@@ -160,7 +160,7 @@
   // default
   {
     "name": "/api/permissions",
-    "alias": "Permissions detail API",
+    "alias": "Permissions API",
     "type": "api"
   },
 
@@ -211,7 +211,7 @@
   // default
   {
     "name": "/api/products",
-    "alias": "Products detail API",
+    "alias": "Products API",
     "type": "api"
   },
 
