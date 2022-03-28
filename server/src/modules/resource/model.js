@@ -20,4 +20,6 @@ schema.index({ type: 1 });
 schema.index({ createdAt: 1 });
 schema.index({ updatedAt: 1 });
 
-module.exports = mongoose.model("Resource", schema);
+const ModelName = "Resource";
+
+module.exports = { Model: mongoose.model(ModelName, schema), name: ModelName };
