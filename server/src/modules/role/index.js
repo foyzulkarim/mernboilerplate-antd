@@ -3,6 +3,7 @@ const {
   authenticateRequest,
   authorizeRequest,
 } = require("../../common/middlewares");
+
 const { name: ModelName } = require("./model");
 
 const processRequest = async (req, res, next) => {
