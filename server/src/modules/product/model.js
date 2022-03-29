@@ -38,4 +38,8 @@ schema.index({ cost: 1 });
 // reference model
 const Product = mongoose.model("Product", schema);
 
-module.exports = Product;
+const ModelName = "Product";
+// reference model
+// const Role = mongoose.model("Role", schema);
+
+module.exports = { Model: Product, name: ModelName };
