@@ -33,10 +33,10 @@ const seed = async () => {
     await mongoose.connect(uri, options);
     logger.info("Connected to MongoDB");
 
-    // await seedResources(logger);
-    // await seedRoles(logger);
-     await seedUsers(logger);
-    // await seedPermissions(logger);
+    await seedResources(logger);
+    await seedRoles(logger);
+    await seedUsers(logger);
+    await seedPermissions(logger);
     // await seedProducts(logger);
 
     logger.info(`Seed finished`);
