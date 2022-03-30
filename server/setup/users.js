@@ -6,6 +6,9 @@ const {
   updateAll,
 } = require("../src/modules/auth/service");
 
+const User = require("../src/modules/auth/model");
+const { name: roleModel } = require("../src/modules/role/model");
+
 const seed = async (logger) => {
   await Promise.all(
     data.map(async (user) => {
@@ -33,9 +36,19 @@ const migrate = async (logger) => {
     throw new Error("Superadmin user not found");
   }
 
+  const admin = await searchOne({ name: "admin" }, "Role");
+  if (!admin) {
+    throw new Error("Admin role not found");
+  }
+
   const response = await updateAll(
     {},
-    { createdBy: superadmin._id, updatedBy: superadmin._id },
+    {
+      createdBy: superadmin._id,
+      updatedBy: superadmin._id,
+      roleId: admin._id,
+      roleAlias: admin.alias,
+    },
     "User"
   );
   return response;

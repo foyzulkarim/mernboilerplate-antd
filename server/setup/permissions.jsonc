@@ -390,7 +390,7 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /users-new permission for superadmin
+  // /users/new permission for superadmin
   {
     "resourceName": "/users/new",
     "resourceAlias": "Users new",
@@ -420,7 +420,7 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /users-new permission for admin
+  // /users/new permission for admin
   {
     "resourceName": "/users/new",
     "resourceAlias": "Users new",
@@ -450,9 +450,9 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /roles-new permission for superadmin
+  // /roles/new permission for superadmin
   {
-    "resourceName": "/roles-new",
+    "resourceName": "/roles/new",
     "resourceAlias": "Roles new",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
@@ -480,9 +480,9 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /resources-new permission for superadmin
+  // /resources/new permission for superadmin
   {
-    "resourceName": "/resources-new",
+    "resourceName": "/resources/new",
     "resourceAlias": "Resources new",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
@@ -510,9 +510,9 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /permissions-new permission for superadmin
+  // /permissions/new permission for superadmin
   {
-    "resourceName": "/permissions-new",
+    "resourceName": "/permissions/new",
     "resourceAlias": "Permissions new",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
@@ -540,9 +540,9 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /products-new permission for user
+  // /products/new permission for user
   {
-    "resourceName": "/products-new",
+    "resourceName": "/products/new",
     "resourceAlias": "Products new",
     "roleName": "user",
     "roleAlias": "User",

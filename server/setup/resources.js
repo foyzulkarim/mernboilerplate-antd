@@ -2,9 +2,10 @@ const fs = require("fs");
 const parser = require("jsonc-parser");
 
 const dataStr = fs.readFileSync("./setup/resources.jsonc", "utf8");
-const { save, searchOne } = require("../src/modules/resource/service");
+const { save, searchOne } = require("../src/core/repository");
+const { name: model } = require("../src/modules/resource/model");
 
-const model = "Resource";
+// const model = "Resource";
 const seed = async (logger) => {
   const data = parser.parse(dataStr);
   await Promise.all(
