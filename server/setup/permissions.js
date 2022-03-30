@@ -3,11 +3,9 @@ const parser = require("jsonc-parser");
 
 const dataStr = fs.readFileSync("./setup/permissions.jsonc", "utf8");
 
-const {
-  save,
-  searchOne,
-  update,
-} = require("../src/modules/permission/service");
+const { save, searchOne, update } = require("../src/core/repository");
+const { name: permissionModel } = require("../src/modules/permission/model");
+const { name: resourceModel } = require("../src/modules/resource/model");
 
 const seed = async (logger) => {
   const data = parser.parse(dataStr);
@@ -18,13 +16,13 @@ const seed = async (logger) => {
       );
       const itemExists = await searchOne(
         { resourceName: item.resourceName, roleName: item.roleName },
-        "Permission"
+        permissionModel
       );
       if (!itemExists) {
         const role = await searchOne({ name: item.roleName }, "Role");
         const resource = await searchOne(
           { name: item.resourceName },
-          "Resource"
+          resourceModel
         );
         try {
           const savedItem = await save(
@@ -33,7 +31,7 @@ const seed = async (logger) => {
               roleId: role._id,
               resourceId: resource._id,
             },
-            "Permission"
+            permissionModel
           );
           logger.info(`Saved permission id: ${savedItem._id}`);
         } catch (error) {
@@ -42,7 +40,7 @@ const seed = async (logger) => {
       } else {
         const updatedItem = await update(
           { _id: itemExists._id, ...item },
-          "Permission"
+          permissionModel
         );
         logger.info(
           `Permission ${item.resourceName} for ${item.roleName} of id ${updatedItem._id} is updated`
