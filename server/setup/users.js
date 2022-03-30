@@ -4,6 +4,7 @@ const {
   createUser,
   searchOne,
   updateAll,
+  update,
 } = require("../src/modules/auth/service");
 
 const User = require("../src/modules/auth/model");
@@ -31,26 +32,41 @@ const seed = async (logger) => {
 
 const migrate = async (logger) => {
   logger.info("User starting");
-  const superadmin = await searchOne({ username: "superadmin" }, "User");
-  if (!superadmin) {
+  const superadminUser = await searchOne({ username: "superadmin" }, "User");
+  if (!superadminUser) {
     throw new Error("Superadmin user not found");
   }
 
-  const admin = await searchOne({ name: "admin" }, "Role");
-  if (!admin) {
+  const adminRole = await searchOne({ name: "admin" }, "Role");
+  if (!adminRole) {
     throw new Error("Admin role not found");
+  }
+
+  const superadminRole = await searchOne({ name: "superadmin" }, "Role");
+  if (!adminRole) {
+    throw new Error("Superadmin role not found");
   }
 
   const response = await updateAll(
     {},
     {
-      createdBy: superadmin._id,
-      updatedBy: superadmin._id,
-      roleId: admin._id,
-      roleAlias: admin.alias,
+      createdBy: superadminUser._id,
+      updatedBy: superadminUser._id,
+      roleId: adminRole._id,
+      roleAlias: adminRole.alias,
     },
     "User"
   );
+  logger.info(`Migrated ${response.nModified} users`);
+  const saUpdateResponse = await update(
+    {
+      ...superadminUser,
+      roleId: superadminRole._id,
+      roleAlias: superadminRole.alias,
+    },
+    "User"
+  );
+  logger.info(`Migrated superadmin user ${saUpdateResponse.nModified}`);
   return response;
 };
 
