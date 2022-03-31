@@ -51,7 +51,8 @@ userSchema.post("save", (error, doc, next) => {
   }
 });
 
-const User = mongoose.model("User", userSchema);
+const ModelName = "User";
+const User = mongoose.model(ModelName, userSchema);
 
 async function getPasswordHash(password) {
   const hash = await bcrypt.hash(password, 10);
@@ -75,4 +76,4 @@ User.setPassword = async (model, newPassword) => {
   return { passwordHash, ...model };
 };
 
-module.exports = User;
+module.exports = { Model: User, name: ModelName };

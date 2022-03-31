@@ -4,15 +4,13 @@ const { NotFound } = require("../../common/errors");
 const {
   save,
   getById,
-  update,
   searchOne,
   dynamicSearch,
   updateAll,
+  update,
 } = require("../../core/repository");
 
-const Model = require("./model");
-
-const ModelName = "User";
+const { Model, name: ModelName } = require("./model");
 
 const changePassword = async (user, newPassword) => {
   const id = user._id;
@@ -75,7 +73,7 @@ const tryCreateUser = async (user) => {
   return id;
 };
 
-const prepareQuery = (payload) => {
+const getQuery = (payload) => {
   const createdBySubQuery = {
     $or: [
       { createdBy: ObjectId(payload.userId) },
@@ -102,20 +100,6 @@ const prepareQuery = (payload) => {
   return query;
 };
 
-const search = async (payload) => {
-  const query = prepareQuery(payload);
-  const data = await Model.collection.find(query).skip(0).limit(20);
-  const items = { data: await data.toArray(), total: 200 };
-  return items;
-};
-
-const count = async (payload) => {
-  const query = prepareQuery(payload);
-  const t = await Model.collection.find(query).count();
-  const items = { total: t };
-  return items;
-};
-
 const searchPermissions = async (roleId) => {
   const permissions = await dynamicSearch(
     {
@@ -126,18 +110,6 @@ const searchPermissions = async (roleId) => {
   );
   return permissions;
 };
-
-// const searchClientPermissions = async (roleId) => {
-//   const clientResources = await dynamicSearch({ type: "client" }, "Resource");
-//   const permissions = await dynamicSearch(
-//     {
-//       roleId: ObjectId(roleId),
-//       isAllowed: true,
-//     },
-//     "Permission"
-//   );
-//   return permissions;
-// };
 
 const getPermittedUserById = async (id, userId) => {
   const user = await getById(id, ModelName);
@@ -154,16 +126,16 @@ const getPermittedUserById = async (id, userId) => {
 
 module.exports = {
   save,
-  update,
   getById: getPermittedUserById,
   searchOne,
   changePassword,
   checkUser,
   createUser,
   getByUsername,
-  search,
-  count,
   tryCreateUser,
   searchPermissions,
   updateAll,
+  update,
+  getQuery,
+  ModelName,
 };

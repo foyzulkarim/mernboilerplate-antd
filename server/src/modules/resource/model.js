@@ -6,6 +6,16 @@ const schema = new mongoose.Schema(
     name: { type: String, unique: true, required: true },
     alias: { type: String, unique: true, required: true },
     type: { type: String, required: true },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
   },
   { timestamps: true }
 );

@@ -11,6 +11,16 @@ const schema = new mongoose.Schema(
     size: { type: Number, required: true },
     manufacturingDate: { type: Date, required: true },
     expiryDate: { type: Date, required: true },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
   },
   { timestamps: true }
 );

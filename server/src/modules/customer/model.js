@@ -11,6 +11,16 @@ const customerSchema = new mongoose.Schema(
     state: { type: String, required: true },
     postcode: { type: String, required: true },
     country: { type: String, required: true },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
   },
   { timestamps: true }
 );

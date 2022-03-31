@@ -238,6 +238,120 @@
 
   // Admin users api permissions
 
+  // admin roles api permissions
+
+  // /api/roles/detail for Admin
+  {
+    "resourceName": "/api/roles/detail",
+    "resourceAlias": "Roles detail API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/create for Admin
+  {
+    "resourceName": "/api/roles/create",
+    "resourceAlias": "Roles create API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/update for Admin
+  {
+    "resourceName": "/api/roles/update",
+    "resourceAlias": "Roles update API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/search for Admin
+  {
+    "resourceName": "/api/roles/search",
+    "resourceAlias": "Roles search API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/count for Admin
+  {
+    "resourceName": "/api/roles/count",
+    "resourceAlias": "Roles count API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/roles/delete for Admin
+  {
+    "resourceName": "/api/roles/delete",
+    "resourceAlias": "Roles delete API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // admin permissions api permissions
+
+  // /api/permissions/detail for Admin
+  {
+    "resourceName": "/api/permissions/detail",
+    "resourceAlias": "Permissions detail API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/create for Admin
+  {
+    "resourceName": "/api/permissions/create",
+    "resourceAlias": "Permissions create API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/update for admin
+  {
+    "resourceName": "/api/permissions/update",
+    "resourceAlias": "Permissions update API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/search for admin
+  {
+    "resourceName": "/api/permissions/search",
+    "resourceAlias": "Permissions search API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/count for admin
+  {
+    "resourceName": "/api/permissions/count",
+    "resourceAlias": "Permissions count API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/delete for admin
+  {
+    "resourceName": "/api/permissions/delete",
+    "resourceAlias": "Permissions delete API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
   // /api/users/detail for admin
   {
     "resourceName": "/api/users/detail",
@@ -301,7 +415,7 @@
     "isAllowed": true,
     "isDisabled": false
   },
-  // /api/roles/search for superadmin
+  // /api/roles/search for admin
   {
     "resourceName": "/api/roles/search",
     "resourceAlias": "Roles search API",
@@ -460,6 +574,36 @@
     "isDisabled": false
   },
 
+  // admin permissions for roles pages
+
+  // /roles permissions for admin
+  {
+    "resourceName": "/roles",
+    "resourceAlias": "Roles menu",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /roles/list permissions for admin
+  {
+    "resourceName": "/roles/list",
+    "resourceAlias": "Roles list",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /roles/new permission for admin
+  {
+    "resourceName": "/roles/new",
+    "resourceAlias": "Roles new",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
   // superadmin permissions for resources pages
 
   // /resources permissions for superadmin
@@ -516,6 +660,36 @@
     "resourceAlias": "Permissions new",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // admin permissions for permissions pages
+
+  // /permissions permissions for admin
+  {
+    "resourceName": "/permissions",
+    "resourceAlias": "Permissions menu",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /permissions/list permissions for admin
+  {
+    "resourceName": "/permissions/list",
+    "resourceAlias": "Permissions list",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /permissions/new permission for admin
+  {
+    "resourceName": "/permissions/new",
+    "resourceAlias": "Permissions new",
+    "roleName": "admin",
+    "roleAlias": "Admin",
     "isAllowed": true,
     "isDisabled": false
   },

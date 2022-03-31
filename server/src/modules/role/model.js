@@ -8,6 +8,16 @@ const schema = new mongoose.Schema(
     isAdmin: { type: Boolean },
     alias: { type: String, unique: true, required: true },
     permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Permission" }],
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: "000000000000",
+    },
   },
   { timestamps: true }
 );

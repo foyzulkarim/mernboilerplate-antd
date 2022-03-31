@@ -3,7 +3,12 @@ const parser = require("jsonc-parser");
 
 const dataStr = fs.readFileSync("./setup/permissions.jsonc", "utf8");
 
-const { save, searchOne, update } = require("../src/core/repository");
+const {
+  save,
+  searchOne,
+  update,
+  updateAll,
+} = require("../src/core/repository");
 const { name: permissionModel } = require("../src/modules/permission/model");
 const { name: resourceModel } = require("../src/modules/resource/model");
 
@@ -51,4 +56,22 @@ const seed = async (logger) => {
   logger.info(`Seeding users finished`);
 };
 
-module.exports = { seed };
+const migrate = async (logger) => {
+  logger.info(`Starting migration of permissions`);
+  const superadminUser = await searchOne({ username: "superadmin" }, "User");
+  if (!superadminUser) {
+    throw new Error("Superadmin user not found");
+  }
+
+  await updateAll(
+    {},
+    {
+      createdBy: superadminUser._id,
+      updatedBy: superadminUser._id,
+    },
+    permissionModel
+  );
+  logger.info(`Migration of permissions finished`);
+};
+
+module.exports = { seed, migrate };

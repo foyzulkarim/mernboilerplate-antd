@@ -1,52 +1,19 @@
 /* eslint-disable no-undef */
 const express = require("express");
+const { tryCreateUser, searchOne, getQuery, ModelName } = require("./service");
 const {
-  update,
-  deleteById,
-  getById,
-  search,
-  count,
-  tryCreateUser,
-  searchOne,
-} = require("./service");
+  getByIdHandler,
+  updateHandler,
+  searchHandler: baseSearchHandler,
+  countHandler: baseCountHandler,
+  deleteHandler,
+} = require("../../core/controller");
 const { validateUserUpdate, validateUserCreate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
-const { NotFound } = require("../../common/errors");
 
 const router = express.Router();
-const ModelName = "User";
 
-const getHandler = async (req, res, next) => {
-  try {
-    const items = [
-      { id: 1, name: "User 1" },
-      { id: 2, name: "User 2" },
-    ];
-    const result = {
-      data: items,
-      total: items.length,
-      success: true,
-    };
-    return res.status(200).send(result);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const getByIdHandler = async (req, res, next) => {
-  try {
-    const { id } = req.query;
-    const item = await getById(id, req.user.id);
-    if (item) {
-      return res.status(200).send(item);
-    }
-    throw new NotFound(`${ModelName} not found by the id: ${id}`);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const postHandler = async (req, res, next) => {
+const saveHandler = async (req, res, next) => {
   try {
     const user = req.body;
     const id = await tryCreateUser(user);
@@ -65,53 +32,15 @@ const postHandler = async (req, res, next) => {
 };
 
 const searchHandler = async (req, res, next) => {
-  try {
-    if (!req.body.pageSize) {
-      req.body.pageSize = 10;
-    }
-    if (!req.body.current) {
-      req.body.current = 1;
-    }
-    const query = { ...req.body, userId: req.user.id };
-    const result = await search(query);
-    const response = { success: true, ...result };
-    return res.status(200).send(response);
-  } catch (error) {
-    return next(error, req, res);
-  }
+  const query = { ...req.body, userId: req.user.id };
+  req.searchQuery = getQuery(query);
+  return baseSearchHandler(req, res, next);
 };
 
 const countHandler = async (req, res, next) => {
-  try {
-    const query = { ...req.body, userId: req.user.id };
-    const result = await count(query);
-    const response = { success: true, ...result };
-    return res.status(200).send(response);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const putHandler = async (req, res, next) => {
-  try {
-    const { body } = req;
-    const id = await update(body, ModelName);
-    return res.status(200).send(id);
-  } catch (error) {
-    return next(error, req, res);
-  }
-};
-
-const deleteHandler = async (req, res, next) => {
-  try {
-    const { id } = req.query;
-    await deleteById(id, ModelName);
-    return res
-      .status(200)
-      .send({ success: true, message: `${ModelName} deleted` });
-  } catch (error) {
-    return next(error, req, res);
-  }
+  const query = { ...req.body, userId: req.user.id };
+  req.searchQuery = getQuery(query);
+  return baseCountHandler(req, res, next);
 };
 
 const checkUserHandler = async (req, res) => {
@@ -124,10 +53,9 @@ const checkUserHandler = async (req, res) => {
   return res.status(200).send({ status: "error", message: "User not found" });
 };
 
-router.get("/", getHandler);
 router.get("/detail", getByIdHandler);
-router.post("/create", handleValidation(validateUserCreate), postHandler);
-router.put("/update", handleValidation(validateUserUpdate), putHandler);
+router.post("/create", handleValidation(validateUserCreate), saveHandler);
+router.put("/update", handleValidation(validateUserUpdate), updateHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
 router.delete("/delete", deleteHandler);
