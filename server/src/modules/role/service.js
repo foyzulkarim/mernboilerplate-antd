@@ -1,12 +1,20 @@
+const { ObjectId } = require("mongoose").Types;
 const { name } = require("./model");
 
 const getQuery = (payload) => {
-  let query = {};
+  const createdBySubQuery = { createdBy: ObjectId(payload.userId) };
+
+  let query = createdBySubQuery;
   if (payload.name) {
     query = {
-      $or: [
-        { name: { $regex: payload.name, $options: "i" } },
-        { alias: { $regex: payload.name, $options: "i" } },
+      $and: [
+        createdBySubQuery,
+        {
+          $or: [
+            { name: { $regex: payload.name, $options: "i" } },
+            { alias: { $regex: payload.name, $options: "i" } },
+          ],
+        },
       ],
     };
   }

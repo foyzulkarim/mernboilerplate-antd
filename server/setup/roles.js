@@ -20,13 +20,13 @@ const seed = async (logger) => {
 
 const migrate = async (logger) => {
   logger.info(`Starting migration of ${modelName}`);
-  const superadminUser = await searchOne({ name: "superadmin" }, modelName);
+  const superadminUser = await searchOne({ username: "superadmin" }, "User");
   if (!superadminUser) {
     throw new Error(`Superadmin user not found`);
   }
 
   await updateAll(
-    {},
+    { createdBy: { $exists: false } },
     {
       createdBy: superadminUser._id,
       updatedBy: superadminUser._id,

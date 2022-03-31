@@ -30,7 +30,17 @@ const EntryForm = (props) => {
 
   const onFinish = async (values) => {
     console.log(values, form);
-    run(values);
+    //  run(values);
+    const result = await save(values);
+    console.log(result);
+
+    if (result instanceof Error) {
+      message.error(result.message);
+    }
+    else {
+      message.success(result.message);
+      form.resetFields();
+    }
   };
 
   return (

@@ -14,12 +14,12 @@ const { handleValidation } = require("../../common/middlewares");
 const router = express.Router();
 
 const searchHandler = async (req, res, next) => {
-  req.searchQuery = getQuery(req.body);
+  req.searchQuery = getQuery({ ...req.body, userId: req.user.id });
   return baseSearchHandler(req, res, next);
 };
 
 const countHandler = async (req, res, next) => {
-  req.searchQuery = getQuery(req.body);
+  req.searchQuery = getQuery({ ...req.body, userId: req.user.id });
   return baseCountHandler(req, res, next);
 };
 

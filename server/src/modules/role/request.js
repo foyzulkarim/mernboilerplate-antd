@@ -6,9 +6,15 @@ const schema = Joi.object().keys({
   alias: Joi.string().required(),
 });
 
-const validate = (data) => {
+const validate = (data, user) => {
   const result = schema.validate(data);
-  result.value = { isSuperAdmin: false, isAdmin: false, ...data };
+  result.value = {
+    ...data,
+    isSuperAdmin: false,
+    isAdmin: false,
+    createdBy: user.id,
+    updatedBy: user.id,
+  };
   return result;
 };
 

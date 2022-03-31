@@ -291,6 +291,17 @@
     "resourceAlias": "Roles delete API",
     "roleName": "admin",
     "roleAlias": "Admin",
+    "isAllowed": false,
+    "isDisabled": false
+  },
+
+  // admin permissions for resources
+  // /api/resources/search for admin
+  {
+    "resourceName": "/api/resources/search",
+    "resourceAlias": "Resources search API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
     "isAllowed": true,
     "isDisabled": false
   },
@@ -348,7 +359,7 @@
     "resourceAlias": "Permissions delete API",
     "roleName": "admin",
     "roleAlias": "Admin",
-    "isAllowed": true,
+    "isAllowed": false,
     "isDisabled": false
   },
 
@@ -724,6 +735,7 @@
     "isDisabled": false
   },
 
+  // user list delete button
   {
     "resourceName": "user-list-delete-btn",
     "resourceAlias": "Delete user button",
@@ -735,6 +747,42 @@
   {
     "resourceName": "user-list-delete-btn",
     "resourceAlias": "Delete user button",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // role list delete button
+  {
+    "resourceName": "role-list-delete-btn",
+    "resourceAlias": "Delete role button",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": true
+  },
+  {
+    "resourceName": "role-list-delete-btn",
+    "resourceAlias": "Delete role button",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+
+  // permission list delete button
+  {
+    "resourceName": "permission-list-delete-btn",
+    "resourceAlias": "Delete permission button",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": true
+  },
+  {
+    "resourceName": "permission-list-delete-btn",
+    "resourceAlias": "Delete permission button",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
     "isAllowed": true,
