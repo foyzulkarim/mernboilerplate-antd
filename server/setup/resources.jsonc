@@ -345,5 +345,15 @@
     "name": "user-list-delete-btn",
     "alias": "User list delete button",
     "type": "client"
+  },
+  {
+    "name": "role-list-delete-btn",
+    "alias": "Role list delete button",
+    "type": "client"
+  },
+  {
+    "name": "permission-list-delete-btn",
+    "alias": "Permission list delete button",
+    "type": "client"
   }
 ]

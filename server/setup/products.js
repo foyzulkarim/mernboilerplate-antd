@@ -1,5 +1,6 @@
 const faker = require("faker");
-const { save } = require("../src/modules/product/service");
+const { save } = require("../src/core/repository");
+const { name: ModelName } = require("../src/modules/product/model");
 
 const getFakeUniqueProductName = () =>
   faker.fake("{{commerce.productName}} {{datatype.uuid}}");
@@ -26,7 +27,7 @@ const seed = async (logger) => {
 
   await Promise.all(
     products.map(async (product) => {
-      const savedProduct = await save(product, "Product");
+      const savedProduct = await save(product, ModelName);
       logger.info(`Saved product id: ${savedProduct._id}`);
     })
   );
