@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose").Types;
 const data = require("./roles.json");
 const { save, searchOne, updateAll } = require("../src/core/repository");
 const { modelName } = require("../src/modules/role/service");
@@ -26,7 +27,12 @@ const migrate = async (logger) => {
   }
 
   await updateAll(
-    { createdBy: { $exists: false } },
+    {
+      $or: [
+        { createdBy: { $exists: false } },
+        { createdBy: ObjectId("303030303030303030303030") },
+      ],
+    },
     {
       createdBy: superadminUser._id,
       updatedBy: superadminUser._id,

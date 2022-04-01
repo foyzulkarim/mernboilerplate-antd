@@ -48,7 +48,8 @@ const migrate = async (logger) => {
   }
 
   const response = await updateAll(
-    { createdBy: { $exists: false } },
+    // { createdBy: { $exists: false } },
+    {},
     {
       createdBy: superadminUser._id,
       updatedBy: superadminUser._id,
@@ -63,6 +64,8 @@ const migrate = async (logger) => {
       ...superadminUser,
       roleId: superadminRole._id,
       roleAlias: superadminRole.alias,
+      createdBy: superadminUser._id,
+      updatedBy: superadminUser._id,
     },
     "User"
   );

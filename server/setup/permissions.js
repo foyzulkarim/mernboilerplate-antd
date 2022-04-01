@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose").Types;
 const fs = require("fs");
 const parser = require("jsonc-parser");
 
@@ -64,7 +65,12 @@ const migrate = async (logger) => {
   }
 
   await updateAll(
-    { createdBy: { $exists: false } },
+    {
+      $or: [
+        { createdBy: { $exists: false } },
+        { createdBy: ObjectId("303030303030303030303030") },
+      ],
+    },
     {
       createdBy: superadminUser._id,
       updatedBy: superadminUser._id,
