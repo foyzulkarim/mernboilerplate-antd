@@ -3,8 +3,51 @@ import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal }
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { history } from 'umi';
+import { history, useAccess } from 'umi';
 import { count, search, remove } from '../service';
+
+const DeleteButton = (props) => {
+
+  const { confirm } = Modal;
+  const { elementId } = props;
+
+  const showDeleteConfirm = (item) => {
+    confirm({
+      title: `Do you Want to delete ${item.name}?`,
+      icon: <ExclamationCircleOutlined />,
+      content: `${item.name} will be deleted permanently.`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        console.log('OK');
+        const r = await remove(item._id);
+        if (r.success) {
+          message.success(r.message);
+          setFetchRoles(true);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  const access = useAccess();
+  const isVisible = access.canShow(elementId);
+  if (isVisible) {
+    const isDisabled = access.isDisabled(elementId);
+    return isDisabled ? <span>Delete</span> : <a
+      key="config"
+      onClick={() => {
+        showDeleteConfirm(props.record);
+      }}
+    >
+      Delete
+    </a>;
+  }
+  return null;
+}
 
 
 const TableList = () => {
@@ -34,28 +77,6 @@ const TableList = () => {
       message.error(ex.data.errorMessage);
       return false;
     }
-  };
-
-  const showDeleteConfirm = (product) => {
-    confirm({
-      title: `Do you Want to delete ${product.name}?`,
-      icon: <ExclamationCircleOutlined />,
-      content: `${product.name} will be deleted permanently.`,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        console.log('OK');
-        const r = await remove(product._id);
-        if (r.success) {
-          message.success(r.message);
-          setFetchRoles(true);
-        }
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
   };
 
   const fetchRoleCount = async () => {
@@ -124,14 +145,7 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            showDeleteConfirm(record);
-          }}
-        >
-          Delete
-        </a>,
+        <DeleteButton key="delete" record={record} elementId='user-list-delete-btn' />,
       ],
     },
   ];

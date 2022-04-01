@@ -12,9 +12,13 @@ const schema = Joi.object().keys({
   isDisabled: Joi.bool().required(),
 });
 
-const validate = (data) => {
+const validate = (data, user) => {
   const result = schema.validate(data);
-  result.value = data;
+  result.value = {
+    ...data,
+    createdBy: user.id,
+    updatedBy: user.id,
+  };
   return result;
 };
 

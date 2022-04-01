@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Card, message } from 'antd';
+import { Form, Card, message, AutoComplete } from 'antd';
 import ProForm, {
   ProFormCheckbox,
   ProFormSelect,
@@ -12,6 +12,7 @@ const EntryForm = (props) => {
   const [form] = Form.useForm();
   const [role, setRole] = React.useState(null);
   const [resource, setResource] = React.useState(null);
+  const [resources, setResources] = React.useState([]);
 
   // get roles 
   const fetchRoles = async () => {
@@ -24,6 +25,7 @@ const EntryForm = (props) => {
   const fetchResources = async () => {
     const result = await getResources();
     const options = result.data.map(r => ({ label: r.alias, value: r._id, resource: r }));
+    setResources(options);
     return options;
   };
 

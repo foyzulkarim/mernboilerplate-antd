@@ -1,5 +1,5 @@
 const data = require("./roles.json");
-const { save, searchOne } = require("../src/core/repository");
+const { save, searchOne, updateAll } = require("../src/core/repository");
 const { modelName } = require("../src/modules/role/service");
 
 const seed = async (logger) => {
@@ -18,4 +18,22 @@ const seed = async (logger) => {
   logger.info(`Seeding ${modelName} finished`);
 };
 
-module.exports = { seed };
+const migrate = async (logger) => {
+  logger.info(`Starting migration of ${modelName}`);
+  const superadminUser = await searchOne({ username: "superadmin" }, "User");
+  if (!superadminUser) {
+    throw new Error(`Superadmin user not found`);
+  }
+
+  await updateAll(
+    { createdBy: { $exists: false } },
+    {
+      createdBy: superadminUser._id,
+      updatedBy: superadminUser._id,
+    },
+    modelName
+  );
+  logger.info(`Migration of ${modelName} finished`);
+};
+
+module.exports = { seed, migrate };

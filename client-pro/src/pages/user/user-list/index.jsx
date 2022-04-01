@@ -9,6 +9,7 @@ import { count, search, remove } from '../service';
 const DeleteButton = (props) => {
 
   const { confirm } = Modal;
+  const { elementId } = props;
 
   const showDeleteConfirm = (product) => {
     confirm({
@@ -33,9 +34,9 @@ const DeleteButton = (props) => {
   };
 
   const access = useAccess();
-  const isVisible = access.canShow('user-list-delete-btn');
+  const isVisible = access.canShow(elementId);
   if (isVisible) {
-    const isDisabled = access.isDisabled('user-list-delete-btn');
+    const isDisabled = access.isDisabled(elementId);
     return isDisabled ? <span>Delete</span> : <a
       key="config"
       onClick={() => {
@@ -147,7 +148,7 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <DeleteButton key="delete" record={record} />,
+        <DeleteButton key="delete" record={record} elementId='user-list-delete-btn' />,
       ],
     },
   ];

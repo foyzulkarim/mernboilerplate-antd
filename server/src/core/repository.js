@@ -82,6 +82,16 @@ const search = async (payload, query, modelName) => {
   return data;
 };
 
+const getDropdownData = async (query, project, modelName) => {
+  const data = await mongoose.models[modelName]
+    .find(query)
+    .select(project)
+    .sort(project)
+    .lean()
+    .exec();
+  return data;
+};
+
 module.exports = {
   save,
   update,
@@ -93,4 +103,5 @@ module.exports = {
   getSortClause,
   count,
   search,
+  getDropdownData,
 };

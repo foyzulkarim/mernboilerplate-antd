@@ -3,6 +3,9 @@ require("dotenv").config();
 const logger = require("../src/core/logger");
 
 const { migrate: userMigrate } = require("./users");
+const { migrate: resourceMigrate } = require("./resources");
+const { migrate: roleMigrate } = require("./roles");
+const { migrate: permissionMigrate } = require("./permissions");
 
 logger.info("Migration starting");
 const isMongoDbUrl = JSON.parse(
@@ -18,6 +21,9 @@ const migrate = async () => {
   await mongoose.connect(uri, options);
   logger.info("Connected to MongoDB");
   await userMigrate(logger);
+  await resourceMigrate(logger);
+  await roleMigrate(logger);
+  await permissionMigrate(logger);
   logger.info(`Migration finished`);
   process.exit(0);
 };

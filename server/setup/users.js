@@ -48,7 +48,7 @@ const migrate = async (logger) => {
   }
 
   const response = await updateAll(
-    {},
+    { createdBy: { $exists: false } },
     {
       createdBy: superadminUser._id,
       updatedBy: superadminUser._id,
