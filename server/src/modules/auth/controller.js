@@ -126,12 +126,14 @@ const forgotPasswordHandler = async (req, res) => {
     if (user) {
       const newPassword = "a123"; // we will replace this and set from random string when we have the email service
       await changePassword(user, newPassword);
-      res.status(200).send("Password changed successfully");
-      return;
+      return res.status(200).send("Password changed successfully");
     }
   }
 
-  res.status(400).send("Invalid email");
+  return res.status(400).send({
+    status: "error",
+    message: "Email address not found.",
+  });
 };
 
 const checkUsernameHandler = async (req, res) => {
@@ -155,7 +157,7 @@ router.post(
   createUserHandler
 );
 router.post("/login", loginHandler);
-router.post("/forgotPassword", forgotPasswordHandler);
+router.post("/forgot-password", forgotPasswordHandler);
 router.post(
   "/check-username",
   handleValidation(validateUsername),

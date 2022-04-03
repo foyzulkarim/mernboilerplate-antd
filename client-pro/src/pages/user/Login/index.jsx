@@ -1,18 +1,13 @@
 import {
-  AlipayCircleOutlined,
   LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from '@ant-design/icons';
-import { Alert, Space, message, Tabs, Button } from 'antd';
+import { Alert, message, Tabs, Button } from 'antd';
 import React, { useState } from 'react';
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
+import ProForm, { ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import { useIntl, Link, history, FormattedMessage, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from './service';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
@@ -208,13 +203,13 @@ const Login = () => {
               <ProFormCheckbox noStyle name="autoLogin">
                 <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
               </ProFormCheckbox>
-              <a
-                style={{
-                  float: 'right',
-                }}
-              >
+
+              <Link to="/user/forgotpassword" style={{
+                float: 'right',
+              }}>
                 <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
-              </a>
+              </Link>
+
             </div>
           </ProForm>
 

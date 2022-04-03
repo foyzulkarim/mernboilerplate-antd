@@ -67,4 +67,8 @@ export default {
   'pages.searchTable.tenThousand': '0000',
   'pages.searchTable.batchDeletion': 'bacth deletion',
   'pages.searchTable.batchApproval': 'batch approval',
+  'pages.form.submit': 'Submit',
+  'pages.form.email.placeholder': 'Please enter your email address',
+  'pages.form.email.required': 'Please enter your email address!',
+  'pages.form.email.type': 'Please enter a valid email address!',
 };
