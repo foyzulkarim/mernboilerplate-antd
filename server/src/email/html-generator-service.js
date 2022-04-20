@@ -1,4 +1,5 @@
 const getPasswordResetHtml = (token) => {
+    const passwordResetURL = `${process.env.FRONTEND_URL}/user/resetpassword?token=${token}`;
     const html = `
   <!DOCTYPE html>
   <html>
@@ -150,7 +151,7 @@ const getPasswordResetHtml = (token) => {
                       <table border="0" cellpadding="0" cellspacing="0">
                         <tr>
                           <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                            <a href="http://localhost:8000/reset-password?token=${token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset password</a>
+                            <a href="${passwordResetURL}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset password</a>
                           </td>
                         </tr>
                       </table>
@@ -165,7 +166,7 @@ const getPasswordResetHtml = (token) => {
             <tr>
               <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
                 <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-                <p style="margin: 0;"><a href="http://localhost:8000/reset-password?token=${token}" target="_blank">http://localhost:8000/reset-password?token=${token}</a></p>
+                <p style="margin: 0;"><a href="${passwordResetURL}" target="_blank">${passwordResetURL}</a></p>
               </td>
             </tr>
             <!-- end copy -->

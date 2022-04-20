@@ -174,6 +174,30 @@ router.post(
 );
 router.post("/login", loginHandler);
 router.post("/forgot-password", forgotPasswordHandler);
+router.post("/verify-token", async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await searchOne({ _id: decoded.id }, modelName);
+      if (user) {
+        return res
+          .status(200)
+          .send({ status: "ok", message: "Token verified" });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid token",
+      });
+    }
+  }
+  return res.status(400).send({
+    status: "error",
+    message: "Invalid token",
+  });
+});
+
 router.post(
   "/check-username",
   handleValidation(validateUsername),

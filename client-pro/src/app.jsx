@@ -8,6 +8,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 const registerPath = '/user/register';
 const forgotpasswordPath = '/user/forgotpassword';
+const resetpasswordPath = '/user/resetpassword';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
 export const initialStateConfig = {
@@ -59,8 +60,8 @@ export const layout = ({ initialState }) => {
       console.log('onPageChange', location.pathname, initialState);
 
       if (!authStr || (JSON.parse(authStr).isAuthenticated) === false) {
-        if (location.pathname === loginPath || location.pathname === registerPath || location.pathname === forgotpasswordPath) {
-          history.push(location.pathname);
+        if (location.pathname === loginPath || location.pathname === registerPath || location.pathname === forgotpasswordPath || location.pathname === resetpasswordPath) {
+          history.push(location);
         }
         else history.push(loginPath);
       }

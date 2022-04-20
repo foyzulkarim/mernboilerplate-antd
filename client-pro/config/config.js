@@ -67,6 +67,12 @@ export default defineConfig({
           component: './user/forgotpassword',
         },
         {
+          path: '/user/resetpassword',
+          layout: false,
+          name: 'resetpassword',
+          component: './user/resetpassword',
+        },
+        {
           component: '404',
         },
       ],
