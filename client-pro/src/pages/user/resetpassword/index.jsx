@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { LockOutlined, MailOutlined, } from '@ant-design/icons';
-import { Form, message, Input, Button, Popover } from 'antd';
+import { Form, message, Input, Button, Popover, Progress } from 'antd';
 import Footer from '@/components/Footer';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import { forgotPassword, verifyToken } from './service';
 import styles from './index.less';
 
 const FormItem = Form.Item;
+
+const passwordStatusMap = {
+    ok: (
+        <div className={styles.success}>
+            <span>Strength: strong</span>
+        </div>
+    ),
+    pass: (
+        <div className={styles.warning}>
+            <span>Strength: Medium</span>
+        </div>
+    ),
+    poor: (
+        <div className={styles.error}>
+            <span>Strength: too short</span>
+        </div>
+    ),
+};
+const passwordProgressMap = {
+    ok: 'success',
+    pass: 'normal',
+    poor: 'exception',
+};
 
 const Resetpassword = (props) => {
 
@@ -30,6 +53,36 @@ const Resetpassword = (props) => {
             history.push('/user/login');
         });
     }, []);
+
+    const getPasswordStatus = () => {
+        const value = form.getFieldValue('password');
+
+        if (value && value.length > 9) {
+            return 'ok';
+        }
+
+        if (value && value.length > 5) {
+            return 'pass';
+        }
+
+        return 'poor';
+    };
+
+    const renderPasswordProgress = () => {
+        const value = form.getFieldValue('password');
+        const passwordStatus = getPasswordStatus();
+        return value && value.length ? (
+            <div className={styles[`progress-${passwordStatus}`]}>
+                <Progress
+                    status={passwordProgressMap[passwordStatus]}
+                    className={styles.progress}
+                    strokeWidth={6}
+                    percent={value.length * 10 > 100 ? 100 : value.length * 10}
+                    showInfo={false}
+                />
+            </div>
+        ) : null;
+    };
 
     const checkPassword = (_, value) => {
         const promise = Promise; // 没有值的情况
