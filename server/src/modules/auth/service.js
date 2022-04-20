@@ -25,6 +25,8 @@ const changePassword = async (user, newPassword) => {
   throw new NotFound(`User not found by the id: ${id}`);
 };
 
+
+
 const getByUsername = async (username) => {
   const item = await Model.findOne({ username }).lean();
   if (item) {

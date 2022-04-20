@@ -2,13 +2,14 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const { handleValidation } = require("../../common/middlewares");
+const { sendEmail } = require("../../email/sendgrid-service");
 const { validateRegistration, validateUsername } = require("./request");
 const {
   checkUser,
   searchOne,
-  changePassword,
   tryCreateUser,
   searchPermissions,
+  update,
 } = require("./service");
 
 const router = express.Router();
@@ -124,8 +125,23 @@ const forgotPasswordHandler = async (req, res) => {
   if (req.body.email) {
     const user = await searchOne({ email: req.body.email }, modelName);
     if (user) {
-      const newPassword = "a123"; // we will replace this and set from random string when we have the email service
-      await changePassword(user, newPassword);
+      const token = jwt.sign(
+        {
+          id: user._id,
+          exp:
+            Math.floor(Date.now() / 1000) +
+            parseInt(process.env.JWT_EXPIRES_IN, 10),
+        },
+        process.env.JWT_SECRET
+      );
+      // await changePassword(user, newPassword);
+      user.passwordResetToken = token;
+      await update(user, modelName);
+      await sendEmail(
+        "foyzulkarim@gmail.com",
+        "BizBook365 Password reset",
+        token
+      );
       return res.status(200).send("Password changed successfully");
     }
   }
