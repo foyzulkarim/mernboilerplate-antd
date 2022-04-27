@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const { ObjectId } = require("mongoose").Types;
 const { handleValidation } = require("../../common/middlewares");
-const { sendEmail } = require("../../email/sendgrid-service");
+const {
+  sendPasswordResetEmail,
+  sendPasswordResetSuccessfulEmail,
+} = require("../../email/sendgrid-service");
 const { validateRegistration, validateUsername } = require("./request");
 const {
   checkUser,
@@ -138,8 +141,8 @@ const forgotPasswordHandler = async (req, res) => {
       );
       user.passwordResetToken = token;
       await update(user, modelName);
-      await sendEmail(
-        "foyzulkarim@gmail.com",
+      await sendPasswordResetEmail(
+        req.body.email,
         "BizBook365 Password reset",
         token
       );
@@ -210,6 +213,10 @@ const resetPasswordHandler = async (req, res) => {
         const tokenValid = token === user.passwordResetToken;
         if (tokenValid) {
           await changePassword(user, password);
+          await sendPasswordResetSuccessfulEmail(
+            user.email,
+            "BizBook365 Password reset successful"
+          );
           return res
             .status(200)
             .send({ status: "ok", message: "Password changed successfully" });
