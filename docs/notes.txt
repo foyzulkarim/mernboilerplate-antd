@@ -1,1 +1,3 @@
 https://umijs.org/plugins/plugin-request
+
+sudo chmod 666 /var/run/docker.sock
