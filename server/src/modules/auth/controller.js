@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const { ObjectId } = require("mongoose").Types;
 const { handleValidation } = require("../../common/middlewares");
 const { sendEmail } = require("../../email/sendgrid-service");
 const { validateRegistration, validateUsername } = require("./request");
@@ -10,6 +11,7 @@ const {
   tryCreateUser,
   searchPermissions,
   update,
+  changePassword,
 } = require("./service");
 
 const router = express.Router();
@@ -134,7 +136,6 @@ const forgotPasswordHandler = async (req, res) => {
         },
         process.env.JWT_SECRET
       );
-      // await changePassword(user, newPassword);
       user.passwordResetToken = token;
       await update(user, modelName);
       await sendEmail(
@@ -142,7 +143,9 @@ const forgotPasswordHandler = async (req, res) => {
         "BizBook365 Password reset",
         token
       );
-      return res.status(200).send("Password changed successfully");
+      return res
+        .status(200)
+        .send({ status: "ok", message: "Email sent successfully" });
     }
   }
 
@@ -167,23 +170,22 @@ const checkUsernameHandler = async (req, res) => {
     .send({ status: "available", message: "Username is available" });
 };
 
-router.post(
-  "/register",
-  handleValidation(validateRegistration),
-  createUserHandler
-);
-router.post("/login", loginHandler);
-router.post("/forgot-password", forgotPasswordHandler);
-router.post("/verify-token", async (req, res) => {
+const verifyTokenHandler = async (req, res) => {
   const { token } = req.body;
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await searchOne({ _id: decoded.id }, modelName);
       if (user) {
+        const tokenValid = token === user.passwordResetToken;
+        if (tokenValid) {
+          return res
+            .status(200)
+            .send({ status: "ok", message: "Token verified" });
+        }
         return res
-          .status(200)
-          .send({ status: "ok", message: "Token verified" });
+          .status(400)
+          .send({ status: "error", message: "Token invalid" });
       }
     } catch (error) {
       return res.status(400).send({
@@ -196,7 +198,48 @@ router.post("/verify-token", async (req, res) => {
     status: "error",
     message: "Invalid token",
   });
-});
+};
+
+const resetPasswordHandler = async (req, res) => {
+  const { token, password } = req.body;
+  if (token && password) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await searchOne({ _id: ObjectId(decoded.id) }, modelName);
+      if (user) {
+        const tokenValid = token === user.passwordResetToken;
+        if (tokenValid) {
+          await changePassword(user, password);
+          return res
+            .status(200)
+            .send({ status: "ok", message: "Password changed successfully" });
+        }
+        return res
+          .status(400)
+          .send({ status: "error", message: "Token invalid" });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid token",
+      });
+    }
+  }
+  return res.status(400).send({
+    status: "error",
+    message: "Invalid token",
+  });
+};
+
+router.post(
+  "/register",
+  handleValidation(validateRegistration),
+  createUserHandler
+);
+router.post("/login", loginHandler);
+router.post("/forgot-password", forgotPasswordHandler);
+router.post("/verify-token", verifyTokenHandler);
+router.post("/reset-password", resetPasswordHandler);
 
 router.post(
   "/check-username",

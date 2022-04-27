@@ -8,9 +8,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage=true",
-    "start:pm2": "pm2 start ./src/server.js --watch",
-    "restart:pm2": "pm2 restart ./src/server.js",
-    "stop:pm2": "pm2 stop ./src/server.js",
+    "pm2:start": "pm2 start ./src/server.js --watch",
+    "pm2:restart": "pm2 restart ./src/server.js",
+    "pm2:stop": "pm2 stop ./src/server.js",
+    "pm2:logs": "pm2 logs",
     "start": "nodemon ./src/server.js | pino-pretty -c -L",
     "db:up": "docker-compose -f ./db.yml up",
     "db:seed": "node ./setup/seed.js",

@@ -4,7 +4,7 @@ import { LockOutlined, MailOutlined, } from '@ant-design/icons';
 import { Form, message, Input, Button, Popover, Progress } from 'antd';
 import Footer from '@/components/Footer';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
-import { forgotPassword, verifyToken } from './service';
+import { forgotPassword, verifyToken, resetPassword } from './service';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -39,19 +39,23 @@ const Resetpassword = (props) => {
     const [submitting, setSubmitting] = useState(false);
     const [token, setToken] = useState('');
     const [visible, setVisible] = useState(false);
+    const [popover, setPopover] = useState(false);
+    const confirmDirty = false;
 
     useEffect(() => {
         const { token } = props.location.query;
         console.log('token', token);
-        verifyToken({ token }).then((r) => {
-            console.log('verified', r);
-            setToken(token);
-        }
-        ).catch((e) => {
-            console.log('error', e);
-            message.error('Token is invalid');
-            history.push('/user/login');
-        });
+        const verify = async () => {
+            const result = await verifyToken({ token });
+            if (result instanceof Error) {
+                message.error(result.message);
+                history.push('/user/login');
+            }
+            else {
+                setToken(token);
+            }
+        };
+        verify();
     }, []);
 
     const getPasswordStatus = () => {
@@ -121,7 +125,7 @@ const Resetpassword = (props) => {
 
     const handleSubmit = async (values) => {
         console.log('values', values);
-        const result = await forgotPassword(values);
+        const result = await resetPassword({ ...values, token });
         console.log(result);
         if (result instanceof Error) {
             message.error(result.message);
@@ -129,6 +133,7 @@ const Resetpassword = (props) => {
         else {
             message.success(result.message);
             form.resetFields();
+            history.push('/user/login');
         }
     };
 
@@ -150,9 +155,6 @@ const Resetpassword = (props) => {
 
             <div className={styles.main}>
                 <ProForm
-                    initialValues={{
-                        autoLogin: true,
-                    }}
                     submitter={{
                         searchConfig: {
                             submitText: intl.formatMessage({

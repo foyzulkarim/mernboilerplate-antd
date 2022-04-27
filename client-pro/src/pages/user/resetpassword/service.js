@@ -10,3 +10,8 @@ export async function verifyToken(params) {
   const result = await post(`/api/auth/verify-token`, params);
   return result;
 }
+
+export async function resetPassword(params) {
+  const result = await post(`/api/auth/reset-password`, params);
+  return result;
+}

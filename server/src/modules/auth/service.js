@@ -16,7 +16,8 @@ const changePassword = async (user, newPassword) => {
   const id = user._id;
   const model = await Model.findById(id);
   if (model) {
-    await Model.setPassword(model, newPassword);
+    model.passwordHash = await Model.getHashedPassword(newPassword);
+    model.passwordResetToken = null;
     model.updatedAt = Date.now().toString();
     model.save();
     return model._id;
@@ -24,8 +25,6 @@ const changePassword = async (user, newPassword) => {
 
   throw new NotFound(`User not found by the id: ${id}`);
 };
-
-
 
 const getByUsername = async (username) => {
   const item = await Model.findOne({ username }).lean();
