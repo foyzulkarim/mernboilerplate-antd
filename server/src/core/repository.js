@@ -9,9 +9,10 @@ const save = async (item, modelName) => {
 };
 
 const update = async (item, modelName) => {
-  const doc = await mongoose.models[modelName].findOneAndUpdate(
-    { _id: item._id },
-    item
+  const doc = await mongoose.models[modelName].findByIdAndUpdate(
+    item._id,
+    item,
+    { new: true }
   );
   eventEmitter.emit(`${modelName}Updated`, doc);
   return doc;

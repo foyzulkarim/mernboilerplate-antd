@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
     roleId: { type: mongoose.Schema.Types.ObjectId, required: true },
     roleAlias: { type: String, required: true },
     passwordHash: { type: String, required: true },
+    passwordResetToken: { type: String, required: false },
     address: { type: String, required: false },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -69,11 +70,6 @@ User.createNew = async (user) => {
 User.getHashedPassword = async (newPassword) => {
   const hash = await getPasswordHash(newPassword);
   return hash;
-};
-
-User.setPassword = async (model, newPassword) => {
-  const passwordHash = await getPasswordHash(newPassword);
-  return { passwordHash, ...model };
 };
 
 module.exports = { Model: User, name: ModelName };

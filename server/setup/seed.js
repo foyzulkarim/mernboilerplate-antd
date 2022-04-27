@@ -37,7 +37,7 @@ const seed = async () => {
     await seedRoles(logger);
     await seedUsers(logger);
     await seedPermissions(logger);
-    await seedProducts(logger);
+    // await seedProducts(logger);
 
     logger.info(`Seed finished`);
     // exit process

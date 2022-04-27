@@ -61,6 +61,18 @@ export default defineConfig({
           component: './user/register',
         },
         {
+          path: '/user/forgotpassword',
+          layout: false,
+          name: 'forgotpassword',
+          component: './user/forgotpassword',
+        },
+        {
+          path: '/user/resetpassword',
+          layout: false,
+          name: 'resetpassword',
+          component: './user/resetpassword',
+        },
+        {
           component: '404',
         },
       ],
