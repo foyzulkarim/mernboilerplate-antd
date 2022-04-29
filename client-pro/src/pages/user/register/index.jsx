@@ -80,7 +80,7 @@ const Register = () => {
       message.error(result.error.message);
     }
     else {
-      message.success('Registration successful!');
+      message.success('Registration successful! Please check your email to activate your account.');
       history.push({
         pathname: '/user/login',
       });
