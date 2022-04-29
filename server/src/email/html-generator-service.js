@@ -1,3 +1,6 @@
+// import fs
+const fs = require("fs");
+
 const getPasswordResetHtml = (token) => {
   const passwordResetURL = `${process.env.FRONTEND_URL}/user/resetpassword?token=${token}`;
   const html = `
@@ -199,7 +202,7 @@ const getPasswordResetHtml = (token) => {
   return html;
 };
 
-const getPasswordResetSuccessfulHtml = (user) => {
+const getPasswordResetSuccessfulHtml = () => {
   const html = `
     <!DOCTYPE html>
 <html>
@@ -375,4 +378,18 @@ const getPasswordResetSuccessfulHtml = (user) => {
   return html;
 };
 
-module.exports = { getPasswordResetHtml, getPasswordResetSuccessfulHtml };
+const getAccountCreatedHtml = (user, token) => {
+  const URL = `${process.env.FRONTEND_URL}/user/activateaccount?token=${token}`;
+  const htmlPath = "./src/email/account-create-successful.html";
+  const html = fs.readFileSync(htmlPath, "utf8");
+  const htmlReplaced = html
+    .replace(/{{username}}/g, user.username)
+    .replace(/{{URL}}/g, URL);
+  return htmlReplaced;
+};
+
+module.exports = {
+  getPasswordResetHtml,
+  getPasswordResetSuccessfulHtml,
+  getAccountCreatedHtml,
+};

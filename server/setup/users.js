@@ -55,6 +55,7 @@ const migrate = async (logger) => {
       updatedBy: superadminUser._id,
       roleId: adminRole._id,
       roleAlias: adminRole.alias,
+      isActive: true,
     },
     "User"
   );

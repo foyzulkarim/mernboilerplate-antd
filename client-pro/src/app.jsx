@@ -9,6 +9,7 @@ const loginPath = '/user/login';
 const registerPath = '/user/register';
 const forgotpasswordPath = '/user/forgotpassword';
 const resetpasswordPath = '/user/resetpassword';
+const activateaccountPath = '/user/activateaccount';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
 export const initialStateConfig = {
@@ -60,7 +61,8 @@ export const layout = ({ initialState }) => {
       console.log('onPageChange', location.pathname, initialState);
 
       if (!authStr || (JSON.parse(authStr).isAuthenticated) === false) {
-        if (location.pathname === loginPath || location.pathname === registerPath || location.pathname === forgotpasswordPath || location.pathname === resetpasswordPath) {
+        const allowedPath = [loginPath, registerPath, forgotpasswordPath, resetpasswordPath, activateaccountPath];
+        if (allowedPath.indexOf(location.pathname) !== -1) {
           history.push(location);
         }
         else history.push(loginPath);

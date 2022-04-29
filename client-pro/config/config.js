@@ -73,6 +73,12 @@ export default defineConfig({
           component: './user/resetpassword',
         },
         {
+          path: '/user/activateaccount',
+          layout: false,
+          name: 'activateaccount',
+          component: './user/activateaccount',
+        },
+        {
           component: '404',
         },
       ],

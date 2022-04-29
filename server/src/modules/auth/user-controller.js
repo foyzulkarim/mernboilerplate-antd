@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const { tryCreateUser, searchOne, getQuery, ModelName } = require("./service");
 const {
   getByIdHandler,
@@ -10,6 +11,8 @@ const {
 } = require("../../core/controller");
 const { validateUserUpdate, validateUserCreate } = require("./request");
 const { handleValidation } = require("../../common/middlewares");
+const { update } = require("../../core/repository");
+const { sendAccountCreatedEmail } = require("../../email/sendgrid-service");
 
 const router = express.Router();
 
@@ -23,6 +26,24 @@ const saveHandler = async (req, res, next) => {
         message: "User already exists by username or email or phone number.",
       });
     }
+    const token = jwt.sign(
+      {
+        id,
+        exp:
+          Math.floor(Date.now() / 1000) +
+          parseInt(process.env.JWT_EXPIRES_IN, 10),
+      },
+      process.env.JWT_SECRET
+    );
+    user.accountActivationToken = token;
+    user._id = id;
+    await update(user, ModelName);
+    await sendAccountCreatedEmail(
+      user.email,
+      "BizBook365 account created",
+      token,
+      user
+    );
     return res
       .status(201)
       .send({ status: "ok", message: "User created successfully", id });
