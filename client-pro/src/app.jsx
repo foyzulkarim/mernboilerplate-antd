@@ -62,7 +62,11 @@ export const layout = ({ initialState }) => {
 
       if (!authStr || (JSON.parse(authStr).isAuthenticated) === false) {
         const allowedPath = [loginPath, registerPath, forgotpasswordPath, resetpasswordPath, activateaccountPath];
-        if (allowedPath.indexOf(location.pathname) !== -1) {
+        let pathname = location.pathname;
+        if (pathname.endsWith('/')) {
+          pathname = pathname.substring(0, pathname.length - 1);
+        }
+        if (allowedPath.indexOf(pathname) !== -1) {
           history.push(location);
         }
         else history.push(loginPath);
