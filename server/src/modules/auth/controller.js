@@ -16,13 +16,17 @@ const {
   update,
   changePassword,
 } = require("./service");
+const { sendAccountCreatedEmail } = require("../../email/sendgrid-service");
 
 const router = express.Router();
-const modelName = "User";
+const ModelName = "User";
 
 const createUserHandler = async (req, res, next) => {
   try {
     const user = req.body;
+    const role = await searchOne({ alias: "Admin", name: "admin" }, "Role");
+    user.roleId = role._id;
+    user.roleAlias = role.alias;
     const id = await tryCreateUser(user);
     if (!id) {
       return res.status(400).send({
@@ -30,6 +34,26 @@ const createUserHandler = async (req, res, next) => {
         message: "User already exists by username or email or phone number.",
       });
     }
+
+    const token = jwt.sign(
+      {
+        id,
+        exp:
+          Math.floor(Date.now() / 1000) +
+          parseInt(process.env.JWT_EXPIRES_IN, 10),
+      },
+      process.env.JWT_SECRET
+    );
+    user.accountActivationToken = token;
+    user._id = id;
+    await update(user, ModelName);
+    await sendAccountCreatedEmail(
+      user.email,
+      "BizBook365 account created",
+      token,
+      user
+    );
+
     return res
       .status(201)
       .send({ status: "ok", message: "User created successfully", id });
@@ -42,6 +66,13 @@ const loginHandler = async (req, res) => {
   if (req.body.username && req.body.password) {
     const user = await checkUser(req.body.username, req.body.password);
     if (user) {
+      if (!user.isActive) {
+        return res.status(400).send({
+          status: "error",
+          message: "User is not active",
+        });
+      }
+
       const permissions = await searchPermissions(user.roleId);
       const token = jwt.sign(
         {
@@ -123,12 +154,12 @@ const loginHandler = async (req, res) => {
     }
   }
 
-  res.status(400).send("Invalid username or password xyz");
+  res.status(400).send("Invalid username or password");
 };
 
 const forgotPasswordHandler = async (req, res) => {
   if (req.body.email) {
-    const user = await searchOne({ email: req.body.email }, modelName);
+    const user = await searchOne({ email: req.body.email }, ModelName);
     if (user) {
       const token = jwt.sign(
         {
@@ -140,7 +171,7 @@ const forgotPasswordHandler = async (req, res) => {
         process.env.JWT_SECRET
       );
       user.passwordResetToken = token;
-      await update(user, modelName);
+      await update(user, ModelName);
       await sendPasswordResetEmail(
         req.body.email,
         "BizBook365 Password reset",
@@ -161,7 +192,7 @@ const forgotPasswordHandler = async (req, res) => {
 const checkUsernameHandler = async (req, res) => {
   const user = await searchOne(
     { username: req.body.username.toLowerCase() },
-    modelName
+    ModelName
   );
   if (user) {
     return res
@@ -178,7 +209,7 @@ const verifyTokenHandler = async (req, res) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await searchOne({ _id: decoded.id }, modelName);
+      const user = await searchOne({ _id: decoded.id }, ModelName);
       if (user) {
         const tokenValid = token === user.passwordResetToken;
         if (tokenValid) {
@@ -208,7 +239,7 @@ const resetPasswordHandler = async (req, res) => {
   if (token && password) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await searchOne({ _id: ObjectId(decoded.id) }, modelName);
+      const user = await searchOne({ _id: ObjectId(decoded.id) }, ModelName);
       if (user) {
         const tokenValid = token === user.passwordResetToken;
         if (tokenValid) {
@@ -238,6 +269,40 @@ const resetPasswordHandler = async (req, res) => {
   });
 };
 
+const activateAccountHandler = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await searchOne({ _id: decoded.id }, ModelName);
+      if (user) {
+        const tokenValid = token === user.accountActivationToken;
+        if (tokenValid) {
+          user.accountActivationToken = null;
+          user.isActive = true;
+          await update(user, ModelName);
+          return res.status(200).send({
+            status: "ok",
+            message: "Account is activated successfully",
+          });
+        }
+        return res
+          .status(400)
+          .send({ status: "error", message: "Token invalid" });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid token",
+      });
+    }
+  }
+  return res.status(400).send({
+    status: "error",
+    message: "Invalid token",
+  });
+};
+
 router.post(
   "/register",
   handleValidation(validateRegistration),
@@ -247,6 +312,7 @@ router.post("/login", loginHandler);
 router.post("/forgot-password", forgotPasswordHandler);
 router.post("/verify-token", verifyTokenHandler);
 router.post("/reset-password", resetPasswordHandler);
+router.post("/activate-account", activateAccountHandler);
 
 router.post(
   "/check-username",

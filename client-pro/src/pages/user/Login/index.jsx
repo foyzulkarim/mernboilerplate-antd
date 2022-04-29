@@ -54,26 +54,21 @@ const Login = () => {
       // 登录
       console.log('values', values, type);
       const msg = await login({ ...values, type });
-      console.log('1.Login>handleSubmit>response', msg);
-
-      if (msg.status === 'ok') {
-        const defaultLoginSuccessMessage = intl.formatMessage({
-          id: 'pages.login.success',
-          defaultMessage: '登录成功！',
-        });
-        message.success(defaultLoginSuccessMessage);
-
+      if (msg instanceof Error) {
+        message.error(msg.message);
+      }
+      else {
+        console.log('msg', msg);
         await setUserInfo(msg);
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query;
+        setUserLoginState(msg);
         history.push(redirect || '/');
         return;
-      } // 如果失败去设置用户错误信息
-
-      setUserLoginState(msg);
+      }
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
@@ -138,14 +133,14 @@ const Login = () => {
               />
             </Tabs>
 
-            {status === 'error' && loginType === 'account' && (
+            {/* {status === 'error' && loginType === 'account' && (
               <LoginMessage
                 content={intl.formatMessage({
                   id: 'pages.login.accountLogin.errorMessage',
                   defaultMessage: '账户或密码错误(admin/ant.design)',
                 })}
               />
-            )}
+            )} */}
             {type === 'account' && (
               <>
                 <ProFormText

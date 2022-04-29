@@ -60,14 +60,7 @@ const createUser = async (user) => {
 const tryCreateUser = async (user) => {
   const { username, phoneNumber, email } = user;
   const query = {
-    $or: [
-      // { phoneNumber: { $regex: phoneNumber, $options: "i" } },
-      // { email: { $regex: email, $options: "i" } },
-      // { username: { $regex: username, $options: "i" } },
-      { phoneNumber },
-      { email },
-      { username },
-    ],
+    $or: [{ phoneNumber }, { email }, { username }],
   };
   const item = await Model.findOne(query);
   if (item) {
