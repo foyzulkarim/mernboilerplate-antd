@@ -805,5 +805,23 @@
     "roleAlias": "Superadmin",
     "isAllowed": true,
     "isDisabled": false
+  },
+
+  // product list delete button
+  {
+    "resourceName": "product-list-delete-btn",
+    "resourceAlias": "Delete product button",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "product-list-delete-btn",
+    "resourceAlias": "Delete product button",
+    "roleName": "user",
+    "roleAlias": "user",
+    "isAllowed": true,
+    "isDisabled": true
   }
 ]
