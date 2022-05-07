@@ -74,7 +74,10 @@ const EntryForm = (props) => {
             request={fetchRoles}
             placeholder="Please select a role"
             rules={[{ required: true, message: 'Please select a role' }]}
-            onChange={(value, e) => setRole({ roleId: value, roleName: e.role.name, roleAlias: e.role.alias })}
+            onChange={(value, e) => {
+              console.log(value, e);
+              setRole({ roleId: value, roleName: e.role.name, roleAlias: e.role.alias })
+            }}
           />
           <ProFormSelect
             width="md"
@@ -83,7 +86,10 @@ const EntryForm = (props) => {
             request={fetchResources}
             placeholder="Please select resource"
             rules={[{ required: true, message: 'Please select a resource' }]}
-            onChange={(value, e) => setResource({ resourceId: value, resourceName: e.resource.name, resourceAlias: e.resource.alias })}
+            onChange={(value, e) => {
+              console.log(value, e);
+              setResource({ resourceId: value, resourceName: e.resource.name, resourceAlias: e.resource.alias });
+            }}
           />
           <ProFormCheckbox name="isAllowed">
             Is allowed

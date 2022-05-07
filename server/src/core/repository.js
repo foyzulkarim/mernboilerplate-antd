@@ -74,13 +74,13 @@ const search = async (payload, query, modelName) => {
   const take = parseInt(process.env.DEFAULT_PAGE_SIZE, 10);
   const skip = (parseInt(payload.current, 10) - 1) * take;
 
-  const data = await mongoose.models[modelName]
-    .find(query)
-    .sort(sort)
-    .skip(skip)
-    .limit(take);
+  const data = mongoose.models[modelName].find(query).sort(sort);
+  const result =
+    payload.pageSize === -1
+      ? await data.lean().exec()
+      : await data.skip(skip).limit(take).lean().exec();
 
-  return data;
+  return result;
 };
 
 const getDropdownData = async (query, project, modelName) => {
