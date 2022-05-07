@@ -185,6 +185,13 @@
     "type": "api"
   },
 
+  // upsert
+  {
+    "name": "/api/permissions/upsert",
+    "alias": "Permissions upsert API",
+    "type": "api"
+  },
+
   // search
   {
     "name": "/api/permissions/search",

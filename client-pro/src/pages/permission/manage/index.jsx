@@ -6,7 +6,7 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
-import { save, getResources, getRoles, search } from '../service';
+import { save, getResources, getRoles, search, upsert } from '../service';
 
 const EntryForm = (props) => {
     const actionRef = useRef();
@@ -15,6 +15,7 @@ const EntryForm = (props) => {
     const [role, setRole] = React.useState(null);
     const [resource, setResource] = React.useState(null);
     const [resources, setResources] = React.useState([]);
+    const [reload, setReload] = React.useState(false);
 
     // get roles 
     const fetchRoles = async () => {
@@ -23,31 +24,38 @@ const EntryForm = (props) => {
         return options;
     };
 
-    // get resources
-    const fetchResources = async () => {
-        const result = await getResources();
-        const options = result.data.map(r => ({ label: r.alias, value: r._id, resource: r }));
-        setResources(result.data);
-        return options;
-    };
+    const getPermissions = async () => {
+        const result = await search({ roleId: role.roleId, pageSize: -1, sort: 'resourceAlias' });
+        const filtered = resources.filter(x => !result.data.some(y => y.resourceId === x._id))
+            .map(z => (
+                {
+                    resourceAlias: z.alias, resourceId: z._id, resourceName: z.name,
+                    isAllowed: false, isDisabled: false,
+                    ...role,
+                }));
+        setData([...result.data, ...filtered]);
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getResources();
+            setResources(result.data);
+        };
+        fetchData();
+    }, []);
 
     useEffect(() => {
         if (role) {
-            const asyncGetData = async () => {
-                const result = await search({ roleId: role.roleId, pageSize: -1 });
-                const filtered = resources.filter(x => !result.data.some(y => y.resourceId === x._id))
-                    .map(z => (
-                        {
-                            resourceAlias: z.alias, resourceId: z._id, resourceName: z.name,
-                            isAllowed: false, isDisabled: false,
-                            ...role,
-                        }));
-                console.log('filtered', filtered.length);
-                setData([...result.data, ...filtered]);
-            }
-            asyncGetData();
+            getPermissions();
         }
     }, [role]);
+
+    useEffect(() => {
+        if (reload) {
+            getPermissions();
+            setReload(false);
+        }
+    }, [reload]);
 
     const onFinish = async (values) => {
         console.log('values', values);
@@ -72,8 +80,16 @@ const EntryForm = (props) => {
         }
     };
 
-    const updatePermission = (entity) => {
-        console.log('entity', entity);
+    const updatePermission = async (entity) => {
+        const { createdBy, updatedBy, createdAt, updatedAt, __v, ...payload } = entity;
+        console.log('entity', payload);
+        const result = await upsert(payload);
+        if (result instanceof Error) {
+            message.error(result.message);
+        } else {
+            message.success(result.message);
+            setReload(true);
+        }
     }
 
     const columns = [
