@@ -208,6 +208,15 @@
     "isAllowed": true,
     "isDisabled": false
   },
+  // /api/permissions/upsert for superadmin
+  {
+    "resourceName": "/api/permissions/upsert",
+    "resourceAlias": "Permissions upsert API",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
   // /api/permissions/search for superadmin
   {
     "resourceName": "/api/permissions/search",
@@ -330,6 +339,15 @@
   {
     "resourceName": "/api/permissions/update",
     "resourceAlias": "Permissions update API",
+    "roleName": "admin",
+    "roleAlias": "Admin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  // /api/permissions/upsert for admin
+  {
+    "resourceName": "/api/permissions/upsert",
+    "resourceAlias": "Permissions upsert API",
     "roleName": "admin",
     "roleAlias": "Admin",
     "isAllowed": true,

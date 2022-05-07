@@ -203,6 +203,12 @@ export default defineConfig({
           path: '/permissions/edit/:id',
           component: './permission/update',
         },
+        {
+          name: 'Manage',
+          icon: 'smile',
+          path: '/permissions/manage',
+          component: './permission/manage',
+        },
       ],
     },
     {

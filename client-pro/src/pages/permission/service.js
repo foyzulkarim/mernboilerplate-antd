@@ -20,6 +20,10 @@ export async function save(params) {
   return await post('/api/permissions/create', params);
 }
 
+export async function upsert(params) {
+  return await post('/api/permissions/upsert', params);
+}
+
 export async function remove(id, options) {
   return await del(`/api/permissions/delete?id=${id}`, {}, options);
 }

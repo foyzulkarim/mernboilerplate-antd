@@ -23,11 +23,20 @@ const countHandler = async (req, res, next) => {
   return baseCountHandler(req, res, next);
 };
 
+const upsertHandler = async (req, res, next) => {
+  const { _id: id } = req.body;
+  if (id) {
+    return updateHandler(req, res, next);
+  }
+  return saveHandler(req, res, next);
+};
+
 router.get("/detail", getByIdHandler);
 router.post("/create", handleValidation(validate), saveHandler);
 router.put("/update", handleValidation(validate), updateHandler);
 router.post("/search", searchHandler);
 router.post("/count", countHandler);
 router.delete("/delete", deleteHandler);
+router.post("/upsert", handleValidation(validate), upsertHandler);
 
 module.exports = router;
