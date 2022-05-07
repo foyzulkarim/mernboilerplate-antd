@@ -150,6 +150,13 @@ npm run db:migrate
 
 You should be able to see the username and password in the `/server/setup/users.json` file.
 
+## Permission management ui 
+
+I have introduced a permission management ui for the application. Sample image is given below.
+
+  ![Product List Page](./docs/images/permission-manage-ui.png)
+
+
 ### Centralized log to `Sentry.io`
 
 We can also send the logs to [sentry.io](https://sentry.io). To use this feature, we need to add the `dsn` entry into `client/src/env.config.js`.
