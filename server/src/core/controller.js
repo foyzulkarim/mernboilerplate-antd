@@ -2,7 +2,6 @@ const { NotFound } = require("../common/errors");
 const {
   getById,
   search,
-  getDropdownData,
   count,
   save,
   update,
@@ -54,7 +53,9 @@ const saveHandler = async (req, res, next) => {
     const { body } = req;
     const id = await save(body, ModelName);
     req.log.info({ id }, `${ModelName} created`);
-    return res.status(201).send(id);
+    return res
+      .status(201)
+      .send({ success: true, message: `${ModelName} created` });
   } catch (error) {
     return next(error, req, res);
   }
@@ -65,7 +66,9 @@ const updateHandler = async (req, res, next) => {
     const ModelName = req.modelName;
     const { body } = req;
     const id = await update(body, ModelName);
-    return res.status(200).send(id);
+    return res
+      .status(200)
+      .send({ success: true, message: `${ModelName} updated` });
   } catch (error) {
     return next(error, req, res);
   }

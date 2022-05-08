@@ -57,29 +57,6 @@ const EntryForm = (props) => {
         }
     }, [reload]);
 
-    const onFinish = async (values) => {
-        console.log('values', values);
-
-        if (!values.hasOwnProperty('isDisabled')) {
-            values.isDisabled = false;
-        }
-
-        if (!values.hasOwnProperty('isAllowed')) {
-            values.isAllowed = false;
-        }
-
-        const result = await save({ ...values, ...role, ...resource });
-        console.log('resource', result);
-        if (result instanceof Error) {
-            message.error(result.message);
-        }
-        else {
-            message.success(result.message);
-            form.resetFields();
-            // setRole(null);
-        }
-    };
-
     const updatePermission = async (entity) => {
         const { createdBy, updatedBy, createdAt, updatedAt, __v, ...payload } = entity;
         console.log('entity', payload);
@@ -122,10 +99,7 @@ const EntryForm = (props) => {
                 return (
                     <Checkbox
                         name="isAllowed"
-                        // initialValue={entity.isAllowed}
-                        // value={entity.isAllowed}
                         onChange={(val) => {
-                            console.log('val', val);
                             updatePermission({ ...entity, isAllowed: val.target.checked });
                         }}
                         checked={entity.isAllowed}
@@ -146,28 +120,14 @@ const EntryForm = (props) => {
                     <Checkbox
                         name="isDisabled"
                         value={entity.isDisabled}
-                        onChange={(value) => {
-                            console.log('value', value);
+                        onChange={(val) => {
+                            updatePermission({ ...entity, isDisabled: val.target.checked });
                         }}
+                        checked={entity.isDisabled}
                     />
                 );
             }
         },
-        // {
-        //     title: 'Actions',
-        //     dataIndex: 'option',
-        //     valueType: 'option',
-        //     render: (_, record) => [
-        //         <a
-        //             key="config"
-        //             onClick={() => {
-        //                 showDeleteConfirm(record);
-        //             }}
-        //         >
-        //             Delete
-        //         </a>,
-        //     ],
-        // },
     ];
 
     return (
